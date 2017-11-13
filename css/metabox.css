@@ -1,0 +1,92 @@
+.couture-metabox {
+	padding: 10px 0;
+}
+
+.couture-metabox .row {
+	margin-left: -10px;
+	margin-right: -10px;
+}
+
+.couture-metabox .row:before,
+.couture-metabox .row:after {
+	display: table;
+	content: " ";
+}
+
+.couture-metabox .col-1 {
+	position: relative;
+	width: 100%;
+	display: inline-block;
+	padding: 0 10px;
+	box-sizing: border-box;
+}
+
+.couture-metabox .col-6 {
+	position: relative;
+	width: 16.6666667%;
+	display: inline-block;
+	padding: 0 10px;
+	box-sizing: border-box;
+}
+
+.couture-metabox img {
+	max-width: 100%;
+	height: auto;
+}
+
+/*Select*/
+.couture-metabox .selectId {
+	margin: 20px 0;
+}
+
+.couture-metabox .selected-product {
+	background-color: #f7f7f7;
+	border: 2px dashed #ededed;
+	padding: 10px;
+}
+
+.couture-metabox .selected-product .close {
+	display: inline-block;
+	position: absolute;
+	top: 8px;
+	right: 18px;
+	width: 16px;
+	height: 16px;
+	background: url(../img/close.png);
+	cursor: pointer;
+}
+
+/*Switch*/
+.switch {
+	width: 100%;
+	height: 30px;
+	position: relative;
+	clear: both;
+	display: block;
+	cursor: pointer;
+}
+
+.switch.active {
+	background-color: #2196F3;
+	color: #fff;
+}
+
+.switch.inactive {
+	background-color: #CCCCCC;
+	color: #999;
+}
+
+.switch.active:before,
+.switch.inactive:before {
+	display: block;
+	line-height: 30px;
+	text-align: center;
+}
+
+.switch.active:before {
+	content: 'Captured';
+}
+
+.switch.inactive:before {
+	content: 'Similar';
+}
