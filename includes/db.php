@@ -5,27 +5,27 @@
  * Post Like.
  *
  ******************************************************/
-function wc_outfit_install_db() {
-	global $wpdb;
+// function wc_outfit_install_db() {
+// 	global $wpdb;
 
-	$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
+// 	$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
 
-	$charset_collate = $wpdb->get_charset_collate();
+// 	$charset_collate = $wpdb->get_charset_collate();
 
-	if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
-		$sql = "CREATE TABLE $table_name (
-			id bigint(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			postid bigint(20) NOT NULL,
-			post_type varchar(20) NOT NULL,
-			user bigint(20) NOT NULL,
-			created_at datetime NOT NULL
-		) $charset_collate;";
+// 	if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+// 		$sql = "CREATE TABLE $table_name (
+// 			id bigint(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+// 			postid bigint(20) NOT NULL,
+// 			post_type varchar(20) NOT NULL,
+// 			user bigint(20) NOT NULL,
+// 			created_at datetime NOT NULL
+// 		) $charset_collate;";
 
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		dbDelta($sql);
-	}
-}
-register_activation_hook(__FILE__, 'wc_outfit_install_db');
+// 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+// 		dbDelta($sql);
+// 	}
+// }
+// register_activation_hook(__FILE__, 'wc_outfit_install_db');
 
 function wc_outfit_post_like($post_id, $post_type) {
 	global $wpdb;
