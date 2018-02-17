@@ -19,22 +19,12 @@ if (!defined('WPINC')) {
 	die;
 }
 
-require_once 'vendor/autoload.php';
-
-use Xim_Woo_Outfit\Traits\Template_Shortcode;
-use Xim_Woo_Outfit\Traits\Test as MyTest;
-
 /**
- * Including the core plugin functions.
+ * Including composer autoload.
  *
  * @since    1.0.0
  */
-require_once dirname(__file__) . '/includes/helper.php';
-require_once dirname(__file__) . '/includes/ajax.php';
-require_once dirname(__file__) . '/includes/functions.php';
-require_once dirname(__file__) . '/includes/metabox.php';
-require_once dirname(__file__) . '/includes/db.php';
-// require_once dirname(__file__) . '/includes/shortcode.php';
+require_once 'vendor/autoload.php';
 
 /**
  * Including the functions for admin menu page and options.
@@ -42,9 +32,8 @@ require_once dirname(__file__) . '/includes/db.php';
  * @since    1.0.0
  */
 // if (is_admin()) {
-	// require_once dirname(__file__) . '/admin/wp_stickit_admin.php';
+// require_once dirname(__file__) . '/admin/wp_stickit_admin.php';
 // }
-
 
 /**
  * Activation Class - fire once while activating the plugin.
@@ -52,30 +41,10 @@ require_once dirname(__file__) . '/includes/db.php';
  * @since    1.0.0
  */
 class Xim_Woo_Outfit_Activation {
+	use Xim_Woo_Outfit\Traits\Database;
 
 	function __construct() {
 		$this->install_db();
-	}
-
-	protected function install_db() {
-		global $wpdb;
-
-		$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
-		$charset_collate = $wpdb->get_charset_collate();
-
-		// Create table if not exists
-		if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
-			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
-			$sql = "CREATE TABLE $table_name (
-				id bigint(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-				postid bigint(20) NOT NULL,
-				post_type varchar(20) NOT NULL,
-				user bigint(20) NOT NULL,
-				created_at datetime NOT NULL
-			) $charset_collate;";
-			dbDelta($sql);
-		}
 	}
 }
 register_activation_hook(__FILE__, function () {
@@ -83,16 +52,56 @@ register_activation_hook(__FILE__, function () {
 });
 
 /**
- * Bootstrap class - fired when plugins are loaded.
+ * Initial class - fired when plugins are loaded.
  *
  * @since    1.0.0
  */
 class Xim_Woo_Outfit_Init {
-	use Template_Shortcode;
+	use Xim_Woo_Outfit\Traits\Helper;
+	use Xim_Woo_Outfit\Traits\Hooks;
+	use Xim_Woo_Outfit\Traits\Metabox;
+	use Xim_Woo_Outfit\Traits\Ajax;
+	use Xim_Woo_Outfit\Traits\Template_Shortcode;
 
 	function __construct() {
 		$this->throw_notice_and_deactive();
 
+		// Hooks
+		add_action('wp_enqueue_scripts', array($this, 'wc_outfit_enqueue_script'));
+		add_action('init', array($this, 'wc_outfit_init'));
+		add_action('template_redirect', array($this, 'wc_outfit_disable_single'));
+		add_action('before_delete_post', array($this, 'wc_outfit_remove_cp_meta_on_delete'));
+		add_filter('body_class', array($this, 'wc_outfit_body_classes'));
+
+		// Metabox
+		add_action('add_meta_boxes', array($this, 'wc_outfit_register_meta_boxes'));
+
+		add_action('save_post', array($this, 'wc_outfit_update_metabox'), 1, 2);
+		add_action('do_meta_boxes', array($this, 'wc_outfit_custom_thumb_boxes'));
+		add_action('admin_enqueue_scripts', array($this, 'wc_outfit_metabox_styles'));
+
+		// Ajax
+		add_action("wp_ajax_products_by_cat", array($this, 'ajax_products_by_cat'));
+		add_action("wp_ajax_nopriv_products_by_cat", array($this, 'nopriv_ajax_products_by_cat'));
+		add_action("wp_ajax_post_like", array($this, 'ajax_post_like'));
+		add_action("wp_ajax_nopriv_post_like", array($this, 'nopriv_ajax_post_like'));
+		add_action("wp_ajax_follow_people", array($this, 'ajax_follow_people'));
+		add_action("wp_ajax_nopriv_follow_people", array($this, 'nopriv_ajax_follow_people'));
+		add_action("wp_ajax_list_follower", array($this, 'ajax_list_follower'));
+
+		add_action("wp_ajax_nopriv_list_follower", array($this, 'ajax_list_follower'));
+		add_action("wp_ajax_list_following", array($this, 'ajax_list_following'));
+
+		add_action("wp_ajax_nopriv_list_following", array($this, 'ajax_list_following'));
+		add_action("wp_ajax_outfit_modal", array($this, 'ajax_outfit_modal'));
+
+		add_action("wp_ajax_nopriv_outfit_modal", array($this, 'ajax_outfit_modal'));
+		add_action('wp_ajax_style_gallery', array($this, 'wc_outfit_ajax_style_gallery'));
+
+		add_action('wp_ajax_nopriv_style_gallery', array($this, 'wc_outfit_ajax_style_gallery'));
+		add_action('wp_ajax_ajax_upload', array($this, 'ajax_upload'));
+
+		// Shortcodes
 		add_shortcode('new-outfit', array($this, 'new_outfit_shortcode'));
 		add_shortcode('all-outfit', array($this, 'all_outfit_shortcode'));
 		add_shortcode('style-gallery', array($this, 'style_gallery_shortcode'));

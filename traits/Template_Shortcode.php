@@ -1,9 +1,11 @@
 <?php
 
 namespace Xim_Woo_Outfit\Traits;
+
 use WP_Query;
 
 trait Template_Shortcode {
+	// use Helper;
 
 	public function new_outfit_shortcode($atts, $content = null) {
 		wp_enqueue_style('bootstrapValidator');
@@ -291,34 +293,34 @@ trait Template_Shortcode {
 		if ($query->have_posts()) {
 			echo '<div class="grid">';
 			while ($query->have_posts()): $query->the_post();
-				$author_data = wc_outfit_get_post_author_data($post->ID);
+				$author_data = $this->wc_outfit_get_post_author_data($post->ID);
 				echo '<div class="grid-item col-sm-4" data-id="' . $post->ID . '">
 						<div class="gal-header">
 							<div class="gal-product clearfix">
 								<ul>
-									' . wc_outfit_hooked_product($post->ID, 4) . '
+									' . $this->wc_outfit_hooked_product($post->ID, 4) . '
 								</ul>
 							</div>
 							<a class="gal-thumb clearfix">
-								<img src="' . wc_outfit_post_thumb_by_id($post->ID) . '" class="gal-img" />
+								<img src="' . $this->wc_outfit_post_thumb_by_id($post->ID) . '" class="gal-img" />
 							</a>
 						</div>
 						<div class="gal-footer clearfix">
 							<div class="pull-left">
-								<a class="author" href="' . user_gallery_link_by_id(get_the_author_meta('ID')) . '">
+								<a class="author" href="' . $this->user_gallery_link_by_id(get_the_author_meta('ID')) . '">
 									' . $author_data['nickname'][0] . '</a>
-								<span class="time">' . wc_outfit_time_ago() . '</span>
+								<span class="time">' . $this->wc_outfit_time_ago() . '</span>
 							</div>
 							<div class="pull-right">
 								<div class="gal-bubble">
 									<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
 
 									<div class="bubble-content">
-										' . wc_outfit_outfit_share_button($post->ID) . '
+										' . $this->wc_outfit_outfit_share_button($post->ID) . '
 									</div>
 								</div>
 
-								' . wc_outfit_post_like_button($post->ID) . '
+								' . $this->wc_outfit_post_like_button($post->ID) . '
 							</div>
 						</div>
 					</div>';
@@ -378,15 +380,15 @@ trait Template_Shortcode {
 
 		// Product modal
 		if (isset($_GET['view'])) {
-			$author = wc_outfit_get_post_author($_GET['view']);
-			$author_data = wc_outfit_get_author_data($author);
+			$author = $this->wc_outfit_get_post_author($_GET['view']);
+			$author_data = $this->wc_outfit_get_author_data($author);
 
 			echo '<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-body clearfix">
 						<div class="thumb">
-							<img src="' . wc_outfit_post_thumb_by_id($_GET['view']) . '" />
+							<img src="' . $this->wc_outfit_post_thumb_by_id($_GET['view']) . '" />
 						</div>
 
 						<div class="details">
@@ -395,13 +397,13 @@ trait Template_Shortcode {
 									<span aria-hidden="true">&times;</span>
 								</button>
 
-								<a class="name" href="' . user_gallery_link_by_id($author) . '">
+								<a class="name" href="' . $this->user_gallery_link_by_id($author) . '">
 									' . $author_data['nickname'][0] . '
 								</a>';
 
 			if ($author != get_current_user_id()) {
 				echo '<a href="#" class="medal" data-id="' . $author . '">';
-				if (wc_outfit_is_following($author)) {
+				if ($this->wc_outfit_is_following($author)) {
 					echo 'Unfollow';
 				} else {
 					echo 'Follow';
@@ -413,7 +415,7 @@ trait Template_Shortcode {
 
 
 							<div class="products owl-carousel">
-								' . wc_outfit_modal_hooked_product($_GET['view']) . '
+								' . $this->wc_outfit_modal_hooked_product($_GET['view']) . '
 							</div>
 
 							<div class="tags">';
@@ -429,12 +431,12 @@ trait Template_Shortcode {
 
 							<div class="info">
 								<div class="pull-left">
-									<span class="time">' . __('Added ', 'couture') . wc_outfit_time_ago($_GET['view']) . '</span>
+									<span class="time">' . __('Added ', 'couture') . $this->wc_outfit_time_ago($_GET['view']) . '</span>
 								</div>
 
 								<div class="pull-right">
-									' . wc_outfit_outfit_share_button($_GET['view']) . '
-									' . wc_outfit_post_like_button($_GET['view']) . '
+									' . $this->wc_outfit_outfit_share_button($_GET['view']) . '
+									' . $this->wc_outfit_post_like_button($_GET['view']) . '
 								</div>
 							</div>
 						</div>
