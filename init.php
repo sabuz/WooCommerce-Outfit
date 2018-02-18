@@ -45,6 +45,7 @@ class Xim_Woo_Outfit_Activation {
 
 	function __construct() {
 		$this->install_db();
+		flush_rewrite_rules();
 	}
 }
 register_activation_hook(__FILE__, function () {
@@ -130,3 +131,36 @@ class Xim_Woo_Outfit_Init {
 add_action('plugins_loaded', function () {
 	new Xim_Woo_Outfit_Init;
 });
+
+
+
+function wk_custom_endpoint() {
+  add_rewrite_endpoint( 'custom', EP_ROOT | EP_PAGES );
+}
+ 
+add_action( 'init', 'wk_custom_endpoint' );
+
+
+add_filter( 'woocommerce_account_menu_items', 'wk_new_menu_items' );
+ 
+/**
+* Insert the new endpoint into the My Account menu.
+*
+* @param array $items
+* @return array
+*/
+function wk_new_menu_items( $items ) {
+    $items[ 'custom' ] = __( 'Custom', 'webkul' );
+    return $items;
+}
+
+
+$endpoint = 'custom';
+ 
+add_action( 'woocommerce_account_' . $endpoint .  '_endpoint', 'wk_endpoint_content' );
+ 
+function wk_endpoint_content() {
+    //content goes here
+    echo 'content goes here';    
+    // https://gist.github.com/neilgee/13ac00c86c903c4ab30544b2b76c483c
+}
