@@ -46,7 +46,7 @@ trait Template_Shortcode {
 			<div class="form-group">
 				<select class="selectId">
 					<option selected disabled>Choose a category</option>';
-		foreach (wc_outfit_product_cats() as $cat):
+		foreach ($this->wc_outfit_product_cats() as $cat):
 			$html .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
 		endforeach;
 		$html .= '</select>
@@ -127,7 +127,7 @@ trait Template_Shortcode {
 			echo '<strong>' . __('BE THE STYLIST: ', 'couture') . '</strong>' . __('Make it work at the office with posh professional styles!', 'couture');
 			echo '</div>';
 		} elseif (isset($_GET['user'])) {
-			$author_data = wc_outfit_get_author_data($_GET['user']);
+			$author_data = $this->wc_outfit_get_author_data($_GET['user']);
 
 			echo '<h4 class="page-subtitle">' . $author_data['nickname'][0] . '</h4>';
 
@@ -137,10 +137,10 @@ trait Template_Shortcode {
 			} else {
 				$current = 'photos';
 			}
-			echo '<a href="' . user_gallery_link_by_id($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">Photos</a>';
-			echo '<a href="' . user_gallery_likes_by_id($_GET['user']) . '" class="' . ($current == 'likes' ? 'active' : '') . '">Liked Looks</a>';
-			echo '<a href="#" class="follower" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . wc_outfit_get_follower_count($_GET['user']) . ' Followers</a>';
-			echo '<a href="#" class="following" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . wc_outfit_get_following_count($_GET['user']) . ' Following</a>';
+			echo '<a href="' . $this->user_gallery_link_by_id($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">Photos</a>';
+			echo '<a href="' . $this->user_gallery_likes_by_id($_GET['user']) . '" class="' . ($current == 'likes' ? 'active' : '') . '">Liked Looks</a>';
+			echo '<a href="#" class="follower" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->wc_outfit_get_follower_count($_GET['user']) . ' Followers</a>';
+			echo '<a href="#" class="following" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->wc_outfit_get_following_count($_GET['user']) . ' Following</a>';
 			echo '</div>';
 		} else {
 			echo '<h4 class="page-subtitle">' . __('Inspire and Admire', 'couture') . '</h4>';
@@ -172,7 +172,7 @@ trait Template_Shortcode {
 			if ($_GET['user'] != get_current_user_id()) {
 				echo '<a href="#" class="medal medal-big" data-id="' . $_GET['user'] . '">';
 				echo '<span><strong>';
-				if (wc_outfit_is_following($_GET['user'])) {
+				if ($this->wc_outfit_is_following($_GET['user'])) {
 					echo 'Unfollow';
 				} else {
 					echo 'Follow';
@@ -200,7 +200,7 @@ trait Template_Shortcode {
 
 		if (isset($_GET['user'])) {
 			if (@$_GET['page'] == 'likes') {
-				$ids = wc_outfit_get_likes_by_user($_GET['user']);
+				$ids = $this->wc_outfit_get_likes_by_user($_GET['user']);
 				if (!empty($ids)) {
 					$args = array(
 						'post_type' => 'outfit',
@@ -357,7 +357,7 @@ trait Template_Shortcode {
 
 		// User modal
 		if (isset($_GET['user'])) {
-			$author_data = wc_outfit_get_author_data($_GET['user']);
+			$author_data = $this->wc_outfit_get_author_data($_GET['user']);
 			echo '<div class="modal fade" id="fanModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
