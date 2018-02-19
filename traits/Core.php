@@ -2,7 +2,7 @@
 
 namespace Xim_Woo_Outfit\Traits;
 
-trait Hooks {
+trait Core {
 	/**
 	 * Load the required js files for this plugin.
 	 *
@@ -39,6 +39,9 @@ trait Hooks {
  *
  */
 	function wc_outfit_init($taxonomy) {
+		add_rewrite_endpoint('outfit/new-outfit', EP_ROOT | EP_PAGES);
+		add_rewrite_endpoint('outfit', EP_ROOT | EP_PAGES);
+
 		// Register post type: outfit
 		register_post_type('outfit',
 			array(
@@ -129,4 +132,49 @@ trait Hooks {
 		}
 	}
 
+	// If WooCommerce not activated, throw error and deactive the plugin
+	protected function throw_notice_and_deactive() {
+		if (!class_exists('WooCommerce')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+			// Deactivate the plugin
+			deactivate_plugins(plugin_basename(__FILE__));
+
+			// Remove success notice
+			unset($_GET['activate']);
+
+			// Throw an error in the wordpress admin
+			add_action('admin_notices', function () {
+				$class = 'notice notice-error is-dismissible';
+				$message = __('<strong>WooCommerce Outfit</strong> requires <strong>WooCommerce</strong> plugin to be installed and activated.', 'xim');
+				printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
+			});
+		}
+	}
+
+	public function wk_new_menu_items($items) {
+		$items['outfit'] = __('Outfit', 'xim');
+		return $items;
+	}
+
+	public function endpoint_content() {
+		echo do_shortcode('[all-outfit]');
+		// https://gist.github.com/neilgee/13ac00c86c903c4ab30544b2b76c483c
+	}
+
+	public function sub_endpoint_content() {
+		echo do_shortcode('[new-outfit]');
+	}
+
+	public function endpoint_title($title) {
+		global $wp_query;
+
+		$is_endpoint = isset($wp_query->query_vars['outfit']);
+
+		if ($is_endpoint && in_the_loop()) {
+			$title = 'Outfit';
+		}
+
+		return $title;
+	}
 }
