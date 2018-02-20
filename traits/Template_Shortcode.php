@@ -5,7 +5,58 @@ namespace Xim_Woo_Outfit\Traits;
 use WP_Query;
 
 trait Template_Shortcode {
-	// use Helper;
+
+	/**
+	 * Outfits shortcode.
+	 *
+	 * @since    1.0.0
+	 */
+	public function outfits_shortcode() {
+		$query = new WP_Query(array(
+			'post_type' => 'outfit',
+			'post_status' => 'any',
+			'posts_per_page' => -1,
+			'author' => get_current_user_id(),
+		));
+
+		$html = '';
+
+		if ($query->have_posts()) {
+			$html .= '<p>' . sprintf(__('To add more outfit photos, go to <a href="%1$s">new outfit</a>', 'xim'), esc_url(wc_get_endpoint_url('outfits/new-outfit'))) .'</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>' . __('ID', 'xim') . '</th>
+						<th>' . __('Title', 'xim') . '</th>
+						<th>' . __('Date', 'xim') . '</th>
+						<th>' . __('Status', 'xim') . '</th>
+					</tr>
+				</thead>
+
+				<tbody>';
+					while ($query->have_posts()) {
+						$query->the_post();
+						$html .= '<tr>
+							<td>' . get_the_ID() . '</td>
+							<td>' . the_title('', '', false) . '</td>
+							<td>' . get_the_date() . '</td>
+							<td>' . get_post_status() . '</td>
+						</tr>';
+					}
+				$html .= '</tbody>
+			</table>';
+
+			wp_reset_postdata();
+		} else {
+			$html .= '<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">
+				<a class="woocommerce-Button button" href="' . esc_url(wc_get_endpoint_url('outfits/new-outfit')) . '">' . __('Add new', 'xim') . '</a>
+				' . __('No outfits available yet.', 'xim') . '
+			</div>';
+		}
+
+		return $html;
+	}
 
 	public function new_outfit_shortcode($atts, $content = null) {
 		wp_enqueue_style('bootstrapValidator');
@@ -59,52 +110,6 @@ trait Template_Shortcode {
 		$html .= wp_nonce_field('post_nonce', 'post_nonce_field') . '
 		    <input type="submit" value="' . __('Add Outfit', 'couture') . '">
 		</form>';
-
-		return $html;
-	}
-
-	public function all_outfit_shortcode() {
-		$html = '<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th><span class="nobr">' . __('ID', 'couture') . '</span></th>
-				<th><span class="nobr">' . __('Date', 'couture') . '</span></th>
-				<th><span class="nobr">' . __('Status', 'couture') . '</span></th>
-				<th><span class="nobr">' . __('Title', 'couture') . '</span></th>
-			</tr>
-		</thead>';
-		$args = array(
-			'post_type' => 'outfit',
-			'post_status' => 'any',
-			'posts_per_page' => -1,
-			'author' => get_current_user_id(),
-		);
-
-		$query = new WP_Query($args);
-
-		$html .= '<tbody>';
-
-		if ($query->have_posts()) {
-			while ($query->have_posts()) {
-				$query->the_post();
-				$html .= '<tr>
-					<td>' . get_the_ID() . '</td>
-					<td>' . get_the_date() . '</td>
-					<td>' . get_post_status() . '</td>
-					<td>' . the_title('', '', false) . '</td>
-				</tr>';
-			}
-		} else {
-			$html .= '<tr>
-				<td colspan="4" class="text-center">
-					' . __('There is no outfit yet.', 'couture') . '
-				</td>
-			</tr>';
-		}
-
-		wp_reset_postdata();
-
-		$html .= '</tbody></table>';
 
 		return $html;
 	}

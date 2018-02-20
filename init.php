@@ -55,17 +55,17 @@ class Xim_Woo_Outfit_Init {
 	use Xim_Woo_Outfit\Traits\Ajax;
 	use Xim_Woo_Outfit\Traits\Template_Shortcode;
 
-	protected $endpoint = 'outfit';
-	protected $sub_endpoint = 'outfit/new-outfit';
+	public $all_outfit_endpoint = 'outfits';
+	public $new_outfit_endpoint = 'outfits/new-outfit';
 
 	function __construct() {
 		// Core
 		$this->throw_notice_and_deactive();
 
-		add_filter('woocommerce_account_menu_items', array($this, 'wk_new_menu_items'));
-		add_action('woocommerce_account_' . $this->sub_endpoint . '_endpoint', array($this, 'sub_endpoint_content'));
-		add_action('woocommerce_account_' . $this->endpoint . '_endpoint', array($this, 'endpoint_content'));
-		add_filter('the_title', array($this, 'endpoint_title'), 10, 2);
+		add_action('woocommerce_account_' . $this->new_outfit_endpoint . '_endpoint', array($this, 'new_outfit_endpoint_content'));
+		add_action('woocommerce_account_' . $this->all_outfit_endpoint . '_endpoint', array($this, 'outfits_endpoint_content'));
+		add_filter('woocommerce_account_menu_items', array($this, 'add_myaccount_menu_items'));
+		add_filter('the_title', array($this, 'custom_endpoints_title'), 10, 2);
 
 		add_action('wp_enqueue_scripts', array($this, 'wc_outfit_enqueue_script'));
 		add_action('init', array($this, 'wc_outfit_init'));
@@ -102,8 +102,8 @@ class Xim_Woo_Outfit_Init {
 		add_action('wp_ajax_ajax_upload', array($this, 'ajax_upload'));
 
 		// Shortcodes
+		add_shortcode('outfits', array($this, 'outfits_shortcode'));
 		add_shortcode('new-outfit', array($this, 'new_outfit_shortcode'));
-		add_shortcode('all-outfit', array($this, 'all_outfit_shortcode'));
 		add_shortcode('style-gallery', array($this, 'style_gallery_shortcode'));
 
 		/**

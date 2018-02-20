@@ -39,8 +39,8 @@ trait Core {
  *
  */
 	function wc_outfit_init($taxonomy) {
-		add_rewrite_endpoint('outfit/new-outfit', EP_ROOT | EP_PAGES);
-		add_rewrite_endpoint('outfit', EP_ROOT | EP_PAGES);
+		add_rewrite_endpoint('outfits/new-outfit', EP_ROOT | EP_PAGES);
+		add_rewrite_endpoint('outfits', EP_ROOT | EP_PAGES);
 
 		// Register post type: outfit
 		register_post_type('outfit',
@@ -132,7 +132,11 @@ trait Core {
 		}
 	}
 
-	// If WooCommerce not activated, throw error and deactive the plugin
+	/**
+	 * If WooCommerce not activated, throw error and deactive the plugin
+	 *
+	 * @since    1.0.0
+	 */
 	protected function throw_notice_and_deactive() {
 		if (!class_exists('WooCommerce')) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -152,27 +156,46 @@ trait Core {
 		}
 	}
 
-	public function wk_new_menu_items($items) {
-		$items['outfit'] = __('Outfit', 'xim');
+	/**
+	 * Add new outfit menu on woocommerce customer dashboard page.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_myaccount_menu_items($items) {
+		$items['outfits'] = __('Outfits', 'xim');
 		return $items;
 	}
 
-	public function endpoint_content() {
-		echo do_shortcode('[all-outfit]');
-		// https://gist.github.com/neilgee/13ac00c86c903c4ab30544b2b76c483c
+	/**
+	 * Generate outfits endpoint content.
+	 *
+	 * @since    1.0.0
+	 */
+	public function outfits_endpoint_content() {
+		echo do_shortcode('[outfits]');
 	}
 
-	public function sub_endpoint_content() {
+	/**
+	 * Generate new-outfit endpoint content.
+	 *
+	 * @since    1.0.0
+	 */
+	public function new_outfit_endpoint_content() {
 		echo do_shortcode('[new-outfit]');
 	}
 
-	public function endpoint_title($title) {
+	/**
+	 * Generate title for custom endpoints.
+	 *
+	 * @since    1.0.0
+	 */
+	public function custom_endpoints_title($title) {
 		global $wp_query;
 
-		$is_endpoint = isset($wp_query->query_vars['outfit']);
-
-		if ($is_endpoint && in_the_loop()) {
-			$title = 'Outfit';
+		if (isset($wp_query->query_vars['outfits']) && in_the_loop()) {
+			$title = 'Outfits';
+		} elseif (isset($wp_query->query_vars['outfits/new-outfit']) && in_the_loop()) {
+			$title = 'Add New Outfit';
 		}
 
 		return $title;

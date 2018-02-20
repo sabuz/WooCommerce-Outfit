@@ -84,7 +84,6 @@ trait Helper {
 		return get_categories($args);
 	}
 
-	
 	//
 	//
 	//
@@ -223,6 +222,10 @@ trait Helper {
 
 		return $url[0];
 	}
+
+	// public function myaccount_join_permalink($path) {
+	// 	return esc_url(get_permalink(get_option('woocommerce_myaccount_page_id')) . $path);
+	// }
 }
 
 ?>
