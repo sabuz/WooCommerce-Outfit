@@ -3,13 +3,60 @@
 namespace Xim_Woo_Outfit\Traits;
 
 trait Core {
+
 	/**
-	 * Load the required js files for this plugin.
+	 * Plugins init hook.
 	 *
 	 * @since    1.0.0
 	 */
-	function wc_outfit_enqueue_script() {
+	function init($taxonomy) {
+		// Add rewrite rules
+		add_rewrite_endpoint('outfits/new-outfit', EP_ROOT | EP_PAGES);
+		add_rewrite_endpoint('outfits', EP_ROOT | EP_PAGES);
 
+		// Register post type: outfit
+		register_post_type('outfit',
+			array(
+				'labels' => array(
+					'name' => __('Outfits', 'xim'),
+					'singular_name' => __('Outfit', 'xim'),
+					'add_new_item' => __('Add New Outfit', 'xim'),
+					'new_item' => __('New Outfit', 'xim'),
+					'edit_item' => __('Edit Outfit', 'xim'),
+					'view_item' => __('View Outfit', 'xim'),
+					'all_items' => __('All Outfits', 'xim'),
+					'search_items' => __('Search Outfits', 'xim'),
+					'not_found' => __('No Outfits found.', 'xim'),
+					'not_found_in_trash' => __('No Outfits found in Trash.', 'xim'),
+				),
+				'public' => true,
+				'exclude_from_search' => true,
+				'rewrite' => false,
+				'supports' => array('title', 'author', 'thumbnail'),
+				'taxonomies' => array('outfit_cats'),
+			)
+		);
+
+		// Register custom taxonomy: outfit_cats.
+		register_taxonomy(
+			'outfit_cats',
+			'outfit',
+			array(
+				'show_ui' => true,
+				'show_tagcloud' => false,
+				'hierarchical' => true,
+				'rewrite' => array('slug' => 'style-gallery/' . $taxonomy),
+				'show_admin_column' => true,
+			)
+		);
+	}
+
+	/**
+	 * Load the required assets for this plugin.
+	 *
+	 * @since    1.0.0
+	 */
+	function enqueue_scripts() {
 		// Add new outfit
 		wp_register_style('bootstrapValidator', plugin_dir_url(__FILE__) . '../css/bootstrapValidator.min.css');
 		wp_register_script('bootstrapValidator', plugin_dir_url(__FILE__) . '../js/bootstrapValidator.min.js', array(), false, true);
@@ -32,108 +79,59 @@ trait Core {
 		wp_enqueue_style('wc-style', plugin_dir_url(__FILE__) . '../css/style.css');
 	}
 
-/**
- * Plugins init hook.
- *
- * @since    1.0.0
- *
- */
-	function wc_outfit_init($taxonomy) {
-		add_rewrite_endpoint('outfits/new-outfit', EP_ROOT | EP_PAGES);
-		add_rewrite_endpoint('outfits', EP_ROOT | EP_PAGES);
-
-		// Register post type: outfit
-		register_post_type('outfit',
-			array(
-				'labels' => array(
-					'name' => __('Outfits'),
-					'all_items' => __('All Outfits'),
-					'singular_name' => __('Outfit'),
-				),
-				'public' => true,
-				'exclude_from_search' => true,
-				'supports' => array('title', 'author', 'thumbnail'),
-			)
-		);
-
-		// Register custom taxonomy: outfit_cats.
-		register_taxonomy(
-			'outfit_cats',
-			'outfit',
-			array(
-				'show_ui' => true,
-				'show_tagcloud' => false,
-				'hierarchical' => true,
-				'rewrite' => array('slug' => 'style-gallery/' . $taxonomy),
-				'show_admin_column' => true,
-			)
-		);
-	}
-
-/**
- * Change page template - not finalized yet.
- *
- */
-// function wc_outfit_page_template($page_template) {
-	// if ( is_page( 'new-outfit' ) ) {
-	//     $page_template = dirname( __FILE__ ) . '/page-template/new-outfit.php';
-	// }
-
-	// if (is_page('all-outfits')) {
-	// 	$page_template = dirname(__FILE__) . '/page-template/page-outfit.php';
-	// }
-
-	// if (is_page('style-gallery-static')) {
-	// 	$page_template = dirname(__FILE__) . '/page-template/page-style-gallery.php';
-	// }
-
-	// return $page_template;
-	// }
-	//add_filter('page_template', 'wc_outfit_page_template');
-
-/**
- * Change body class -  not finalized yet.
- *
- */
-	function wc_outfit_body_classes($classes) {
-		if (is_page('new-outfit')) {
-			$classes[] = 'couture-outfit';
-		}
-
-		if (is_page('style-gallery')) {
-			$classes[] = 'couture-gallery';
-		}
-
-		return $classes;
-	}
-
-/**
- * Disable single view.
- *
- */
-	function wc_outfit_disable_single() {
-		$queried_post_type = get_query_var('post_type');
-		if (is_single() && 'outfit' == $queried_post_type) {
-			wp_redirect(home_url(), 301);
+	/**
+	 * Disable single outfit view.
+	 *
+	 * @since    1.0.0
+	 */
+	function disable_single_outfit_view() {
+		if (is_single() && get_query_var('post_type') == 'outfit') {
+			wp_redirect(home_url('404'), 301);
 			exit;
 		}
 	}
 
-/**
- * Remove custom post meta on delete.
- *
- */
-	function wc_outfit_remove_cp_meta_on_delete($postid) {
-		if (get_post_type($postid) == 'outfit') {
-			wp_delete_attachment(get_post_thumbnail_id($postid), true);
-			delete_post_meta($postid, 'featured');
-			delete_post_meta($postid, 'products');
-			delete_post_meta($postid, 'likes');
+	/**
+	 * Remove single outfit permalink html.
+	 *
+	 * @since    1.0.0
+	 */
+	function remove_sample_permalink_html($permalink) {
+		return;
+	}
+
+	/**
+	 * Remove outfit quick view.
+	 *
+	 * @since    1.0.0
+	 */
+	function filter_post_row_actions($actions, $post) {
+		if ($post->post_type == 'outfit') {
+			unset($actions['view']);
+		}
+
+		return $actions;
+	}
+
+	/**
+	 * Remove outfit post data on delete.
+	 *
+	 * @since    1.0.0
+	 */
+	function remove_post_data_on_delete($post_id) {
+		if (get_post_type($post_id) == 'outfit') {
+			// delete post attachment
+			wp_delete_attachment(get_post_thumbnail_id($post_id), true);
+
+			// delete post meta
+			delete_post_meta($post_id, 'featured');
+			delete_post_meta($post_id, 'products');
+			delete_post_meta($post_id, 'likes');
 		}
 	}
 
 	/**
-	 * If WooCommerce not activated, throw error and deactive the plugin
+	 * If WooCommerce is not activated, throw error and deactive the plugin
 	 *
 	 * @since    1.0.0
 	 */
@@ -189,7 +187,7 @@ trait Core {
 	 *
 	 * @since    1.0.0
 	 */
-	public function custom_endpoints_title($title) {
+	public function filter_endpoints_title($title) {
 		global $wp_query;
 
 		if (isset($wp_query->query_vars['outfits']) && in_the_loop()) {
@@ -199,5 +197,15 @@ trait Core {
 		}
 
 		return $title;
+	}
+
+	public function filter_body_class($classes) {
+		global $post;
+
+		if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'style-gallery')) {
+			$classes[] = 'outfit-gallery';
+		}
+
+		return $classes;
 	}
 }

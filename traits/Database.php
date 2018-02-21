@@ -4,6 +4,11 @@ namespace Xim_Woo_Outfit\Traits;
 
 trait Database {
 	
+	/**
+	 * Install db table 'post_likes'.
+	 *
+	 * @since    1.0.0
+	 */
 	public function install_db() {
 		global $wpdb;
 
@@ -25,25 +30,25 @@ trait Database {
 		}
 	}
 
-	function wc_outfit_post_like($post_id, $post_type) {
+	public function toggle_post_like($post_id, $post_type) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
 
 		$user = get_current_user_id();
 
-		if (wc_outfit_is_liked($post_id)) {
+		if ($this->is_liked_outfit($post_id)) {
 			$wpdb->delete($table_name, ['postid' => $post_id, 'user' => $user]);
 		} else {
 			$wpdb->insert($table_name, ['postid' => $post_id, 'post_type' => $post_type, 'user' => $user, 'created_at' => current_time('mysql')]);
 		}
 	}
 
-	function wc_outfit_get_post_like_count($post_id) {
+	function get_post_like_count($post_id) {
 		$count = get_post_meta($post_id, 'likes', true);
 		return !empty($count) ? $count : 0;
 	}
 
-	function wc_outfit_get_post_like_count_db($post_id) {
+	function get_post_like_count_db($post_id) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
 
@@ -52,8 +57,8 @@ trait Database {
 		return $wpdb->num_rows;
 	}
 
-// Deprecated
-	function wc_outfit_most_liked($order = 'most-liked-day', $type = 'outfit') {
+	// Deprecated
+	function most_liked_outfits($order = 'most-liked-day', $type = 'outfit') {
 		global $wpdb;
 		$liked_table = $wpdb->prefix . 'wc_outfit_post_likes';
 		$post_table = $wpdb->prefix . 'posts';
@@ -77,7 +82,7 @@ trait Database {
 		return array_merge($liked_today, $reminder_liked);
 	}
 
-	function wc_outfit_is_liked($post_id) {
+	function is_liked_outfit($post_id) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
 		$user = get_current_user_id();
@@ -91,10 +96,10 @@ trait Database {
 		return false;
 	}
 
-	function wc_outfit_get_likes_by_user($id, $type = 'outfit') {
+	function get_liked_outfit_by_user($user_id) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
 
-		return $wpdb->get_col("SELECT postid FROM $table_name WHERE user = $id AND post_type = '$type'");
+		return $wpdb->get_col("SELECT postid FROM $table_name WHERE user = $user_id AND post_type = 'outfit'");
 	}
 }

@@ -65,41 +65,38 @@ class Xim_Woo_Outfit_Init {
 		add_action('woocommerce_account_' . $this->new_outfit_endpoint . '_endpoint', array($this, 'new_outfit_endpoint_content'));
 		add_action('woocommerce_account_' . $this->all_outfit_endpoint . '_endpoint', array($this, 'outfits_endpoint_content'));
 		add_filter('woocommerce_account_menu_items', array($this, 'add_myaccount_menu_items'));
-		add_filter('the_title', array($this, 'custom_endpoints_title'), 10, 2);
+		add_filter('the_title', array($this, 'filter_endpoints_title'), 10, 2);
 
-		add_action('wp_enqueue_scripts', array($this, 'wc_outfit_enqueue_script'));
-		add_action('init', array($this, 'wc_outfit_init'));
-		add_action('template_redirect', array($this, 'wc_outfit_disable_single'));
-		add_action('before_delete_post', array($this, 'wc_outfit_remove_cp_meta_on_delete'));
-		add_filter('body_class', array($this, 'wc_outfit_body_classes'));
+		add_action('init', array($this, 'init'));
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+		add_action('template_redirect', array($this, 'disable_single_outfit_view'));
+		add_filter('get_sample_permalink_html', array($this, 'remove_sample_permalink_html'));
+		add_filter('post_row_actions', array($this, 'filter_post_row_actions'), 10, 2);
+		add_action('before_delete_post', array($this, 'remove_post_data_on_delete'));
+		add_filter('body_class', array($this, 'filter_body_class'));
 
 		// Metabox
-		add_action('add_meta_boxes', array($this, 'wc_outfit_register_meta_boxes'));
-
-		add_action('save_post', array($this, 'wc_outfit_update_metabox'), 1, 2);
-		add_action('do_meta_boxes', array($this, 'wc_outfit_custom_thumb_boxes'));
-		add_action('admin_enqueue_scripts', array($this, 'wc_outfit_metabox_styles'));
+		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+		add_action('add_meta_boxes', array($this, 'register_meta_boxes'));
+		add_action('save_post', array($this, 'update_meta_on_submit'), 1, 2);
+		add_action('do_meta_boxes', array($this, 're_init_thumb_box'));
 
 		// Ajax
-		add_action('wp_ajax_products_by_cat', array($this, 'ajax_products_by_cat'));
-		add_action('wp_ajax_nopriv_products_by_cat', array($this, 'nopriv_ajax_products_by_cat'));
-		add_action('wp_ajax_post_like', array($this, 'ajax_post_like'));
-		add_action('wp_ajax_nopriv_post_like', array($this, 'nopriv_ajax_post_like'));
-		add_action('wp_ajax_follow_people', array($this, 'ajax_follow_people'));
-		add_action('wp_ajax_nopriv_follow_people', array($this, 'nopriv_ajax_follow_people'));
-		add_action('wp_ajax_list_follower', array($this, 'ajax_list_follower'));
-
-		add_action('wp_ajax_nopriv_list_follower', array($this, 'ajax_list_follower'));
-		add_action('wp_ajax_list_following', array($this, 'ajax_list_following'));
-
-		add_action('wp_ajax_nopriv_list_following', array($this, 'ajax_list_following'));
-		add_action('wp_ajax_outfit_modal', array($this, 'ajax_outfit_modal'));
-
-		add_action('wp_ajax_nopriv_outfit_modal', array($this, 'ajax_outfit_modal'));
-		add_action('wp_ajax_style_gallery', array($this, 'wc_outfit_ajax_style_gallery'));
-
-		add_action('wp_ajax_nopriv_style_gallery', array($this, 'wc_outfit_ajax_style_gallery'));
-		add_action('wp_ajax_ajax_upload', array($this, 'ajax_upload'));
+		add_action('wp_ajax_wc_outfit_products_by_cat', array($this, 'ajax_get_products_by_cat'));
+		add_action('wp_ajax_nopriv_wc_outfit_products_by_cat', array($this, 'nopriv_ajax_get_products_by_cat'));
+		add_action('wp_ajax_wc_outfit_post_like', array($this, 'ajax_post_like'));
+		add_action('wp_ajax_nopriv_wc_outfit_post_like', array($this, 'nopriv_ajax_post_like'));
+		add_action('wp_ajax_wc_outfit_follow_people', array($this, 'ajax_follow_people'));
+		add_action('wp_ajax_nopriv_wc_outfit_follow_people', array($this, 'nopriv_ajax_follow_people'));
+		add_action('wp_ajax_wc_outfit_list_follower', array($this, 'ajax_list_follower'));
+		add_action('wp_ajax_nopriv_wc_outfit_list_follower', array($this, 'ajax_list_follower'));
+		add_action('wp_ajax_wc_outfit_list_following', array($this, 'ajax_list_following'));
+		add_action('wp_ajax_nopriv_wc_outfit_list_following', array($this, 'ajax_list_following'));
+		add_action('wp_ajax_wc_outfit_single_outfit_modal', array($this, 'ajax_outfit_modal'));
+		add_action('wp_ajax_nopriv_wc_outfit_single_outfit_modal', array($this, 'ajax_outfit_modal'));
+		add_action('wp_ajax_wc_outfit_style_gallery', array($this, 'ajax_style_gallery'));
+		add_action('wp_ajax_nopriv_wc_outfit_style_gallery', array($this, 'ajax_style_gallery'));
+		add_action('wp_ajax_wc_outfit_post_outfit', array($this, 'ajax_post_outfit'));
 
 		// Shortcodes
 		add_shortcode('outfits', array($this, 'outfits_shortcode'));

@@ -44,7 +44,7 @@ jQuery(document).on('click', '.like-btn', function(e) {
 	var pointer = jQuery(this);
 	post_id = pointer.attr('data-id');
 
-	jQuery.get(object.ajaxurl + '?action=post_like', {
+	jQuery.get(object.ajaxurl + '?action=wc_outfit_post_like', {
 		post_id: post_id,
 		post_type: 'outfit'
 	}).done(function(data) {
@@ -74,7 +74,7 @@ jQuery(document).on('click', '.medal', function(e) {
 	if (jQuery.isNumeric(user_id)) {
 		e.preventDefault();
 
-		jQuery.get(object.ajaxurl + '?action=follow_people', {
+		jQuery.get(object.ajaxurl + '?action=wc_outfit_follow_people', {
 			user_id: user_id
 		}).done(function(data) {
 			if (jQuery.isNumeric(data)) {
@@ -110,7 +110,7 @@ jQuery('.follower').on('click', function(e) {
 
 	jQuery('.list-group').empty();
 
-	jQuery.get(object.ajaxurl + '?action=list_follower', {
+	jQuery.get(object.ajaxurl + '?action=wc_outfit_list_follower', {
 		user: user
 	}).done(function(data) {
 		jQuery.each(data, function(i, j) {
@@ -126,7 +126,7 @@ jQuery('.following').on('click', function(e) {
 
 	jQuery('.list-group').empty();
 
-	jQuery.get(object.ajaxurl + '?action=list_following', {
+	jQuery.get(object.ajaxurl + '?action=wc_outfit_list_following', {
 		user: user
 	}).done(function(data) {
 		jQuery.each(data, function(i, j) {
@@ -139,7 +139,7 @@ jQuery('.following').on('click', function(e) {
 jQuery(document).on('click', '.gal-header', function() {
 	view = jQuery(this).closest('.grid-item').attr('data-id');
 
-	jQuery.get(object.ajaxurl + '?action=outfit_modal', {
+	jQuery.get(object.ajaxurl + '?action=wc_outfit_single_outfit_modal', {
 		view: view
 	}).done(function(data) {
 		jQuery('#productModal .modal-content').empty().append(jQuery(data));
@@ -197,7 +197,7 @@ jQuery('.more').on('click', '.button', function() {
 			obj.cat = cat;
 		}
 
-		jQuery.get(object.ajaxurl + '?action=style_gallery', obj).done(function(data) {
+		jQuery.get(object.ajaxurl + '?action=wc_outfit_style_gallery', obj).done(function(data) {
 			data = jQuery(data).filter('div');
 
 			jQuery('.grid').append(data);

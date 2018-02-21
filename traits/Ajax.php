@@ -5,14 +5,11 @@ namespace Xim_Woo_Outfit\Traits;
 use WP_Query;
 
 trait Ajax {
-/*******************************************************
- *
- * Ajax Callback Functions.
- *
- ******************************************************/
-	function ajax_products_by_cat() {
+
+	function ajax_get_products_by_cat() {
+		$json = array();
 		$user = wp_get_current_user();
-		$args = array(
+		$data = new WP_Query(array(
 			'post_type' => 'product',
 			'post_status' => 'publish',
 			'posts_per_page' => -1,
@@ -25,9 +22,7 @@ trait Ajax {
 				),
 			),
 			'fields' => 'ids',
-		);
-		$data = new WP_Query($args);
-		$json = array();
+		));
 
 		if ($data->posts) {
 			foreach ($data->posts as $id) {
@@ -46,15 +41,14 @@ trait Ajax {
 		wp_send_json($json);
 	}
 
-	function nopriv_ajax_products_by_cat() {
-		$json = array();
-		wp_send_json($json);
+	function nopriv_ajax_get_products_by_cat() {
+		wp_send_json(array());
 	}
 
 	function ajax_post_like() {
-		wc_outfit_post_like($_REQUEST['post_id'], $_REQUEST['post_type']);
-		update_post_meta($_REQUEST['post_id'], 'likes', wc_outfit_get_post_like_count_db($_REQUEST['post_id']));
-		echo wc_outfit_get_post_like_count($_REQUEST['post_id']);
+		$this->toggle_post_like($_REQUEST['post_id'], $_REQUEST['post_type']);
+		update_post_meta($_REQUEST['post_id'], 'likes', $this->get_post_like_count_db($_REQUEST['post_id']));
+		echo $this->get_post_like_count($_REQUEST['post_id']);
 
 		die();
 	}
@@ -67,28 +61,25 @@ trait Ajax {
 	function ajax_follow_people() {
 		$user = get_current_user_id();
 
-		if ($user) {
-			$followers = get_user_meta($_REQUEST['user_id'], 'followers', true);
-			$following = get_user_meta($user, 'following', true);
+		$followers = get_user_meta($_REQUEST['user_id'], 'followers', true) ?: array();
+		$following = get_user_meta($user, 'following', true) ?: array();
 
-			if (in_array($user, $followers)) {
-				$followers = array_diff($followers, [$user]);
-			} else {
-				$followers[] = $user;
-			}
-
-			if (in_array($_REQUEST['user_id'], $following)) {
-				$following = array_diff($following, [$_REQUEST['user_id']]);
-			} else {
-				$following[] = $_REQUEST['user_id'];
-			}
-
-			update_user_meta($_REQUEST['user_id'], 'followers', $followers);
-			update_user_meta($user, 'following', $following);
-			echo count($followers);
+		if (in_array($user, $followers)) {
+			$followers = array_diff($followers, array($user));
+		} else {
+			$followers[] = $user;
 		}
 
-		die();
+		if (in_array($_REQUEST['user_id'], $following)) {
+			$following = array_diff($following, array($_REQUEST['user_id']));
+		} else {
+			$following[] = $_REQUEST['user_id'];
+		}
+
+		update_user_meta($_REQUEST['user_id'], 'followers', $followers);
+		update_user_meta($user, 'following', $following);
+		
+		wp_send_json(count($followers));
 	}
 
 	function nopriv_ajax_follow_people() {
@@ -100,10 +91,10 @@ trait Ajax {
 		$data = array();
 
 		if ($_REQUEST['user']) {
-			$followers = get_user_meta($_REQUEST['user'], 'followers', true);
+			$followers = get_user_meta($_REQUEST['user'], 'followers', true) ?: array();
 
 			foreach ($followers as $key => $value) {
-				$author_data = wc_outfit_get_author_data($value);
+				$author_data = get_user_meta($value);
 				$data[$value] = $author_data['nickname'][0];
 			}
 		}
@@ -115,10 +106,10 @@ trait Ajax {
 		$data = array();
 
 		if ($_REQUEST['user']) {
-			$following = get_user_meta($_REQUEST['user'], 'following', true);
+			$following = get_user_meta($_REQUEST['user'], 'following', true) ?: array();
 
 			foreach ($following as $key => $value) {
-				$author_data = wc_outfit_get_author_data($value);
+				$author_data = get_user_meta($value);
 				$data[$value] = $author_data['nickname'][0];
 			}
 		}
@@ -130,13 +121,13 @@ trait Ajax {
 		$content = '';
 
 		if ($_REQUEST['view']) {
-			$author_id = $this->wc_outfit_get_post_author($_REQUEST['view']);
-			$author_data = $this->wc_outfit_get_author_data($author_id);
-			// $author_data = wc_outfit_get_author_data($value);
+			$author_id = $this->get_outfit_author_id($_REQUEST['view']);
+			$author_data = get_user_meta($author_id);
+			// $author_data = get_user_meta($value);
 
 			$content = '<div class="modal-body clearfix">';
 			$content .= '<div class="thumb">';
-			$content .= '<img src="' . $this->wc_outfit_post_thumb_by_id($_REQUEST['view']) . '" />';
+			$content .= '<img src="' . $this->get_outfit_thumbnail($_REQUEST['view']) . '" />';
 			$content .= '</div>';
 
 			$content .= '<div class="details">';
@@ -148,7 +139,7 @@ trait Ajax {
 
 			if ($author_id != get_current_user_id()) {
 				$content .= '<a href="#" class="medal" data-id="' . $author_id . '">';
-				if ($this->wc_outfit_is_following($author_id)) {
+				if ($this->is_following($author_id)) {
 					$content .= 'Unfollow';
 				} else {
 					$content .= 'Follow';
@@ -176,7 +167,7 @@ trait Ajax {
 			// $content .= '</table>';
 			// $content .= '</div>';
 
-			$content .= '<div class="products owl-carousel">' . $this->wc_outfit_modal_hooked_product($_REQUEST['view']) . '</div>';
+			$content .= '<div class="products owl-carousel">' . $this->modal_hooked_products($_REQUEST['view']) . '</div>';
 
 			$content .= '<div class="tags">';
 
@@ -189,12 +180,12 @@ trait Ajax {
 
 			$content .= '<div class="info">';
 			$content .= '<div class="pull-left">';
-			$content .= '<span class="time">' . __('Added ', 'couture') . $this->wc_outfit_time_ago($_REQUEST['view']) . '</span>';
+			$content .= '<span class="time">' . __('Added ', 'couture') . $this->outfit_posted_ago($_REQUEST['view']) . '</span>';
 			$content .= '</div>';
 
 			$content .= '<div class="pull-right">';
-			$content .= $this->wc_outfit_outfit_share_button($_REQUEST['view']);
-			$content .= $this->wc_outfit_post_like_button($_REQUEST['view']);
+			$content .= $this->outfit_share_button_html($_REQUEST['view']);
+			$content .= $this->outfit_like_button_html($_REQUEST['view']);
 			$content .= '</div>';
 			$content .= '</div>';
 			$content .= '</div>';
@@ -214,10 +205,10 @@ trait Ajax {
 		die();
 	}
 
-	function wc_outfit_ajax_style_gallery() {
+	function ajax_style_gallery() {
 		if ($_REQUEST['user']) {
 			if (@$_REQUEST['page'] == 'likes') {
-				$ids = wc_outfit_get_likes_by_user($_REQUEST['user']);
+				$ids = get_liked_outfit_by_user($_REQUEST['user']);
 				if (!empty($ids)) {
 					$args = array(
 						'post_type' => 'outfit',
@@ -297,7 +288,7 @@ trait Ajax {
 					);
 
 				} elseif (@$_REQUEST['order'] == 'most-liked-day' || @$_REQUEST['order'] == 'most-liked-week') {
-					$ids = wc_outfit_most_liked($_REQUEST['order']);
+					$ids = most_liked_outfits($_REQUEST['order']);
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
@@ -326,28 +317,28 @@ trait Ajax {
 				<div class="gal-header">
 					<div class="gal-product clearfix">
 						<ul>
-							' . wc_outfit_hooked_product($query->post->ID, 4) . '
+							' . hooked_products($query->post->ID, 4) . '
 						</ul>
 					</div>
 					<a class="gal-thumb clearfix">
-						<img src="' . wc_outfit_post_thumb_by_id($query->post->ID) . '" class="gal-img" />
+						<img src="' . get_outfit_thumbnail($query->post->ID) . '" class="gal-img" />
 					</a>
 				</div>
 				<div class="gal-footer clearfix">
 					<div class="pull-left">
 						<a class="author" href="' . user_gallery_link_by_id(get_the_author_meta('ID')) . '">' . wc_outfit_author_name_by_id(get_the_author_meta('ID')) . '</a>
-						<span class="time">' . wc_outfit_time_ago() . '</span>
+						<span class="time">' . outfit_posted_ago() . '</span>
 					</div>
 					<div class="pull-right">
 						<div class="gal-bubble">
 							<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
 
 							<div class="bubble-content">
-								' . wc_outfit_outfit_share_button($query->post->ID) . '
+								' . outfit_share_button_html($query->post->ID) . '
 							</div>
 						</div>
 
-						' . wc_outfit_post_like_button($query->post->ID) . '
+						' . outfit_like_button_html($query->post->ID) . '
 					</div>
 				</div>
 			</div>';
@@ -355,9 +346,8 @@ trait Ajax {
 		die();
 	}
 
-// Ajax Upload
-
-	function ajax_upload() {
+	// Ajax Upload
+	function ajax_post_outfit() {
 		$msg = array();
 
 		if (!isset($_REQUEST['ids'])) {

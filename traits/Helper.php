@@ -2,18 +2,11 @@
 
 namespace Xim_Woo_Outfit\Traits;
 
-// use Xim_Woo_Outfit\Traits\Database;
-
-/**
- * Define helper functions for this plugin.
- *
- * @since    1.0.0
- */
-
 trait Helper {
 	use Database;
+	
 	// Post time inverval
-	function wc_outfit_time_ago($post_id = null) {
+	function outfit_posted_ago($post_id = null) {
 		if ($post_id) {
 			$post_time = get_the_time('U', $post_id);
 		} else {
@@ -23,39 +16,34 @@ trait Helper {
 		return human_time_diff($post_time, current_time('timestamp')) . ' ago';
 	}
 
-// Get author by post id
-	function wc_outfit_get_post_author($post_id) {
+	// Get outfit author by post id
+	function get_outfit_author_id($post_id) {
 		return get_post_field('post_author', $post_id);
 	}
 
-// Get author data
-	function wc_outfit_get_author_data($author_id) {
-		return get_user_meta($author_id);
-	}
-
-// Get author data
-	function wc_outfit_get_post_author_data($post_id) {
+	// Get outfit author data
+	function get_outfit_author_data($post_id) {
 		$author_id = get_post_field('post_author', $post_id);
 
 		return get_user_meta($author_id);
 	}
 
-// Get follower count
-	function wc_outfit_get_follower_count($user_id) {
-		$followers = get_user_meta($user_id, 'followers', true);
+	// Get follower count
+	function get_follower_count($user_id) {
+		$followers = get_user_meta($user_id, 'followers', true) ?: array();
 
 		return count($followers);
 	}
 
-// Get following count
-	function wc_outfit_get_following_count($user_id) {
-		$following = get_user_meta($user_id, 'following', true);
+	// Get following count
+	function get_following_count($user_id) {
+		$following = get_user_meta($user_id, 'following', true) ?: array();
 
 		return count($following);
 	}
 
-// Check if following a user
-	function wc_outfit_is_following($user_id) {
+	// Check if following a user
+	function is_following($user_id) {
 		$logged_user = get_current_user_id();
 
 		if ($logged_user) {
@@ -71,8 +59,8 @@ trait Helper {
 		return false;
 	}
 
-// Product Category Helper Functions
-	function wc_outfit_product_cats() {
+	// Product Category Helper Functions
+	function get_product_cats() {
 		$args = array(
 			'taxonomy' => 'product_cat',
 			'orderby' => 'name',
@@ -81,15 +69,12 @@ trait Helper {
 			'hierarchical' => 1,
 			'hide_empty' => 0,
 		);
+
 		return get_categories($args);
 	}
 
 	//
-	//
-	//
 	// The following Functions are not finalized yet.
-	//
-	//
 	//
 	function user_gallery_link() {
 		return home_url('style-gallery/?user=') . get_current_user_id();
@@ -104,32 +89,36 @@ trait Helper {
 		return home_url('style-gallery/?user=') . $user . '&page=likes';
 	}
 
-	function wc_outfit_post_like_button($post, $count = true) {
+	// public function myaccount_join_permalink($path) {
+	// 	return esc_url(get_permalink(get_option('woocommerce_myaccount_page_id')) . $path);
+	// }
+
+	function outfit_like_button_html($post_id, $count = true) {
 		$content = '';
 		$content .= '<div class="post-like">';
 
-		if ($this->wc_outfit_is_liked($post)) {
-			$content .= '<a href="#" class="like-btn enabled" data-id="' . $post . '">';
+		if ($this->is_liked_outfit($post_id)) {
+			$content .= '<a href="#" class="like-btn enabled" data-id="' . $post_id . '">';
 		} else {
-			$content .= '<a href="#" class="like-btn" data-id="' . $post . '">';
+			$content .= '<a href="#" class="like-btn" data-id="' . $post_id . '">';
 		}
 		$content .= '<i class="fa fa-heart"></i></a>';
 		if ($count == true) {
-			$content .= '<span class="count">' . self::wc_outfit_get_post_like_count($post) . '</span>';
+			$content .= '<span class="count">' . self::get_post_like_count($post_id) . '</span>';
 		}
 		$content .= '</div>';
 
 		return $content;
 	}
 
-	function wc_outfit_outfit_share_button($post, $url = null) {
+	function outfit_share_button_html($post_id, $url = null) {
 		if ($url == null) {
-			$url = home_url('style-gallery/?view=' . $post);
+			$url = home_url('style-gallery/?view=' . $post_id);
 		}
 
 		$content = '';
 		$content .= '<div class="social-share">';
-		$content .= '<a href="http://pinterest.com/pin/create/button/?url=' . esc_url($url) . '&media=' . $this->wc_outfit_post_thumb_by_id($post, 'product-thumb') . '&description=' . get_the_title($post) . '" target="_blank" class="fa fa-pinterest-p"></a>';
+		$content .= '<a href="http://pinterest.com/pin/create/button/?url=' . esc_url($url) . '&media=' . $this->get_outfit_thumbnail($post_id, 'product-thumb') . '&description=' . get_the_title($post_id) . '" target="_blank" class="fa fa-pinterest-p"></a>';
 		$content .= '<a href="http://www.tumblr.com/share/link?url=' . esc_url($url) . '" target="_blank" class="fa fa-tumblr"></a>';
 		$content .= '<a href="http://www.facebook.com/sharer.php?u=' . esc_url($url) . '" target="_blank" class="fa fa-facebook"></a>';
 		$content .= '</div>';
@@ -137,7 +126,7 @@ trait Helper {
 		return $content;
 	}
 
-	function wc_outfit_hooked_product($post_id, $limit) {
+	function hooked_products($post_id, $limit) {
 		$products = get_post_meta($post_id, 'products', true);
 		$content = '';
 
@@ -152,15 +141,15 @@ trait Helper {
 		return $content;
 	}
 
-	function wc_outfit_modal_hooked_product($post) {
-		$products = get_post_meta($post, 'products', true);
+	function modal_hooked_products($post_id) {
+		$products = get_post_meta($post_id, 'products', true);
 		$content = '';
 
 		// $content .= '<div class="owl-carousel">';
 		if (!empty($products)) {
 			foreach (json_decode($products) as $product) {
 				$content .= '<div class="item"><a href="' . get_permalink($product->id) . '">';
-				$content .= '<img src="' . $this->wc_outfit_post_thumb_by_id($product->id, 'product-thumb') . '">';
+				$content .= '<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">';
 				$content .= '<div class="ribbon ' . ($product->labels == 1 ? 'captured' : '') . '">' . ($product->labels == 1 ? 'Captured' : 'Similar') . '</div>';
 				$content .= '<h4 class="title">' . get_the_title($product->id) . '</h4></a></div>';
 				//$content .= '<div class="price">' . wc_outfit_get_product_price($product->id) . '</div></a></div>';
@@ -171,61 +160,57 @@ trait Helper {
 		return $content;
 	}
 
-// function modal_measurements($user) {
-	// 	$data = get_userdata($user);
-	// 	$arr = array();
+	// function modal_measurements($user) {
+		// 	$data = get_userdata($user);
+		// 	$arr = array();
 
-// 	if ($data->pvt_height != 'true' && !empty($data->height_ft) && !empty($data->height_in)) {
-	// 		$arr['height'] = $data->height_ft . '\'' . $data->height_in . '\'\'';
-	// 	} else {
-	// 		$arr['height'] = '--';
+	// 	if ($data->pvt_height != 'true' && !empty($data->height_ft) && !empty($data->height_in)) {
+		// 		$arr['height'] = $data->height_ft . '\'' . $data->height_in . '\'\'';
+		// 	} else {
+		// 		$arr['height'] = '--';
+		// 	}
+
+	// 	if ($data->pvt_bra != 'true' && !empty($data->bra_size) && !empty($data->bra_cup)) {
+		// 		$arr['bra'] = $data->bra_size . $data->bra_cup;
+		// 	} else {
+		// 		$arr['bra'] = '--';
+		// 	}
+
+	// 	if ($data->pvt_waist != 'true' && !empty($data->waist)) {
+		// 		$arr['waist'] = $data->waist;
+		// 	} else {
+		// 		$arr['waist'] = '--';
+		// 	}
+
+	// 	if ($data->pvt_hips != 'true' && !empty($data->hips)) {
+		// 		$arr['hips'] = $data->hips;
+		// 	} else {
+		// 		$arr['hips'] = '--';
+		// 	}
+
+	// 	if ($data->pvt_shoe != 'true' && !empty($data->shoe)) {
+		// 		$arr['shoe'] = $data->shoe;
+		// 	} else {
+		// 		$arr['shoe'] = '--';
+		// 	}
+
+	// 	return $arr;
+		// }
+
+	// function modal_tags() {
+		// 	$tags = wp_get_post_categories();
+
+	// 	foreach ($tags as $tag) {
+
 	// 	}
-
-// 	if ($data->pvt_bra != 'true' && !empty($data->bra_size) && !empty($data->bra_cup)) {
-	// 		$arr['bra'] = $data->bra_size . $data->bra_cup;
-	// 	} else {
-	// 		$arr['bra'] = '--';
-	// 	}
-
-// 	if ($data->pvt_waist != 'true' && !empty($data->waist)) {
-	// 		$arr['waist'] = $data->waist;
-	// 	} else {
-	// 		$arr['waist'] = '--';
-	// 	}
-
-// 	if ($data->pvt_hips != 'true' && !empty($data->hips)) {
-	// 		$arr['hips'] = $data->hips;
-	// 	} else {
-	// 		$arr['hips'] = '--';
-	// 	}
-
-// 	if ($data->pvt_shoe != 'true' && !empty($data->shoe)) {
-	// 		$arr['shoe'] = $data->shoe;
-	// 	} else {
-	// 		$arr['shoe'] = '--';
-	// 	}
-
-// 	return $arr;
 	// }
 
-// function modal_tags() {
-	// 	$tags = wp_get_post_categories();
-
-// 	foreach ($tags as $tag) {
-
-// 	}
-	// }
-
-// Functions
-	function wc_outfit_post_thumb_by_id($post, $size = 'full') {
-		$url = wp_get_attachment_image_src(get_post_thumbnail_id($post), $size);
+	// Return outfit thumbnail url by post-id and thumb size
+	function get_outfit_thumbnail($post_id, $size = 'full') {
+		$url = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), $size);
 
 		return $url[0];
 	}
-
-	// public function myaccount_join_permalink($path) {
-	// 	return esc_url(get_permalink(get_option('woocommerce_myaccount_page_id')) . $path);
-	// }
 }
 
 ?>

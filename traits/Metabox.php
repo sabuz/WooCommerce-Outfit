@@ -3,29 +3,52 @@
 namespace Xim_Woo_Outfit\Traits;
 
 trait Metabox {
-	// use Helper;
-	/*******************************************************
-		 *
-		 * Custom Post Type Metabox.
-		 *
-	*/
-	function wc_outfit_register_meta_boxes() {
-		add_meta_box('couture-hooked-products', __('Used Products', 'couture'), array($this, 'wc_outfit_mb_hooked_products_callback'), 'outfit');
-		add_meta_box('couture-featured', __('Featured Post', 'couture'), array($this, 'wc_outfit_mb_featured_products_callback'), 'outfit', 'side');
+
+	/**
+	 * Load the required assets in wp-admin for this plugin.
+	 *
+	 * @since    1.0.0
+	 */
+	function admin_enqueue_scripts() {
+		global $post_type;
+
+		if ($post_type == 'outfit') {
+			// css
+			wp_enqueue_style('metabox', plugin_dir_url(__FILE__) . '../css/metabox.css');
+
+			// js
+			wp_enqueue_script('metabox', plugin_dir_url(__FILE__) . '../js/metabox.js', array(), false, true);
+			wp_localize_script('metabox', 'object', ['ajaxurl' => admin_url('admin-ajax.php')]);
+		}
 	}
 
-	function wc_outfit_mb_hooked_products_callback($post) {
+	/**
+	 * Register outfit meta boxes.
+	 *
+	 * @since    1.0.0
+	 */
+	function register_meta_boxes() {
+		add_meta_box('wc-outfit-hooked-products', __('Used Products', 'xim'), array($this, 'mb_hooked_products_callback'), 'outfit');
+		add_meta_box('wc-outfit-featured', __('Featured Post', 'xim'), array($this, 'mb_featured_products_callback'), 'outfit', 'side');
+	}
+
+	/**
+	 * Hooked products metabox callback.
+	 *
+	 * @since    1.0.0
+	 */
+	function mb_hooked_products_callback($post) {
 		$products = get_post_meta($post->ID, 'products', true);
+
 		$content = '';
-
+		$content .= wp_nonce_field('wc_outfit_meta_box_nonce', 'wc_outfit_meta_box_nonce');
 		$content .= '<div class="couture-metabox">';
-
 		$content .= '<div class="selected-product">';
 		$content .= '<div class="row">';
 		if (!empty($products)) {
 			foreach (json_decode($products) as $product) {
 				$content .= '<div class="col-6">';
-				$content .= '<img src="' . $this->wc_outfit_post_thumb_by_id($product->id, 'product-thumb') . '">';
+				$content .= '<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">';
 				$content .= '<a class="close" data-id="' . $product->id . '"></a>';
 				$content .= '<span class="switch ' . ($product->labels == 1 ? 'active' : 'inactive') . '" data-id="' . $product->id . '"></span>';
 				$content .= '</div>';
@@ -38,7 +61,7 @@ trait Metabox {
 		$content .= '<div class="col-1">';
 		$content .= '<select class="selectId">';
 		$content .= '<option selected disabled>Choose a category</option>';
-		foreach ($this->wc_outfit_product_cats() as $cat) {
+		foreach ($this->get_product_cats() as $cat) {
 			$content .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
 		}
 		$content .= '</select>';
@@ -55,19 +78,35 @@ trait Metabox {
 		echo $content;
 	}
 
-	function wc_outfit_mb_featured_products_callback($post) {
+	/**
+	 * Featured product metabox callback.
+	 *
+	 * @since    1.0.0
+	 */
+	function mb_featured_products_callback($post) {
+		wp_nonce_field('wc_outfit_meta_box_nonce', 'wc_outfit_meta_box_nonce');
+
 		$value = get_post_meta($post->ID, 'featured', true);
 
-		echo '<div class="couture-metabox">';
-		echo '<label for="featured">';
-		echo '<input type="checkbox" name="featured" id="featured" ' . (!empty($value) ? "checked" : "") . '/>';
-		echo __('Make this post featured ?', 'prfx-textdomain');
-		echo '</label>';
-		echo '</div>';
+		echo '<div class="couture-metabox">
+			<label for="featured">
+				<input type="checkbox" name="featured" id="featured" ' . (!empty($value) ? "checked" : "") . '/>
+				' . __('Make this post featured ?', 'xim') . '
+			</label>
+		</div>';
 	}
 
-	function wc_outfit_update_metabox($post_id, $post) {
+	/**
+	 * Update post meta on save.
+	 *
+	 * @since    1.0.0
+	 */
+	function update_meta_on_submit($post_id, $post) {
 		global $post_type;
+
+		if (!isset($_POST['wc_outfit_meta_box_nonce']) || !wp_verify_nonce($_POST['wc_outfit_meta_box_nonce'], 'wc_outfit_meta_box_nonce')) {
+			return;
+		}
 
 		if (wp_is_post_revision($post_id)) {
 			return;
@@ -86,20 +125,14 @@ trait Metabox {
 		}
 	}
 
-	function wc_outfit_custom_thumb_boxes() {
+	/**
+	 * Remove default metabox for thumb and init a new one.
+	 *
+	 * @since    1.0.0
+	 */
+	function re_init_thumb_box() {
 		remove_meta_box('postimagediv', 'outfit', 'side');
-		add_meta_box('postimagediv', __('Outfit Image'), 'post_thumbnail_meta_box', 'outfit', 'normal', 'low');
-	}
-
-	function wc_outfit_metabox_styles() {
-		global $post_type;
-
-		if ($post_type == 'outfit') {
-			wp_enqueue_style('metabox', plugin_dir_url(__FILE__) . '../css/metabox.css');
-
-			wp_enqueue_script('metabox', plugin_dir_url(__FILE__) . '../js/metabox.js', array(), false, true);
-			wp_localize_script('metabox', 'object', ['ajaxurl' => admin_url('admin-ajax.php')]);
-		}
+		add_meta_box('postimagediv', __('Outfit Photo'), 'post_thumbnail_meta_box', 'outfit', 'normal', 'low');
 	}
 
 }
