@@ -160,7 +160,7 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	public function add_myaccount_menu_items($items) {
-		$items['outfits'] = __('Outfits', 'xim');
+		$items = array_splice($items, 0, count($items) - 1) + array('outfits' => __('Outfits', 'xim')) + $items;
 		return $items;
 	}
 
