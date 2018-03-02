@@ -78,7 +78,7 @@ trait Ajax {
 
 		update_user_meta($_REQUEST['user_id'], 'followers', $followers);
 		update_user_meta($user, 'following', $following);
-		
+
 		wp_send_json(count($followers));
 	}
 
@@ -184,8 +184,8 @@ trait Ajax {
 			$content .= '</div>';
 
 			$content .= '<div class="pull-right">';
-			$content .= $this->outfit_share_button_html($_REQUEST['view']);
-			$content .= $this->outfit_like_button_html($_REQUEST['view']);
+			$content .= $this->share_buttons_html($_REQUEST['view']);
+			$content .= $this->like_button_html($_REQUEST['view']);
 			$content .= '</div>';
 			$content .= '</div>';
 			$content .= '</div>';
@@ -314,34 +314,34 @@ trait Ajax {
 
 		while ($query->have_posts()): $query->the_post();
 			echo '<div class="grid-item col-sm-4" data-id="' . $query->post->ID . '">
-				<div class="gal-header">
-					<div class="gal-product clearfix">
-						<ul>
-							' . hooked_products($query->post->ID, 4) . '
-						</ul>
-					</div>
-					<a class="gal-thumb clearfix">
-						<img src="' . get_outfit_thumbnail($query->post->ID) . '" class="gal-img" />
-					</a>
-				</div>
-				<div class="gal-footer clearfix">
-					<div class="pull-left">
-						<a class="author" href="' . user_gallery_link_by_id(get_the_author_meta('ID')) . '">' . wc_outfit_author_name_by_id(get_the_author_meta('ID')) . '</a>
-						<span class="time">' . outfit_posted_ago() . '</span>
-					</div>
-					<div class="pull-right">
-						<div class="gal-bubble">
-							<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
+						<div class="gal-header">
+							<div class="gal-product clearfix">
+								<ul>
+									' . hooked_products($query->post->ID, 4) . '
+								</ul>
+							</div>
+							<a class="gal-thumb clearfix">
+								<img src="' . get_outfit_thumbnail($query->post->ID) . '" class="gal-img" />
+							</a>
+						</div>
+						<div class="gal-footer clearfix">
+							<div class="pull-left">
+								<a class="author" href="' . user_gallery_link_by_id(get_the_author_meta('ID')) . '">' . wc_outfit_author_name_by_id(get_the_author_meta('ID')) . '</a>
+								<span class="time">' . outfit_posted_ago() . '</span>
+							</div>
+							<div class="pull-right">
+								<div class="gal-bubble">
+									<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
 
-							<div class="bubble-content">
-								' . outfit_share_button_html($query->post->ID) . '
+									<div class="bubble-content">
+										' . share_buttons_html($query->post->ID) . '
+									</div>
+								</div>
+
+								' . like_button_html($query->post->ID) . '
 							</div>
 						</div>
-
-						' . outfit_like_button_html($query->post->ID) . '
-					</div>
-				</div>
-			</div>';
+					</div>';
 		endwhile;
 		die();
 	}

@@ -22,7 +22,7 @@ trait Template_Shortcode {
 		$html = '';
 
 		if ($query->have_posts()) {
-			$html .= '<p>' . sprintf(__('To add more outfit photos, go to <a href="%1$s">new outfit</a>', 'xim'), esc_url(wc_get_endpoint_url('outfits/new-outfit'))) .'</p>
+			$html .= '<p>' . sprintf(__('To add more outfit photos, go to <a href="%1$s">new outfit</a>', 'xim'), esc_url(wc_get_endpoint_url('outfits/new-outfit'))) . '</p>
 
 			<table>
 				<thead>
@@ -35,16 +35,16 @@ trait Template_Shortcode {
 				</thead>
 
 				<tbody>';
-					while ($query->have_posts()) {
-						$query->the_post();
-						$html .= '<tr>
+			while ($query->have_posts()) {
+				$query->the_post();
+				$html .= '<tr>
 							<td>' . get_the_ID() . '</td>
 							<td>' . the_title('', '', false) . '</td>
 							<td>' . get_the_date() . '</td>
 							<td>' . get_post_status() . '</td>
 						</tr>';
-					}
-				$html .= '</tbody>
+			}
+			$html .= '</tbody>
 			</table>';
 
 			wp_reset_postdata();
@@ -154,8 +154,8 @@ trait Template_Shortcode {
 			}
 			echo '<a href="' . $this->user_gallery_link_by_id($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">Photos</a>';
 			echo '<a href="' . $this->user_gallery_likes_by_id($_GET['user']) . '" class="' . ($current == 'likes' ? 'active' : '') . '">Liked Looks</a>';
-			echo '<a href="#" class="follower" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_follower_count($_GET['user']) . ' Followers</a>';
-			echo '<a href="#" class="following" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_following_count($_GET['user']) . ' Following</a>';
+			echo '<a href="#" class="follower" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_followers($_GET['user']) . ' Followers</a>';
+			echo '<a href="#" class="following" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_following($_GET['user']) . ' Following</a>';
 			echo '</div>';
 		} else {
 			echo '<h4 class="page-subtitle">' . __('Inspire and Admire', 'couture') . '</h4>';
@@ -310,35 +310,35 @@ trait Template_Shortcode {
 			while ($query->have_posts()): $query->the_post();
 				$author_data = $this->get_outfit_author_data($post->ID);
 				echo '<div class="grid-item col-sm-4" data-id="' . $post->ID . '">
-						<div class="gal-header">
-							<div class="gal-product clearfix">
-								<ul>
-									' . $this->hooked_products($post->ID, 4) . '
-								</ul>
-							</div>
-							<a class="gal-thumb clearfix">
-								<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-img" />
-							</a>
-						</div>
-						<div class="gal-footer clearfix">
-							<div class="pull-left">
-								<a class="author" href="' . $this->user_gallery_link_by_id(get_the_author_meta('ID')) . '">
-									' . $author_data['nickname'][0] . '</a>
-								<span class="time">' . $this->outfit_posted_ago() . '</span>
-							</div>
-							<div class="pull-right">
-								<div class="gal-bubble">
-									<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
+										<div class="gal-header">
+											<div class="gal-product clearfix">
+												<ul>
+													' . $this->hooked_products($post->ID, 4) . '
+												</ul>
+											</div>
+											<a class="gal-thumb clearfix">
+												<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-img" />
+											</a>
+										</div>
+										<div class="gal-footer clearfix">
+											<div class="pull-left">
+												<a class="author" href="' . $this->user_gallery_link_by_id(get_the_author_meta('ID')) . '">
+													' . $author_data['nickname'][0] . '</a>
+												<span class="time">' . $this->outfit_posted_ago() . '</span>
+											</div>
+											<div class="pull-right">
+												<div class="gal-bubble">
+													<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
 
-									<div class="bubble-content">
-										' . $this->outfit_share_button_html($post->ID) . '
-									</div>
-								</div>
+													<div class="bubble-content">
+														' . $this->share_buttons_html($post->ID) . '
+													</div>
+												</div>
 
-								' . $this->outfit_like_button_html($post->ID) . '
-							</div>
-						</div>
-					</div>';
+												' . $this->like_button_html($post->ID) . '
+											</div>
+										</div>
+									</div>';
 			endwhile;
 			echo '</div>';
 
@@ -450,8 +450,8 @@ trait Template_Shortcode {
 								</div>
 
 								<div class="pull-right">
-									' . $this->outfit_share_button_html($_GET['view']) . '
-									' . $this->outfit_like_button_html($_GET['view']) . '
+									' . $this->share_buttons_html($_GET['view']) . '
+									' . $this->like_button_html($_GET['view']) . '
 								</div>
 							</div>
 						</div>

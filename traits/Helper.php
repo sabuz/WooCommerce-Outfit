@@ -4,7 +4,14 @@ namespace Xim_Woo_Outfit\Traits;
 
 trait Helper {
 	use Database;
-	
+
+	// Return outfit thumbnail url by post-id and thumb size
+	function get_outfit_thumbnail($post_id, $size = 'full') {
+		$url = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), $size);
+
+		return @$url[0];
+	}
+
 	// Post time inverval
 	function outfit_posted_ago($post_id = null) {
 		if ($post_id) {
@@ -23,20 +30,18 @@ trait Helper {
 
 	// Get outfit author data
 	function get_outfit_author_data($post_id) {
-		$author_id = get_post_field('post_author', $post_id);
-
-		return get_user_meta($author_id);
+		return get_user_meta(get_post_field('post_author', $post_id));
 	}
 
 	// Get follower count
-	function get_follower_count($user_id) {
+	function get_num_followers($user_id) {
 		$followers = get_user_meta($user_id, 'followers', true) ?: array();
 
 		return count($followers);
 	}
 
 	// Get following count
-	function get_following_count($user_id) {
+	function get_num_following($user_id) {
 		$following = get_user_meta($user_id, 'following', true) ?: array();
 
 		return count($following);
@@ -44,9 +49,7 @@ trait Helper {
 
 	// Check if following a user
 	function is_following($user_id) {
-		$logged_user = get_current_user_id();
-
-		if ($logged_user) {
+		if ($logged_user = get_current_user_id()) {
 			$following_users = get_user_meta($logged_user, 'following', true);
 
 			if (!empty($following_users)) {
@@ -93,9 +96,8 @@ trait Helper {
 	// 	return esc_url(get_permalink(get_option('woocommerce_myaccount_page_id')) . $path);
 	// }
 
-	function outfit_like_button_html($post_id, $count = true) {
-		$content = '';
-		$content .= '<div class="post-like">';
+	function like_button_html($post_id, $count = true) {
+		$content = '<div class="post-like">';
 
 		if ($this->is_liked_outfit($post_id)) {
 			$content .= '<a href="#" class="like-btn enabled" data-id="' . $post_id . '">';
@@ -111,17 +113,16 @@ trait Helper {
 		return $content;
 	}
 
-	function outfit_share_button_html($post_id, $url = null) {
+	function share_buttons_html($post_id, $url = null) {
 		if ($url == null) {
 			$url = home_url('style-gallery/?view=' . $post_id);
 		}
 
-		$content = '';
-		$content .= '<div class="social-share">';
-		$content .= '<a href="http://pinterest.com/pin/create/button/?url=' . esc_url($url) . '&media=' . $this->get_outfit_thumbnail($post_id, 'product-thumb') . '&description=' . get_the_title($post_id) . '" target="_blank" class="fa fa-pinterest-p"></a>';
-		$content .= '<a href="http://www.tumblr.com/share/link?url=' . esc_url($url) . '" target="_blank" class="fa fa-tumblr"></a>';
-		$content .= '<a href="http://www.facebook.com/sharer.php?u=' . esc_url($url) . '" target="_blank" class="fa fa-facebook"></a>';
-		$content .= '</div>';
+		$content = '<div class="social-share">
+			<a href="http://pinterest.com/pin/create/button/?url=' . esc_url($url) . '&media=' . $this->get_outfit_thumbnail($post_id, 'product-thumb') . '&description=' . get_the_title($post_id) . '" target="_blank" class="fa fa-pinterest-p"></a>
+			<a href="http://www.tumblr.com/share/link?url=' . esc_url($url) . '" target="_blank" class="fa fa-tumblr"></a>
+			<a href="http://www.facebook.com/sharer.php?u=' . esc_url($url) . '" target="_blank" class="fa fa-facebook"></a>
+		</div>';
 
 		return $content;
 	}
@@ -148,10 +149,11 @@ trait Helper {
 		// $content .= '<div class="owl-carousel">';
 		if (!empty($products)) {
 			foreach (json_decode($products) as $product) {
-				$content .= '<div class="item"><a href="' . get_permalink($product->id) . '">';
-				$content .= '<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">';
-				$content .= '<div class="ribbon ' . ($product->labels == 1 ? 'captured' : '') . '">' . ($product->labels == 1 ? 'Captured' : 'Similar') . '</div>';
-				$content .= '<h4 class="title">' . get_the_title($product->id) . '</h4></a></div>';
+				$content .= '<div class="item"><a href="' . get_permalink($product->id) . '">
+					<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">
+					<div class="ribbon ' . ($product->labels == 1 ? 'captured' : '') . '">' . ($product->labels == 1 ? 'Captured' : 'Similar') . '</div>
+					<h4 class="title">' . get_the_title($product->id) . '</h4></a>
+				</div>';
 				//$content .= '<div class="price">' . wc_outfit_get_product_price($product->id) . '</div></a></div>';
 			}
 		}
@@ -161,56 +163,49 @@ trait Helper {
 	}
 
 	// function modal_measurements($user) {
-		// 	$data = get_userdata($user);
-		// 	$arr = array();
+	// 	$data = get_userdata($user);
+	// 	$arr = array();
 
 	// 	if ($data->pvt_height != 'true' && !empty($data->height_ft) && !empty($data->height_in)) {
-		// 		$arr['height'] = $data->height_ft . '\'' . $data->height_in . '\'\'';
-		// 	} else {
-		// 		$arr['height'] = '--';
-		// 	}
+	// 		$arr['height'] = $data->height_ft . '\'' . $data->height_in . '\'\'';
+	// 	} else {
+	// 		$arr['height'] = '--';
+	// 	}
 
 	// 	if ($data->pvt_bra != 'true' && !empty($data->bra_size) && !empty($data->bra_cup)) {
-		// 		$arr['bra'] = $data->bra_size . $data->bra_cup;
-		// 	} else {
-		// 		$arr['bra'] = '--';
-		// 	}
+	// 		$arr['bra'] = $data->bra_size . $data->bra_cup;
+	// 	} else {
+	// 		$arr['bra'] = '--';
+	// 	}
 
 	// 	if ($data->pvt_waist != 'true' && !empty($data->waist)) {
-		// 		$arr['waist'] = $data->waist;
-		// 	} else {
-		// 		$arr['waist'] = '--';
-		// 	}
+	// 		$arr['waist'] = $data->waist;
+	// 	} else {
+	// 		$arr['waist'] = '--';
+	// 	}
 
 	// 	if ($data->pvt_hips != 'true' && !empty($data->hips)) {
-		// 		$arr['hips'] = $data->hips;
-		// 	} else {
-		// 		$arr['hips'] = '--';
-		// 	}
+	// 		$arr['hips'] = $data->hips;
+	// 	} else {
+	// 		$arr['hips'] = '--';
+	// 	}
 
 	// 	if ($data->pvt_shoe != 'true' && !empty($data->shoe)) {
-		// 		$arr['shoe'] = $data->shoe;
-		// 	} else {
-		// 		$arr['shoe'] = '--';
-		// 	}
+	// 		$arr['shoe'] = $data->shoe;
+	// 	} else {
+	// 		$arr['shoe'] = '--';
+	// 	}
 
 	// 	return $arr;
-		// }
+	// }
 
 	// function modal_tags() {
-		// 	$tags = wp_get_post_categories();
+	// 	$tags = wp_get_post_categories();
 
 	// 	foreach ($tags as $tag) {
 
 	// 	}
 	// }
-
-	// Return outfit thumbnail url by post-id and thumb size
-	function get_outfit_thumbnail($post_id, $size = 'full') {
-		$url = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), $size);
-
-		return $url[0];
-	}
 }
 
 ?>

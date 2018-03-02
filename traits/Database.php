@@ -3,7 +3,7 @@
 namespace Xim_Woo_Outfit\Traits;
 
 trait Database {
-	
+
 	/**
 	 * Install db table 'post_likes'.
 	 *
@@ -12,8 +12,8 @@ trait Database {
 	public function install_db() {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
 		$charset_collate = $wpdb->get_charset_collate();
+		$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
 
 		// Create table if not exists
 		if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
@@ -32,8 +32,8 @@ trait Database {
 
 	public function toggle_post_like($post_id, $post_type) {
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
 
+		$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
 		$user = get_current_user_id();
 
 		if ($this->is_liked_outfit($post_id)) {
@@ -84,6 +84,7 @@ trait Database {
 
 	function is_liked_outfit($post_id) {
 		global $wpdb;
+
 		$table_name = $wpdb->prefix . 'wc_outfit_post_likes';
 		$user = get_current_user_id();
 
