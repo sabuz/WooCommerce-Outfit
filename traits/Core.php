@@ -11,8 +11,8 @@ trait Core {
 	 */
 	function init($taxonomy) {
 		// Add rewrite rules
-		add_rewrite_endpoint('outfits/new-outfit', EP_ROOT | EP_PAGES);
-		add_rewrite_endpoint('outfits', EP_ROOT | EP_PAGES);
+		add_rewrite_endpoint($this->new_outfit_endpoint, EP_ROOT | EP_PAGES);
+		add_rewrite_endpoint($this->all_outfit_endpoint, EP_ROOT | EP_PAGES);
 
 		// Register post type: outfit
 		register_post_type('outfit',
@@ -135,7 +135,7 @@ trait Core {
 	 *
 	 * @since    1.0.0
 	 */
-	protected function throw_notice_and_deactive() {
+	function throw_notice_and_deactive() {
 		if (!class_exists('WooCommerce')) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
@@ -159,8 +159,8 @@ trait Core {
 	 *
 	 * @since    1.0.0
 	 */
-	public function add_myaccount_menu_items($items) {
-		$items = array_splice($items, 0, count($items) - 1) + array('outfits' => __('Outfits', 'xim')) + $items;
+	function add_myaccount_menu_items($items) {
+		$items = array_splice($items, 0, count($items) - 1) + array($this->all_outfit_endpoint => __('Outfits', 'xim')) + $items;
 		return $items;
 	}
 
@@ -169,7 +169,7 @@ trait Core {
 	 *
 	 * @since    1.0.0
 	 */
-	public function outfits_endpoint_content() {
+	function outfits_endpoint_content() {
 		echo do_shortcode('[outfits]');
 	}
 
@@ -178,7 +178,7 @@ trait Core {
 	 *
 	 * @since    1.0.0
 	 */
-	public function new_outfit_endpoint_content() {
+	function new_outfit_endpoint_content() {
 		echo do_shortcode('[new-outfit]');
 	}
 
@@ -187,19 +187,19 @@ trait Core {
 	 *
 	 * @since    1.0.0
 	 */
-	public function filter_endpoints_title($title) {
+	function filter_endpoints_title($title) {
 		global $wp_query;
 
-		if (isset($wp_query->query_vars['outfits']) && in_the_loop()) {
+		if (isset($wp_query->query_vars[$this->all_outfit_endpoint]) && in_the_loop()) {
 			$title = 'Outfits';
-		} elseif (isset($wp_query->query_vars['outfits/new-outfit']) && in_the_loop()) {
+		} elseif (isset($wp_query->query_vars[$this->new_outfit_endpoint]) && in_the_loop()) {
 			$title = 'Add New Outfit';
 		}
 
 		return $title;
 	}
 
-	public function filter_body_class($classes) {
+	function filter_body_class($classes) {
 		global $post;
 
 		if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'style-gallery')) {

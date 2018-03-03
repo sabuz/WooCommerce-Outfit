@@ -12,7 +12,7 @@ trait Helper {
 		return @$url[0];
 	}
 
-	// Post time inverval
+	// Post time interval
 	function outfit_posted_ago($post_id = null) {
 		if ($post_id) {
 			$post_time = get_the_time('U', $post_id);
@@ -47,6 +47,12 @@ trait Helper {
 		return count($following);
 	}
 
+	// Get post like count
+	function get_num_post_like($post_id) {
+		$count = get_post_meta($post_id, 'likes', true);
+		return !empty($count) ? $count : 0;
+	}
+
 	// Check if following a user
 	function is_following($user_id) {
 		if ($logged_user = get_current_user_id()) {
@@ -76,26 +82,20 @@ trait Helper {
 		return get_categories($args);
 	}
 
-	//
-	// The following Functions are not finalized yet.
-	//
-	function user_gallery_link() {
-		return home_url('style-gallery/?user=') . get_current_user_id();
-	}
-	// add_shortcode('user_gallery_link', 'user_gallery_link');
+	// User gallery page link.
+	function get_user_gallery_link($user = null, $page = null) {
+		if (!$user) {
+			$user = get_current_user_id();
+		}
 
-	function user_gallery_link_by_id($user) {
-		return home_url('style-gallery/?user=') . $user;
-	}
+		if ($page) {
+			$page = '&page=' . $page;
+		}
 
-	function user_gallery_likes_by_id($user) {
-		return home_url('style-gallery/?user=') . $user . '&page=likes';
+		return home_url('style-gallery/?user=') . $user . $page;
 	}
 
-	// public function myaccount_join_permalink($path) {
-	// 	return esc_url(get_permalink(get_option('woocommerce_myaccount_page_id')) . $path);
-	// }
-
+	// Like button html.
 	function like_button_html($post_id, $count = true) {
 		$content = '<div class="post-like">';
 
@@ -106,13 +106,14 @@ trait Helper {
 		}
 		$content .= '<i class="fa fa-heart"></i></a>';
 		if ($count == true) {
-			$content .= '<span class="count">' . self::get_post_like_count($post_id) . '</span>';
+			$content .= '<span class="count">' . $this->get_num_post_like($post_id) . '</span>';
 		}
 		$content .= '</div>';
 
 		return $content;
 	}
 
+	// Share button html.
 	function share_buttons_html($post_id, $url = null) {
 		if ($url == null) {
 			$url = home_url('style-gallery/?view=' . $post_id);
@@ -127,6 +128,7 @@ trait Helper {
 		return $content;
 	}
 
+	// Hooked products.
 	function hooked_products($post_id, $limit) {
 		$products = get_post_meta($post_id, 'products', true);
 		$content = '';
@@ -142,6 +144,7 @@ trait Helper {
 		return $content;
 	}
 
+	// Modal hooked products.
 	function modal_hooked_products($post_id) {
 		$products = get_post_meta($post_id, 'products', true);
 		$content = '';

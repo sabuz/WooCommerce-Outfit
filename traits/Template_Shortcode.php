@@ -11,7 +11,7 @@ trait Template_Shortcode {
 	 *
 	 * @since    1.0.0
 	 */
-	public function outfits_shortcode() {
+	function outfits_shortcode() {
 		$query = new WP_Query(array(
 			'post_type' => 'outfit',
 			'post_status' => 'any',
@@ -63,7 +63,7 @@ trait Template_Shortcode {
 	 *
 	 * @since    1.0.0
 	 */
-	public function new_outfit_shortcode($atts, $content = null) {
+	function new_outfit_shortcode($atts, $content = null) {
 		wp_enqueue_style('bootstrapValidator');
 		wp_enqueue_script('bootstrapValidator');
 		wp_enqueue_script('filepicker');
@@ -124,7 +124,7 @@ trait Template_Shortcode {
 	 *
 	 * @since    1.0.0
 	 */
-	public function style_gallery_shortcode() {
+	function style_gallery_shortcode() {
 		global $post;
 
 		wp_enqueue_script('arctext');
@@ -152,8 +152,8 @@ trait Template_Shortcode {
 			} else {
 				$current = 'photos';
 			}
-			echo '<a href="' . $this->user_gallery_link_by_id($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">Photos</a>';
-			echo '<a href="' . $this->user_gallery_likes_by_id($_GET['user']) . '" class="' . ($current == 'likes' ? 'active' : '') . '">Liked Looks</a>';
+			echo '<a href="' . $this->get_user_gallery_link($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">Photos</a>';
+			echo '<a href="' . $this->get_user_gallery_link($_GET['user'], 'likes') . '" class="' . ($current == 'likes' ? 'active' : '') . '">Liked Looks</a>';
 			echo '<a href="#" class="follower" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_followers($_GET['user']) . ' Followers</a>';
 			echo '<a href="#" class="following" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_following($_GET['user']) . ' Following</a>';
 			echo '</div>';
@@ -215,7 +215,7 @@ trait Template_Shortcode {
 
 		if (isset($_GET['user'])) {
 			if (@$_GET['page'] == 'likes') {
-				$ids = $this->get_liked_outfit_by_user($_GET['user']);
+				$ids = $this->get_liked_outfits($_GET['user']);
 				if (!empty($ids)) {
 					$args = array(
 						'post_type' => 'outfit',
@@ -322,7 +322,7 @@ trait Template_Shortcode {
 										</div>
 										<div class="gal-footer clearfix">
 											<div class="pull-left">
-												<a class="author" href="' . $this->user_gallery_link_by_id(get_the_author_meta('ID')) . '">
+												<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
 													' . $author_data['nickname'][0] . '</a>
 												<span class="time">' . $this->outfit_posted_ago() . '</span>
 											</div>
@@ -412,7 +412,7 @@ trait Template_Shortcode {
 									<span aria-hidden="true">&times;</span>
 								</button>
 
-								<a class="name" href="' . $this->user_gallery_link_by_id($author) . '">
+								<a class="name" href="' . $this->get_user_gallery_link($author) . '">
 									' . $author_data['nickname'][0] . '
 								</a>';
 

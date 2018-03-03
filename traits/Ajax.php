@@ -6,6 +6,11 @@ use WP_Query;
 
 trait Ajax {
 
+	/**
+	 * Get products list by category.
+	 *
+	 * @since    1.0.0
+	 */
 	function ajax_get_products_by_cat() {
 		$json = array();
 		$user = wp_get_current_user();
@@ -30,8 +35,7 @@ trait Ajax {
 					$post_data = array();
 					$post_data['id'] = $id;
 					$post_data['title'] = get_the_title($id);
-					$post_data['thumb'] = wp_get_attachment_image_src(get_post_thumbnail_id($id), 'product-thumb');
-					$post_data['thumb'] = $post_data['thumb'][0];
+					$post_data['thumb'] = $this->get_outfit_thumbnail($id, 'product-thumb');
 
 					array_push($json, $post_data);
 				}
@@ -45,19 +49,28 @@ trait Ajax {
 		wp_send_json(array());
 	}
 
+	/**
+	 * Toggle post like.
+	 *
+	 * @since    1.0.0
+	 */
 	function ajax_post_like() {
 		$this->toggle_post_like($_REQUEST['post_id'], $_REQUEST['post_type']);
-		update_post_meta($_REQUEST['post_id'], 'likes', $this->get_post_like_count_db($_REQUEST['post_id']));
-		echo $this->get_post_like_count($_REQUEST['post_id']);
+		update_post_meta($_REQUEST['post_id'], 'likes', $this->get_num_post_like_db($_REQUEST['post_id']));
 
-		die();
+		wp_send_json($this->get_num_post_like($_REQUEST['post_id']));
 	}
 
 	function nopriv_ajax_post_like() {
-		echo home_url('my-account');
+		echo get_permalink(get_option('woocommerce_myaccount_page_id'));
 		die();
 	}
 
+	/**
+	 * Follow people.
+	 *
+	 * @since    1.0.0
+	 */
 	function ajax_follow_people() {
 		$user = get_current_user_id();
 
@@ -83,10 +96,15 @@ trait Ajax {
 	}
 
 	function nopriv_ajax_follow_people() {
-		echo home_url('my-account');
+		echo get_permalink(get_option('woocommerce_myaccount_page_id'));
 		die();
 	}
 
+	/**
+	 * List follower.
+	 *
+	 * @since    1.0.0
+	 */
 	function ajax_list_follower() {
 		$data = array();
 
@@ -102,6 +120,11 @@ trait Ajax {
 		wp_send_json($data);
 	}
 
+	/**
+	 * List following.
+	 *
+	 * @since    1.0.0
+	 */
 	function ajax_list_following() {
 		$data = array();
 
@@ -117,13 +140,17 @@ trait Ajax {
 		wp_send_json($data);
 	}
 
+	/**
+	 * Single outfit modal data.
+	 *
+	 * @since    1.0.0
+	 */
 	function ajax_outfit_modal() {
 		$content = '';
 
 		if ($_REQUEST['view']) {
 			$author_id = $this->get_outfit_author_id($_REQUEST['view']);
 			$author_data = get_user_meta($author_id);
-			// $author_data = get_user_meta($value);
 
 			$content = '<div class="modal-body clearfix">';
 			$content .= '<div class="thumb">';
@@ -133,7 +160,7 @@ trait Ajax {
 			$content .= '<div class="details">';
 			$content .= '<div class="author clearfix">';
 			$content .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-			$content .= '<a href="' . $this->user_gallery_link_by_id($author_id) . '" class="name">';
+			$content .= '<a href="' . $this->get_user_gallery_link($author_id) . '" class="name">';
 			$content .= $author_data['nickname'][0];
 			$content .= '</a>';
 
@@ -205,10 +232,15 @@ trait Ajax {
 		die();
 	}
 
+	/**
+	 * Load outfit post data on request.
+	 *
+	 * @since    1.0.0
+	 */
 	function ajax_style_gallery() {
 		if ($_REQUEST['user']) {
 			if (@$_REQUEST['page'] == 'likes') {
-				$ids = get_liked_outfit_by_user($_REQUEST['user']);
+				$ids = $this->get_liked_outfits($_REQUEST['user']);
 				if (!empty($ids)) {
 					$args = array(
 						'post_type' => 'outfit',
@@ -288,7 +320,7 @@ trait Ajax {
 					);
 
 				} elseif (@$_REQUEST['order'] == 'most-liked-day' || @$_REQUEST['order'] == 'most-liked-week') {
-					$ids = most_liked_outfits($_REQUEST['order']);
+					$ids = $this->most_liked_outfits($_REQUEST['order']);
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
@@ -314,34 +346,34 @@ trait Ajax {
 
 		while ($query->have_posts()): $query->the_post();
 			echo '<div class="grid-item col-sm-4" data-id="' . $query->post->ID . '">
-						<div class="gal-header">
-							<div class="gal-product clearfix">
-								<ul>
-									' . hooked_products($query->post->ID, 4) . '
-								</ul>
-							</div>
-							<a class="gal-thumb clearfix">
-								<img src="' . get_outfit_thumbnail($query->post->ID) . '" class="gal-img" />
-							</a>
-						</div>
-						<div class="gal-footer clearfix">
-							<div class="pull-left">
-								<a class="author" href="' . user_gallery_link_by_id(get_the_author_meta('ID')) . '">' . wc_outfit_author_name_by_id(get_the_author_meta('ID')) . '</a>
-								<span class="time">' . outfit_posted_ago() . '</span>
-							</div>
-							<div class="pull-right">
-								<div class="gal-bubble">
-									<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
-
-									<div class="bubble-content">
-										' . share_buttons_html($query->post->ID) . '
-									</div>
+							<div class="gal-header">
+								<div class="gal-product clearfix">
+									<ul>
+										' . $this->hooked_products($query->post->ID, 4) . '
+									</ul>
 								</div>
-
-								' . like_button_html($query->post->ID) . '
+								<a class="gal-thumb clearfix">
+									<img src="' . $this->get_outfit_thumbnail($query->post->ID) . '" class="gal-img" />
+								</a>
 							</div>
-						</div>
-					</div>';
+							<div class="gal-footer clearfix">
+								<div class="pull-left">
+									<a class="author" href="' . user_gallery_link_by_id(get_the_author_meta('ID')) . '">' . wc_outfit_author_name_by_id(get_the_author_meta('ID')) . '</a>
+									<span class="time">' . outfit_posted_ago() . '</span>
+								</div>
+								<div class="pull-right">
+									<div class="gal-bubble">
+										<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
+
+										<div class="bubble-content">
+											' . share_buttons_html($query->post->ID) . '
+										</div>
+									</div>
+
+									' . like_button_html($query->post->ID) . '
+								</div>
+							</div>
+						</div>';
 		endwhile;
 		die();
 	}
