@@ -46,7 +46,8 @@ jQuery(document).on('click', '.like-btn', function(e) {
 
 	jQuery.get(object.ajaxurl + '?action=wc_outfit_post_like', {
 		post_id: post_id,
-		post_type: 'outfit'
+		post_type: 'outfit',
+		security: object.nonce
 	}).done(function(data) {
 		if (jQuery.isNumeric(data)) {
 			pointer.siblings('.count').html(data);
@@ -75,7 +76,8 @@ jQuery(document).on('click', '.medal', function(e) {
 		e.preventDefault();
 
 		jQuery.get(object.ajaxurl + '?action=wc_outfit_follow_people', {
-			user_id: user_id
+			user_id: user_id,
+			security: object.nonce
 		}).done(function(data) {
 			if (jQuery.isNumeric(data)) {
 				jQuery('.follower').html(data + ' Followers');
@@ -111,7 +113,8 @@ jQuery('.follower').on('click', function(e) {
 	jQuery('.list-group').empty();
 
 	jQuery.get(object.ajaxurl + '?action=wc_outfit_list_follower', {
-		user: user
+		user: user,
+		security: object.nonce
 	}).done(function(data) {
 		jQuery.each(data, function(i, j) {
 			jQuery('.list-group').append('<li class="list-group-item"><a href="' + object.homeurl + '/style-gallery/?user=' + i + '">' + j + '</a></li>');
@@ -127,7 +130,8 @@ jQuery('.following').on('click', function(e) {
 	jQuery('.list-group').empty();
 
 	jQuery.get(object.ajaxurl + '?action=wc_outfit_list_following', {
-		user: user
+		user: user,
+		security: object.nonce
 	}).done(function(data) {
 		jQuery.each(data, function(i, j) {
 			jQuery('.list-group').append('<li class="list-group-item"><a href="' + object.homeurl + '/style-gallery/?user=' + i + '">' + j + '</a></li>');
@@ -140,7 +144,8 @@ jQuery(document).on('click', '.gal-header', function() {
 	view = jQuery(this).closest('.grid-item').attr('data-id');
 
 	jQuery.get(object.ajaxurl + '?action=wc_outfit_single_outfit_modal', {
-		view: view
+		view: view,
+		security: object.nonce
 	}).done(function(data) {
 		jQuery('#productModal .modal-content').empty().append(jQuery(data));
 

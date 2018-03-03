@@ -1,7 +1,8 @@
 {
     "autoload": {
         "psr-4": {
-            "Xim_Woo_Outfit\\Traits\\": "traits/"
+            "Xim_Woo_Outfit\\Traits\\": "traits/",
+            "Xim_Woo_Outfit\\Admin\\": "admin/"
         }
     }
 }

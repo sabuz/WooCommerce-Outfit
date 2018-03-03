@@ -10,6 +10,7 @@ class ComposerStaticInitf67a5b5513df5f4a3fe37f83fcd37cfb
         'X' => 
         array (
             'Xim_Woo_Outfit\\Traits\\' => 22,
+            'Xim_Woo_Outfit\\Admin\\' => 21,
         ),
     );
 
@@ -17,6 +18,10 @@ class ComposerStaticInitf67a5b5513df5f4a3fe37f83fcd37cfb
         'Xim_Woo_Outfit\\Traits\\' => 
         array (
             0 => __DIR__ . '/../..' . '/traits',
+        ),
+        'Xim_Woo_Outfit\\Admin\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/admin',
         ),
     );
 

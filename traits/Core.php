@@ -62,7 +62,7 @@ trait Core {
 		wp_register_script('bootstrapValidator', plugin_dir_url(__FILE__) . '../js/bootstrapValidator.min.js', array(), false, true);
 		wp_register_script('filepicker', plugin_dir_url(__FILE__) . '../js/jquery.filepicker.js', array(), false, true);
 		wp_register_script('new-outfit', plugin_dir_url(__FILE__) . '../js/new-outfit.js', array(), false, true);
-		wp_localize_script('new-outfit', 'object', ['ajaxurl' => admin_url('admin-ajax.php')]);
+		wp_localize_script('new-outfit', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 
 		// Style Gallery
 		wp_register_script('arctext', plugin_dir_url(__FILE__) . '../js/jquery.arctext.js', array(), false, true);
@@ -70,7 +70,7 @@ trait Core {
 		wp_register_script('imgLoaded', plugin_dir_url(__FILE__) . '../js/imagesloaded.pkgd.min.js', array(), false, true);
 		wp_register_script('isotope', plugin_dir_url(__FILE__) . '../js/isotope.pkgd.min.js', array(), false, true);
 		wp_register_script('style-gallery', plugin_dir_url(__FILE__) . '../js/style-gallery.js', array(), false, true);
-		wp_localize_script('style-gallery', 'object', ['ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url()]);
+		wp_localize_script('style-gallery', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 
 		wp_enqueue_style('wc-bootstrap', plugin_dir_url(__FILE__) . '../css/bootstrap.css');
 		wp_enqueue_style('owlCarousel', plugin_dir_url(__FILE__) . '../css/owl.carousel.css');
@@ -159,7 +159,7 @@ trait Core {
 	 *
 	 * @since    1.0.0
 	 */
-	function add_myaccount_menu_items($items) {
+	function myaccount_menu_items($items) {
 		$items = array_splice($items, 0, count($items) - 1) + array($this->all_outfit_endpoint => __('Outfits', 'xim')) + $items;
 		return $items;
 	}

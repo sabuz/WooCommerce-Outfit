@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Xim_Woo_Outfit\\Traits\\' => array($baseDir . '/traits'),
+    'Xim_Woo_Outfit\\Admin\\' => array($baseDir . '/admin'),
 );

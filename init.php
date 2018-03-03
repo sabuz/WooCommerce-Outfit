@@ -54,6 +54,7 @@ class Xim_Woo_Outfit_Init {
 	use Xim_Woo_Outfit\Traits\Metabox;
 	use Xim_Woo_Outfit\Traits\Ajax;
 	use Xim_Woo_Outfit\Traits\Template_Shortcode;
+	use Xim_Woo_Outfit\Admin\Admin;
 
 	public $all_outfit_endpoint = 'outfits';
 	public $new_outfit_endpoint = 'outfits/new-outfit';
@@ -64,7 +65,7 @@ class Xim_Woo_Outfit_Init {
 
 		add_action('woocommerce_account_' . $this->new_outfit_endpoint . '_endpoint', array($this, 'new_outfit_endpoint_content'));
 		add_action('woocommerce_account_' . $this->all_outfit_endpoint . '_endpoint', array($this, 'outfits_endpoint_content'));
-		add_filter('woocommerce_account_menu_items', array($this, 'add_myaccount_menu_items'));
+		add_filter('woocommerce_account_menu_items', array($this, 'myaccount_menu_items'));
 		add_filter('the_title', array($this, 'filter_endpoints_title'), 10, 2);
 
 		add_action('init', array($this, 'init'));
@@ -103,16 +104,12 @@ class Xim_Woo_Outfit_Init {
 		add_shortcode('new-outfit', array($this, 'new_outfit_shortcode'));
 		add_shortcode('style-gallery', array($this, 'style_gallery_shortcode'));
 
-		/**
-		 * Including the functions for admin menu page and options.
-		 *
-		 * @since    1.0.0
-		 */
-		// if (is_admin()) {
-		// require_once dirname(__file__) . '/admin/wp_stickit_admin.php';
-		// }
+		// Admin Page
+		if (is_admin()) {
+			add_action('admin_menu', array($this, 'wp_stickit_menu'));
+		}
 	}
 }
-add_action('plugins_loaded', function () {
+add_action('plugins_loaded', function() {
 	new Xim_Woo_Outfit_Init;
 });
