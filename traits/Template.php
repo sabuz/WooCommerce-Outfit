@@ -511,7 +511,7 @@ trait Template {
 
 				<div class="owl-carousel">';
 				while ($query->have_posts()): $query->the_post();
-					echo '<div class="item" data-id="' . get_the_ID() . '">' . the_post_thumbnail('product-thumb') . '</div>';
+					echo '<div class="item" data-id="' . get_the_ID() . '"><img src="' . $this->get_outfit_thumbnail(get_the_ID(), 'product-thumb') . '"></div>';
 				endwhile;
 				echo '</div>
 			</div>';

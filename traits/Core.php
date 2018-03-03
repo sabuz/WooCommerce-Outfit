@@ -71,6 +71,7 @@ trait Core {
 		wp_register_script('imgLoaded', plugin_dir_url(__FILE__) . '../js/imagesloaded.pkgd.min.js', array(), false, true);
 		wp_register_script('isotope', plugin_dir_url(__FILE__) . '../js/isotope.pkgd.min.js', array(), false, true);
 		wp_register_script('style-gallery', plugin_dir_url(__FILE__) . '../js/style-gallery.js', array(), false, true);
+		wp_localize_script('single-product', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 		wp_localize_script('style-gallery', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 
 		wp_enqueue_style('wc-bootstrap', plugin_dir_url(__FILE__) . '../css/bootstrap.css');
@@ -208,5 +209,17 @@ trait Core {
 		}
 
 		return $classes;
+	}
+
+	function inject_footer_content() {
+		if (is_product()) {
+			echo '<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+
+					</div>
+				</div>
+			</div>';
+		}
 	}
 }
