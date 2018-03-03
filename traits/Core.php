@@ -65,6 +65,7 @@ trait Core {
 		wp_localize_script('new-outfit', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 
 		// Style Gallery
+		wp_register_script('single-product', plugin_dir_url(__FILE__) . '../js/single-product.js', array(), false, true);
 		wp_register_script('arctext', plugin_dir_url(__FILE__) . '../js/jquery.arctext.js', array(), false, true);
 		wp_register_script('infinite', plugin_dir_url(__FILE__) . '../js/infinite.js', array(), false, true);
 		wp_register_script('imgLoaded', plugin_dir_url(__FILE__) . '../js/imagesloaded.pkgd.min.js', array(), false, true);

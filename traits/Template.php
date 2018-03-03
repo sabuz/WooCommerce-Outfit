@@ -4,14 +4,14 @@ namespace Xim_Woo_Outfit\Traits;
 
 use WP_Query;
 
-trait Template_Shortcode {
+trait Template {
 
 	/**
 	 * Outfits shortcode.
 	 *
 	 * @since    1.0.0
 	 */
-	function outfits_shortcode() {
+	function template_outfits() {
 		$query = new WP_Query(array(
 			'post_type' => 'outfit',
 			'post_status' => 'any',
@@ -63,7 +63,7 @@ trait Template_Shortcode {
 	 *
 	 * @since    1.0.0
 	 */
-	function new_outfit_shortcode($atts, $content = null) {
+	function template_new_outfit($atts, $content = null) {
 		wp_enqueue_style('bootstrapValidator');
 		wp_enqueue_script('bootstrapValidator');
 		wp_enqueue_script('filepicker');
@@ -124,7 +124,7 @@ trait Template_Shortcode {
 	 *
 	 * @since    1.0.0
 	 */
-	function style_gallery_shortcode() {
+	function template_style_gallery() {
 		global $post;
 
 		wp_enqueue_script('arctext');
@@ -485,5 +485,38 @@ trait Template_Shortcode {
 		</div>';
 		}
 
+	}
+
+	function template_single_product_listing() {
+		global $post;
+
+		wp_enqueue_script('single-product');
+
+		$query = new WP_Query(array(
+			'post_type' => 'outfit',
+			'post_status' => 'publish',
+			'posts_per_page' => -1,
+			'meta_query' => array(
+				array(
+					'key' => 'products',
+					'value' => $post->ID,
+					'compare' => 'LIKE',
+				),
+			),
+		));
+
+		if ($query->have_posts()) {
+			echo '<div class="single-product-carousel outfit">
+				<h2>' . __('Explore Shop & Outfit Photos', 'couture') . '</h2>
+
+				<div class="owl-carousel">';
+				while ($query->have_posts()): $query->the_post();
+					echo '<div class="item" data-id="' . get_the_ID() . '">' . the_post_thumbnail('product-thumb') . '</div>';
+				endwhile;
+				echo '</div>
+			</div>';
+		}
+
+		wp_reset_postdata();
 	}
 }

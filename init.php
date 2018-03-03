@@ -53,7 +53,7 @@ class Xim_Woo_Outfit_Init {
 	use Xim_Woo_Outfit\Traits\Helper;
 	use Xim_Woo_Outfit\Traits\Metabox;
 	use Xim_Woo_Outfit\Traits\Ajax;
-	use Xim_Woo_Outfit\Traits\Template_Shortcode;
+	use Xim_Woo_Outfit\Traits\Template;
 	use Xim_Woo_Outfit\Admin\Admin;
 
 	public $all_outfit_endpoint = 'outfits';
@@ -99,10 +99,11 @@ class Xim_Woo_Outfit_Init {
 		add_action('wp_ajax_nopriv_wc_outfit_style_gallery', array($this, 'ajax_style_gallery'));
 		add_action('wp_ajax_wc_outfit_post_outfit', array($this, 'ajax_post_outfit'));
 
-		// Shortcodes
-		add_shortcode('outfits', array($this, 'outfits_shortcode'));
-		add_shortcode('new-outfit', array($this, 'new_outfit_shortcode'));
-		add_shortcode('style-gallery', array($this, 'style_gallery_shortcode'));
+		// Templates
+		add_shortcode('outfits', array($this, 'template_outfits'));
+		add_shortcode('new-outfit', array($this, 'template_new_outfit'));
+		add_shortcode('style-gallery', array($this, 'template_style_gallery'));
+		add_action('woocommerce_after_single_product', array($this, 'template_single_product_listing'));
 
 		// Admin Page
 		if (is_admin()) {
