@@ -8,7 +8,7 @@ trait Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	function wp_stickit_menu_options() {
+	function menu_page() {
 		if (!current_user_can('manage_options')) {
 			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}?>
@@ -63,7 +63,7 @@ trait Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	function register_wp_stickit_settings() {
+	function register_menu_settings() {
 		register_setting('wp-stickit-option-group', 'wp_stickit_class_name');
 		register_setting('wp-stickit-option-group', 'wp_stickit_top');
 		register_setting('wp-stickit-option-group', 'wp_stickit_zindex');
@@ -76,8 +76,8 @@ trait Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	function wp_stickit_menu() {
-		add_options_page('Woocommerce Outfit', 'Woocommerce Outfit', 'manage_options', 'wc_outfit', array($this, 'wp_stickit_menu_options'));
-		add_action('admin_init', array($this, 'register_wp_stickit_settings'));
+	function admin_menu() {
+		add_options_page('Woocommerce Outfit', 'Woocommerce Outfit', 'manage_options', 'wc_outfit', array($this, 'menu_page'));
+		add_action('admin_init', array($this, 'register_menu_settings'));
 	}
 }

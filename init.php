@@ -108,7 +108,7 @@ class Xim_Woo_Outfit_Init {
 
 		// Admin Page
 		if (is_admin()) {
-			add_action('admin_menu', array($this, 'wp_stickit_menu'));
+			add_action('admin_menu', array($this, 'admin_menu'));
 		}
 	}
 }

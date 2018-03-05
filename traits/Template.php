@@ -66,8 +66,10 @@ trait Template {
 	function template_new_outfit($atts, $content = null) {
 		wp_enqueue_style('bootstrapValidator');
 		wp_enqueue_script('bootstrapValidator');
-		wp_enqueue_script('filepicker');
+		// wp_enqueue_script('filepicker');
 		wp_enqueue_script('new-outfit');
+
+		wp_enqueue_media();
 
 		$atts = shortcode_atts(array(), $atts);
 
@@ -77,7 +79,7 @@ trait Template {
 
 				<div class="row">
 					<div class="col-sm-8">
-						<input data-label="Select Image" class="filepicker" type="file" name="thumb" multiple="false" accept="image/*">
+						<input id="frontend-button" type="button" value="Select Image" class="button" style="position: relative; z-index: 1;"><img id="frontend-image" />
 					</div>
 					<div class="col-sm-4">
 						<h4>Photo Guidelines</h4>
@@ -115,6 +117,42 @@ trait Template {
 		$html .= wp_nonce_field('post_nonce', 'post_nonce_field') . '
 		    <input type="submit" value="' . __('Add Outfit', 'couture') . '">
 		</form>';
+
+		$html .= "<script>
+			jQuery(document).ready( function() {
+				var file_frame; // variable for the wp.media file_frame
+
+				// attach a click event (or whatever you want) to some element on your page
+				jQuery( '#frontend-button' ).on( 'click', function( event ) {
+					event.preventDefault();
+
+				    // if the file_frame has already been created, just reuse it
+					if ( file_frame ) {
+						file_frame.open();
+						return;
+					} 
+
+					file_frame = wp.media.frames.file_frame = wp.media({
+						title: $( this ).data( 'uploader_title' ),
+						button: {
+							text: jQuery( this ).data( 'uploader_button_text' ),
+						},
+						multiple: false // set this to true for multiple file selection
+					});
+
+					file_frame.on( 'select', function() {
+						attachment = file_frame.state().get('selection').first().toJSON();
+						console.log(attachment)
+
+						// do something with the file here
+						jQuery( '#frontend-button' ).hide();
+						jQuery( '#frontend-image' ).attr('src', attachment.url);
+					});
+
+					file_frame.open();
+				});
+			});
+		</script>";
 
 		return $html;
 	}
