@@ -79,7 +79,8 @@ trait Template {
 
 				<div class="row">
 					<div class="col-sm-8">
-						<input id="frontend-button" type="button" value="Select Image" class="button" style="position: relative; z-index: 1;"><img id="frontend-image" />
+						<input id="frontend-button" type="button" value="Select Image" class="button">
+						<input type="text" id="input-val" value="No image selected" readonly>
 					</div>
 					<div class="col-sm-4">
 						<h4>Photo Guidelines</h4>
@@ -145,8 +146,7 @@ trait Template {
 						console.log(attachment)
 
 						// do something with the file here
-						jQuery( '#frontend-button' ).hide();
-						jQuery( '#frontend-image' ).attr('src', attachment.url);
+						jQuery( '#input-val' ).val(attachment.id);
 					});
 
 					file_frame.open();

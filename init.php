@@ -76,6 +76,7 @@ class Xim_Woo_Outfit_Init {
 		add_action('before_delete_post', array($this, 'remove_post_data_on_delete'));
 		add_filter('body_class', array($this, 'filter_body_class'));
 		add_filter('wp_footer', array($this, 'inject_footer_content'));
+		add_filter( 'ajax_query_attachments_args', array( $this, 'filter_media' ) );
 
 		// Metabox
 		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
