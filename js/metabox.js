@@ -6,7 +6,8 @@ jQuery('.selectId').on('change', function(e) {
 	var cat_id = jQuery(this).val();
 
 	jQuery.get(object.ajaxurl + '?action=wc_outfit_products_by_cat', {
-		cat: cat_id
+		cat: cat_id,
+		security: object.nonce
 	}).done(function(data) {
 		jQuery('#products').fadeTo('slow', 1);
 		jQuery('#products').empty();

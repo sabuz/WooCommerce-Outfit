@@ -80,7 +80,7 @@ trait Template {
 				<div class="row">
 					<div class="col-sm-8">
 						<input id="frontend-button" type="button" value="Select Image" class="button">
-						<input type="text" id="input-val" value="No image selected" readonly>
+						<input type="text" name="thumb" id="thumb" placeholder="No image selected">
 					</div>
 					<div class="col-sm-4">
 						<h4>Photo Guidelines</h4>
@@ -109,50 +109,14 @@ trait Template {
 			$html .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
 		endforeach;
 		$html .= '</select>
-
 				<div class="row">
 					<div id="products" class="products"></div>
 				</div>
 			</div>';
 
-		$html .= wp_nonce_field('post_nonce', 'post_nonce_field') . '
-		    <input type="submit" value="' . __('Add Outfit', 'couture') . '">
+		// wp_nonce_field('post_nonce', 'post_nonce_field')
+		$html .=  '<input type="submit" value="' . __('Add Outfit', 'couture') . '">
 		</form>';
-
-		$html .= "<script>
-			jQuery(document).ready( function() {
-				var file_frame; // variable for the wp.media file_frame
-
-				// attach a click event (or whatever you want) to some element on your page
-				jQuery( '#frontend-button' ).on( 'click', function( event ) {
-					event.preventDefault();
-
-				    // if the file_frame has already been created, just reuse it
-					if ( file_frame ) {
-						file_frame.open();
-						return;
-					} 
-
-					file_frame = wp.media.frames.file_frame = wp.media({
-						title: $( this ).data( 'uploader_title' ),
-						button: {
-							text: jQuery( this ).data( 'uploader_button_text' ),
-						},
-						multiple: false // set this to true for multiple file selection
-					});
-
-					file_frame.on( 'select', function() {
-						attachment = file_frame.state().get('selection').first().toJSON();
-						console.log(attachment)
-
-						// do something with the file here
-						jQuery( '#input-val' ).val(attachment.id);
-					});
-
-					file_frame.open();
-				});
-			});
-		</script>";
 
 		return $html;
 	}

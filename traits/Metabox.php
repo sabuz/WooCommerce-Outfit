@@ -18,7 +18,7 @@ trait Metabox {
 
 			// js
 			wp_enqueue_script('metabox', plugin_dir_url(__FILE__) . '../js/metabox.js', array(), false, true);
-			wp_localize_script('metabox', 'object', ['ajaxurl' => admin_url('admin-ajax.php')]);
+			wp_localize_script('metabox', 'object', ['ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('wc_outfit_nonce')]);
 		}
 	}
 
