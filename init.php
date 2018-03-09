@@ -32,11 +32,36 @@ require_once 'vendor/autoload.php';
  * @since    1.0.0
  */
 class Xim_Woo_Outfit_Activation {
+	use Xim_Woo_Outfit\Traits\Core;
 	use Xim_Woo_Outfit\Traits\Database;
 
 	function __construct() {
-		flush_rewrite_rules();
-		$this->install_db();
+		$this->activation_hook();
+	}
+
+	function activation_hook() {
+		if (!class_exists('WooCommerce')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+			// Deactivate the plugin
+			deactivate_plugins(plugin_basename(__FILE__));
+
+			// Remove success notice
+			unset($_GET['activate']);
+
+			// Throw an error in the wordpress admin
+			add_action('admin_notices', function () {
+				$class = 'notice notice-error is-dismissible';
+				$message = __('<strong>WooCommerce Outfit</strong> requires <strong>WooCommerce</strong> plugin to be installed and activated.', 'xim');
+				printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
+			});
+		} else {
+			// install database
+			$this->install_db();
+
+			// set flush rewrite flag enabled
+			set_transient('wc_outfit_flush_rewrite_rules_flag', true, 604800);
+		}
 	}
 }
 register_activation_hook(__FILE__, function () {
@@ -61,7 +86,7 @@ class Xim_Woo_Outfit_Init {
 
 	function __construct() {
 		// Core
-		$this->throw_notice_and_deactive();
+		$this->throw_notice_and_deactive_runtime();
 
 		add_action('woocommerce_account_' . $this->new_outfit_endpoint . '_endpoint', array($this, 'new_outfit_endpoint_content'));
 		add_action('woocommerce_account_' . $this->all_outfit_endpoint . '_endpoint', array($this, 'outfits_endpoint_content'));
@@ -76,7 +101,7 @@ class Xim_Woo_Outfit_Init {
 		add_action('before_delete_post', array($this, 'remove_post_data_on_delete'));
 		add_filter('body_class', array($this, 'filter_body_class'));
 		add_filter('wp_footer', array($this, 'inject_footer_content'));
-		add_filter( 'ajax_query_attachments_args', array( $this, 'filter_media' ) );
+		add_filter('ajax_query_attachments_args', array($this, 'filter_media'));
 
 		// Metabox
 		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
@@ -113,6 +138,6 @@ class Xim_Woo_Outfit_Init {
 		}
 	}
 }
-add_action('plugins_loaded', function() {
+add_action('plugins_loaded', function () {
 	new Xim_Woo_Outfit_Init;
 });

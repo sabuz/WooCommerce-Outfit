@@ -14,6 +14,12 @@ trait Core {
 		add_rewrite_endpoint($this->new_outfit_endpoint, EP_ROOT | EP_PAGES);
 		add_rewrite_endpoint($this->all_outfit_endpoint, EP_ROOT | EP_PAGES);
 
+		// flush rewrite rules
+		if (get_transient('wc_outfit_flush_rewrite_rules_flag') == true) {
+			flush_rewrite_rules();
+			set_transient('wc_outfit_flush_rewrite_rules_flag', false, 604800);
+		}
+
 		// Register post type: outfit
 		register_post_type('outfit',
 			array(
@@ -137,7 +143,7 @@ trait Core {
 	 *
 	 * @since    1.0.0
 	 */
-	function throw_notice_and_deactive() {
+	function throw_notice_and_deactive_runtime() {
 		if (!class_exists('WooCommerce')) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
