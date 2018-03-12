@@ -21,6 +21,14 @@ trait Template {
 
 		$html = '';
 
+		if (isset($_COOKIE['wc_outfit_success']) && $_COOKIE['wc_outfit_success'] == 'true')  {
+			$html .= '<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">' . __('Outfit submitted successfully.', 'xim') . '</div>
+
+			<script>
+				document.cookie="wc_outfit_success=;expires=expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/"
+			</script>';
+		}
+
 		if ($query->have_posts()) {
 			$html .= '<p>' . sprintf(__('To add more outfit photos, go to <a href="%1$s">new outfit</a>', 'xim'), esc_url(wc_get_endpoint_url('outfits/new-outfit'))) . '</p>
 

@@ -358,6 +358,7 @@ trait Ajax {
 		$query = new WP_Query($args);
 
 		while ($query->have_posts()): $query->the_post();
+			$author_data = $this->get_outfit_author_data($post->ID);
 			echo '<div class="grid-item col-sm-4" data-id="' . $query->post->ID . '">
 				<div class="gal-header">
 					<div class="gal-product clearfix">
@@ -371,19 +372,19 @@ trait Ajax {
 				</div>
 				<div class="gal-footer clearfix">
 					<div class="pull-left">
-						<a class="author" href="' . user_gallery_link_by_id(get_the_author_meta('ID')) . '">' . wc_outfit_author_name_by_id(get_the_author_meta('ID')) . '</a>
-						<span class="time">' . outfit_posted_ago() . '</span>
+						<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">' . $author_data['nickname'][0] . '</a>
+						<span class="time">' . $this->outfit_posted_ago() . '</span>
 					</div>
 					<div class="pull-right">
 						<div class="gal-bubble">
 							<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
 
 							<div class="bubble-content">
-								' . share_buttons_html($query->post->ID) . '
+								' . $this->share_buttons_html($query->post->ID) . '
 							</div>
 						</div>
 
-						' . like_button_html($query->post->ID) . '
+						' . $this->like_button_html($query->post->ID) . '
 					</div>
 				</div>
 			</div>';
@@ -399,79 +400,37 @@ trait Ajax {
 	function ajax_post_outfit() {
 		check_ajax_referer('wc_outfit_nonce', 'security');
 		
-		$msg = array();
-		$data = array();
+		$data = $response = array();
 		parse_str($_REQUEST['form_data'], $data);
 
-		if (!isset($data['ids'])) {
-			$msg[] = 'Products are required';
+		if (empty($data['ids'])) {
+			$response['message'][] = __('Products are required.', 'xim');
 		}
 
-		if (!isset($data['thumb'])) {
-			$msg[] = 'Thumbnail is required';
+		if (empty($data['thumb'])) {
+			$response['message'][] = __('Outfit photo is required.', 'xim');
 		}
 
-		// if (!file_exists($_FILES['thumb']['tmp_name'])) {
-		// 	$msg[] = 'Thumbnail are required';
-		// }
-
-		if (count($msg) == 0) {
-			$post_args = array(
+		if (count($response) == 0) {
+			$post_id = wp_insert_post(array(
 				'post_title' => '',
 				'post_type' => 'outfit',
 				'post_status' => 'pending',
-			);
-
-			$post_id = wp_insert_post($post_args);
+			));
 
 			if ($post_id) {
+				set_post_thumbnail($post_id, $data['thumb']);
+				add_post_meta($post_id, 'products', $data['ids']);
+				wp_update_post(['ID' => $post_id, 'post_title' => 'Outfit ' . $post_id]);
 
-				// Including file library if not exist
-				// if (!function_exists('wp_handle_upload')) {
-				// 	require_once ABSPATH . 'wp-admin/includes/file.php';
-				// }
-
-				// Uploading file to server
-				// $movefile = wp_handle_upload($_FILES['thumb'], ['test_form' => false]);
-
-				// If uploading success & No error
-				// if ($movefile && !isset($movefile['error'])) {
-				// 	$filename = $movefile['file'];
-				// 	$filetype = wp_check_filetype(basename($filename), null);
-				// 	$wp_upload_dir = wp_upload_dir();
-
-				// 	$attachment = array(
-				// 		'guid' => $wp_upload_dir['url'] . '/' . basename($filename),
-				// 		'post_mime_type' => $filetype['type'],
-				// 		'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
-				// 		'post_content' => '',
-				// 		'post_status' => 'inherit',
-				// 	);
-
-					// Adding file to media
-					// $attach_id = wp_insert_attachment($attachment, $filename);
-
-					// If attachment success
-					// if ($attach_id) {
-						// require_once ABSPATH . 'wp-admin/includes/image.php';
-
-						// Updating attachment metadata
-						// $attach_data = wp_generate_attachment_metadata($attach_id, $filename);
-						// wp_update_attachment_metadata($attach_id, $attach_data);
-
-						set_post_thumbnail($post_id, $data['thumb']);
-						add_post_meta($post_id, 'products', $data['ids']);
-						wp_update_post(['ID' => $post_id, 'post_title' => 'Outfit ' . $post_id]);
-					// }
-
-					$msg[] = 'Success';
-				// } else {
-				// 	$msg[] = $movefile['error'];
-				// }
+				$response['message'][] = 'Outfit submitted successfully.';
+				$response['status'] = 'success';
 			}
+		} else {
+			$response['status'] = 'failed';
 		}
 
-		wp_send_json($msg);
+		wp_send_json($response);
 	}
 }
 

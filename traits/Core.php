@@ -72,7 +72,7 @@ trait Core {
 		wp_register_script('bootstrapValidator', plugin_dir_url(__FILE__) . '../assets/js/bootstrapValidator.min.js', array(), false, true);
 		wp_register_script('filepicker', plugin_dir_url(__FILE__) . '../assets/js/jquery.filepicker.js', array(), false, true);
 		wp_register_script('new-outfit', plugin_dir_url(__FILE__) . '../assets/js/new-outfit.js', array(), false, true);
-		wp_localize_script('new-outfit', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
+		wp_localize_script('new-outfit', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 
 		// Style Gallery
 		wp_register_script('single-product', plugin_dir_url(__FILE__) . '../assets/js/single-product.js', array(), false, true);
@@ -84,6 +84,7 @@ trait Core {
 		wp_localize_script('single-product', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 		wp_localize_script('style-gallery', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 
+		// All Outfits
 		wp_enqueue_style('wc-bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.css');
 		wp_enqueue_style('owlCarousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.css');
 		wp_enqueue_script('wc-bootstrap', plugin_dir_url(__FILE__) . '../assets/js/bootstrap.js');

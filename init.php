@@ -119,8 +119,8 @@ class Xim_Woo_Outfit_Init {
 		add_action('do_meta_boxes', array($this, 're_init_thumb_box'));
 
 		// Ajax
-		add_action('wp_ajax_wc_outfit_products_by_cat', array($this, 'ajax_get_products_by_cat'));
-		add_action('wp_ajax_nopriv_wc_outfit_products_by_cat', array($this, 'nopriv_ajax_get_products_by_cat'));
+		add_action('wp_ajax_wc_outfit_get_products_by_cat', array($this, 'ajax_get_products_by_cat'));
+		add_action('wp_ajax_nopriv_wc_outfit_get_products_by_cat', array($this, 'nopriv_ajax_get_products_by_cat'));
 		add_action('wp_ajax_wc_outfit_post_like', array($this, 'ajax_post_like'));
 		add_action('wp_ajax_nopriv_wc_outfit_post_like', array($this, 'nopriv_ajax_post_like'));
 		add_action('wp_ajax_wc_outfit_follow_people', array($this, 'ajax_follow_people'));
