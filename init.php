@@ -32,40 +32,47 @@ require_once 'vendor/autoload.php';
  * @since    1.0.0
  */
 class Xim_Woo_Outfit_Activation {
-	use Xim_Woo_Outfit\Traits\Core;
 	use Xim_Woo_Outfit\Traits\Database;
 
 	function __construct() {
-		$this->activation_hook();
-	}
+		// install database
+		$this->install_db();
 
-	function activation_hook() {
-		if (!class_exists('WooCommerce')) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-			// Deactivate the plugin
-			deactivate_plugins(plugin_basename(__FILE__));
-
-			// Remove success notice
-			unset($_GET['activate']);
-
-			// Throw an error in the wordpress admin
-			add_action('admin_notices', function () {
-				$class = 'notice notice-error is-dismissible';
-				$message = __('<strong>WooCommerce Outfit</strong> requires <strong>WooCommerce</strong> plugin to be installed and activated.', 'xim');
-				printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
-			});
-		} else {
-			// install database
-			$this->install_db();
-
-			// set flush rewrite flag enabled
-			set_transient('wc_outfit_flush_rewrite_rules_flag', true, 604800);
-		}
+		// set flush rewrite flag enabled
+		set_transient('wc_outfit_flush_rewrite_rules_flag', true, 604800);
 	}
 }
+
 register_activation_hook(__FILE__, function () {
-	new Xim_Woo_Outfit_Activation;
+	if (class_exists('WooCommerce')) {
+		/**
+		 * If WooCommerce is activated, initiate the activation class
+		 *
+		 * @since    1.0.0
+		 */
+		new Xim_Woo_Outfit_Activation;
+
+	} else {
+		/**
+		 * If WooCommerce is not activated, throw error and deactive the plugin
+		 *
+		 * @since    1.0.0
+		 */
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+		// Deactivate the plugin
+		deactivate_plugins(plugin_basename(__FILE__));
+
+		// Remove success notice
+		unset($_GET['activate']);
+
+		// Throw an error in the wordpress admin
+		add_action('admin_notices', function () {
+			$class = 'notice notice-error is-dismissible';
+			$message = __('<strong>WooCommerce Outfit</strong> requires <strong>WooCommerce</strong> plugin to be installed and activated.', 'xim');
+			printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
+		});
+	}
 });
 
 /**
@@ -85,23 +92,25 @@ class Xim_Woo_Outfit_Init {
 	public $new_outfit_endpoint = 'outfits/new-outfit';
 
 	function __construct() {
+		// Add translation support
+		load_plugin_textdomain('xim', false, basename(dirname(__FILE__)) . '/languages');
+
 		// Core
-		$this->throw_notice_and_deactive_runtime();
+		add_action('init', array($this, 'init'));
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+		add_action('template_redirect', array($this, 'template_redirect'));
+		add_filter('get_sample_permalink_html', array($this, 'remove_sample_permalink_html'));
+		add_filter('post_row_actions', array($this, 'filter_post_row_actions'), 10, 2);
+		add_action('before_delete_post', array($this, 'before_delete_post'));
+		add_filter('body_class', array($this, 'filter_body_class'));
+		add_filter('ajax_query_attachments_args', array($this, 'ajax_query_attachments_args'));
+		add_filter('wp_footer', array($this, 'wp_footer'));
+		add_filter('wp_head', array($this, 'wp_head'));
 
 		add_action('woocommerce_account_' . $this->new_outfit_endpoint . '_endpoint', array($this, 'new_outfit_endpoint_content'));
 		add_action('woocommerce_account_' . $this->all_outfit_endpoint . '_endpoint', array($this, 'outfits_endpoint_content'));
 		add_filter('woocommerce_account_menu_items', array($this, 'myaccount_menu_items'));
 		add_filter('the_title', array($this, 'filter_endpoints_title'), 10, 2);
-
-		add_action('init', array($this, 'init'));
-		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
-		add_action('template_redirect', array($this, 'disable_single_outfit_view'));
-		add_filter('get_sample_permalink_html', array($this, 'remove_sample_permalink_html'));
-		add_filter('post_row_actions', array($this, 'filter_post_row_actions'), 10, 2);
-		add_action('before_delete_post', array($this, 'remove_post_data_on_delete'));
-		add_filter('body_class', array($this, 'filter_body_class'));
-		add_filter('wp_footer', array($this, 'inject_footer_content'));
-		add_filter('ajax_query_attachments_args', array($this, 'filter_media'));
 
 		// Metabox
 		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
@@ -138,6 +147,32 @@ class Xim_Woo_Outfit_Init {
 		}
 	}
 }
+
 add_action('plugins_loaded', function () {
-	new Xim_Woo_Outfit_Init;
+	if (class_exists('WooCommerce')) {
+		/**
+		 * If WooCommerce is activated, initiate the plugin
+		 *
+		 * @since    1.0.0
+		 */
+		new Xim_Woo_Outfit_Init;
+
+	} else {
+		/**
+		 * If WooCommerce is not activated, throw error and deactive the plugin
+		 *
+		 * @since    1.0.0
+		 */
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+		// Deactivate the plugin
+		deactivate_plugins(plugin_basename(__FILE__));
+
+		// Throw an error in the wordpress admin
+		add_action('admin_notices', function () {
+			$class = 'notice notice-error is-dismissible';
+			$message = __('<strong>WooCommerce Outfit</strong> requires <strong>WooCommerce</strong> plugin to be installed and activated.', 'xim');
+			printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
+		});
+	}
 });

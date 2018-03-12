@@ -14,62 +14,52 @@ trait Admin {
 		}?>
 
 		<div class="wrap">
-			<h2><?php _e('Woocommerce Outfit', 'menu-test')?></h2>
+			<h2><?php _e('Woocommerce Outfit Options', 'xim')?></h2>
 
-			<form method="post" action="options.php">
-				<?php settings_fields('wp-stickit-option-group');?>
-				<?php do_settings_sections('wp_stickit');?>
+			<?php if (isset($_GET['section'])) {
+				$section = $_GET['section'];
+			} ?>
 
-				<table class="form-table">
-					<tr valign="top">
-						<th scope="row">Class Name</th>
-						<td><input type="text" name="wp_stickit_class_name" value="<?php echo esc_attr(get_option('wp_stickit_class_name', '.sidebar')); ?>" class="regular-text" />
-						<p class="description">Sets the class name of the widget that will be sticky.</p></td>
-					</tr>
+			<h2 class="nav-tab-wrapper">
+	    		<a href="?page=wc_outfit&section=general" class="nav-tab <?php echo $section == 'general' ? 'nav-tab-active' : ''; ?>">General</a>
+	    		<a href="?page=wc_outfit&section=im" class="nav-tab <?php echo $section == 'im' ? 'nav-tab-active' : ''; ?>">Import Users</a>
+			</h2>
 
-					<tr valign="top">
-						<th scope="row">Top</th>
-						<td><input type="number" step="1" min="0" name="wp_stickit_top" value="<?php echo esc_attr(get_option('wp_stickit_top', 0)); ?>" class="medium-text" />
-						<p class="description">Sets sticky top, eg. it will be stuck at position top 50 if you set 50.</p></td>
-					</tr>
+			<?php if ($section == 'im') {?>
+				<form method="post" action="#">
+					<table class="form-table">
+				        <tr valign="top">
+							<th scope="row">Backup Data</th>
+							<td><textarea name="xd-exim-user-im-data" id="xd-exim-user-im-data" rows="5" cols="100"></textarea>
+							<p class="description">Paste the exported data strings here to import users</p></td>
+						</tr>
+				    </table>
 
-					<tr valign="top">
-						<th scope="row">Z-Index</th>
-						<td><input type="number" step="1" min="0" name="wp_stickit_zindex" value="<?php echo esc_attr(get_option('wp_stickit_zindex', 100)); ?>" class="medium-text" />
-						<p class="description">Sets z-index. Default is try to get element z-index property from css style. If undefined, default is 100.</p></td>
-					</tr>
+					<?php submit_button('Import');?>
+				</form>
+			<?php } else {?>
+				<form method="post" action="#">
+					<table class="form-table">
+				        <tr valign="top">
+				        	<th scope="row">Role</th>
+				        	<td><select name="roles" id="roles" multiple>
+								<?php wp_dropdown_roles()?>
+							</select>
+							<p class="description"><?php _e('Leave blank to export users of all roles', 'xd')?></p></td>
+				        </tr>
 
-					<tr valign="top">
-						<th scope="row">Screen Min Width</th>
-						<td><input type="number" step="1" min="1" name="wp_stickit_screen_min_width" value="<?php echo esc_attr(get_option('wp_stickit_screen_min_width', 1280)); ?>" class="medium-text" />
-						<p class="description">Sets min width for RWD. This is equal to min-width in media query.</p></td>
-					</tr>
+				        <tr valign="top">
+							<th scope="row">Backup Data</th>
+							<td><textarea name="xd-exim-user-ex-data" id="xd-exim-user-ex-data" rows="5" cols="100" readonly></textarea>
+							<p class="description">Save the backup strings</p></td>
+						</tr>
+				    </table>
 
-					<tr valign="top">
-						<th scope="row">Screen Max Width</th>
-						<td><input type="number" step="1" min="1" name="wp_stickit_screen_max_width" value="<?php echo esc_attr(get_option('wp_stickit_screen_max_width', 1920)); ?>" class="medium-text" />
-						<p class="description">Sets max width for RWD. This is equal to max-width in media query.</p></td>
-					</tr>
-				</table>
-
-				<?php submit_button();?>
-
-			</form>
+					<?php submit_button('Export');?>
+				</form>
+			<?php }?>
 		</div>
 	<?php }
-
-	/**
-	 * Register options field.
-	 *
-	 * @since    1.0.0
-	 */
-	function register_menu_settings() {
-		register_setting('wp-stickit-option-group', 'wp_stickit_class_name');
-		register_setting('wp-stickit-option-group', 'wp_stickit_top');
-		register_setting('wp-stickit-option-group', 'wp_stickit_zindex');
-		register_setting('wp-stickit-option-group', 'wp_stickit_screen_min_width');
-		register_setting('wp-stickit-option-group', 'wp_stickit_screen_max_width');
-	}
 
 	/**
 	 * Register option page.
@@ -78,6 +68,5 @@ trait Admin {
 	 */
 	function admin_menu() {
 		add_options_page('Woocommerce Outfit', 'Woocommerce Outfit', 'manage_options', 'wc_outfit', array($this, 'menu_page'));
-		add_action('admin_init', array($this, 'register_menu_settings'));
 	}
 }
