@@ -33,10 +33,14 @@ require_once 'vendor/autoload.php';
  */
 class Xim_Woo_Outfit_Activation {
 	use Xim_Woo_Outfit\Traits\Database;
+	use Xim_Woo_Outfit\Traits\Core;
 
 	function __construct() {
 		// install database
 		$this->install_db();
+
+		// install pages
+		$this->install_pages();
 
 		// set flush rewrite flag enabled
 		set_transient('wc_outfit_flush_rewrite_rules_flag', true, 604800);
