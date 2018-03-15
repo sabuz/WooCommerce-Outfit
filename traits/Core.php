@@ -255,27 +255,20 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function install_pages() {
-		$post = get_page_by_path('style-gallery', OBJECT, 'page');
 
-		if ($post == null) {
-			wp_insert_post(array(
-				'post_title' => __('Style Gallery', 'xim'),
-				'post_type' => 'page',
-				'post_status' => 'publish',
-				'post_author' => get_current_user_id(),
-				'post_content' => '[style-gallery]',
-			));
-		} else {
-			if (strpos($post->post_content, '[style-gallery]') == false) {
-				wp_insert_post(array(
-					'post_title' => __('Style Gallery', 'xim'),
-					'post_type' => 'page',
-					'post_status' => 'publish',
-					'post_author' => get_current_user_id(),
-					'post_content' => '[style-gallery]',
-				));
+		if ($post = get_page_by_path('style-gallery', OBJECT, 'page')) {
+			if (strpos($post->post_content, '[style-gallery]') !== false) {
+				return;
 			}
 		}
+
+		wp_insert_post(array(
+			'post_title' => __('Style Gallery', 'xim'),
+			'post_type' => 'page',
+			'post_status' => 'publish',
+			'post_author' => get_current_user_id(),
+			'post_content' => '[style-gallery]',
+		));
 	}
 
 }
