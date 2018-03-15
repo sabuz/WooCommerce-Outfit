@@ -46,7 +46,6 @@ jQuery(document).on('click', '.like-btn', function(e) {
 
 	jQuery.get(object.ajaxurl + '?action=wc_outfit_post_like', {
 		post_id: post_id,
-		post_type: 'outfit',
 		security: object.nonce
 	}).done(function(data) {
 		if (jQuery.isNumeric(data)) {

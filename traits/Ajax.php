@@ -59,7 +59,7 @@ trait Ajax {
 	function ajax_post_like() {
 		check_ajax_referer('wc_outfit_nonce', 'security');
 
-		$this->toggle_post_like($_REQUEST['post_id'], $_REQUEST['post_type']);
+		$this->toggle_post_like($_REQUEST['post_id']);
 		update_post_meta($_REQUEST['post_id'], 'likes', $this->get_num_post_like_db($_REQUEST['post_id']));
 
 		wp_send_json($this->get_num_post_like($_REQUEST['post_id']));
@@ -78,26 +78,29 @@ trait Ajax {
 	function ajax_follow_people() {
 		check_ajax_referer('wc_outfit_nonce', 'security');
 
-		$user = get_current_user_id();
-		$followers = get_user_meta($_REQUEST['user_id'], 'followers', true) ?: array();
-		$following = get_user_meta($user, 'following', true) ?: array();
+		// $user = get_current_user_id();
+		// $followers = get_user_meta($_REQUEST['user_id'], 'followers', true) ?: array();
+		// $following = get_user_meta($user, 'following', true) ?: array();
 
-		if (in_array($user, $followers)) {
-			$followers = array_diff($followers, array($user));
-		} else {
-			$followers[] = $user;
-		}
+		// if (in_array($user, $followers)) {
+		// 	$followers = array_diff($followers, array($user));
+		// } else {
+		// 	$followers[] = $user;
+		// }
 
-		if (in_array($_REQUEST['user_id'], $following)) {
-			$following = array_diff($following, array($_REQUEST['user_id']));
-		} else {
-			$following[] = $_REQUEST['user_id'];
-		}
+		// if (in_array($_REQUEST['user_id'], $following)) {
+		// 	$following = array_diff($following, array($_REQUEST['user_id']));
+		// } else {
+		// 	$following[] = $_REQUEST['user_id'];
+		// }
 
-		update_user_meta($_REQUEST['user_id'], 'followers', $followers);
-		update_user_meta($user, 'following', $following);
+		// update_user_meta($_REQUEST['user_id'], 'followers', $followers);
+		// update_user_meta($user, 'following', $following);
+		$this->toggle_follow_profile($_REQUEST['user_id']);
 
-		wp_send_json(count($followers));
+		// wp_send_json(count($followers));
+
+
 	}
 
 	function nopriv_ajax_follow_people() {
@@ -116,7 +119,8 @@ trait Ajax {
 		$data = array();
 
 		if ($_REQUEST['user']) {
-			$followers = get_user_meta($_REQUEST['user'], 'followers', true) ?: array();
+			// $followers = get_user_meta($_REQUEST['user'], 'followers', true) ?: array();
+			$followers = $this->get_followers($_REQUEST['user']) ?: array();
 
 			foreach ($followers as $key => $value) {
 				$author_data = get_user_meta($value);
@@ -138,7 +142,8 @@ trait Ajax {
 		$data = array();
 
 		if ($_REQUEST['user']) {
-			$following = get_user_meta($_REQUEST['user'], 'following', true) ?: array();
+			// $following = get_user_meta($_REQUEST['user'], 'following', true) ?: array();
+			$following = $this->get_followings($_REQUEST['user']) ?: array();
 
 			foreach ($following as $key => $value) {
 				$author_data = get_user_meta($value);

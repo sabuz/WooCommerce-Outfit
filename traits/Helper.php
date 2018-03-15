@@ -35,14 +35,16 @@ trait Helper {
 
 	// Get follower count
 	function get_num_followers($user_id) {
-		$followers = get_user_meta($user_id, 'followers', true) ?: array();
+		// $followers = get_user_meta($user_id, 'followers', true) ?: array();
+		$followers = $this->get_followers($user_id);
 
 		return count($followers);
 	}
 
 	// Get following count
 	function get_num_following($user_id) {
-		$following = get_user_meta($user_id, 'following', true) ?: array();
+		// $following = get_user_meta($user_id, 'following', true) ?: array();
+		$following = $this->get_followings($user_id);
 
 		return count($following);
 	}
@@ -51,21 +53,6 @@ trait Helper {
 	function get_num_post_like($post_id) {
 		$count = get_post_meta($post_id, 'likes', true);
 		return !empty($count) ? $count : 0;
-	}
-
-	// Check if following a user
-	function is_following($user_id) {
-		if ($logged_user = get_current_user_id()) {
-			$following_users = get_user_meta($logged_user, 'following', true);
-
-			if (!empty($following_users)) {
-				if (in_array($user_id, $following_users)) {
-					return true;
-				}
-			}
-		}
-
-		return false;
 	}
 
 	// Product Category Helper Functions

@@ -80,6 +80,28 @@ register_activation_hook(__FILE__, function () {
 });
 
 /**
+ * Deactivation Class - fire once while deactivating the plugin.
+ *
+ * @since    1.0.0
+ */
+class Xim_Woo_Outfit_Deactivation {
+
+	function __construct() {
+		$this->remove_cap();
+	}
+
+	// remove upload capability
+	function remove_cap() {
+		$role = get_role('customer');
+		$role->remove_cap('upload_files');
+	}
+}
+
+register_deactivation_hook(__FILE__, function () {
+	new Xim_Woo_Outfit_Deactivation;
+});
+
+/**
  * Initial class - fired when plugins are loaded.
  *
  * @since    1.0.0
