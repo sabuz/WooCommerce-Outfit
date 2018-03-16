@@ -270,7 +270,6 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function install_pages() {
-
 		if ($post = get_page_by_path('style-gallery', OBJECT, 'page')) {
 			if (strpos($post->post_content, '[style-gallery]') !== false) {
 				return;
