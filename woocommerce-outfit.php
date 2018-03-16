@@ -132,6 +132,7 @@ class Xim_Woo_Outfit_Init {
 		add_filter('ajax_query_attachments_args', array($this, 'ajax_query_attachments_args'));
 		add_filter('wp_footer', array($this, 'wp_footer'));
 		add_filter('wp_head', array($this, 'wp_head'));
+		add_filter('post_type_link', array($this, 'append_query_string'), 10, 2);
 
 		add_action('woocommerce_account_' . $this->new_outfit_endpoint . '_endpoint', array($this, 'new_outfit_endpoint_content'));
 		add_action('woocommerce_account_' . $this->all_outfit_endpoint . '_endpoint', array($this, 'outfits_endpoint_content'));

@@ -14,10 +14,10 @@ trait Metabox {
 
 		if ($post_type == 'outfit') {
 			// css
-			wp_enqueue_style('metabox', plugin_dir_url(__FILE__) . '../css/metabox.css');
+			wp_enqueue_style('metabox', plugin_dir_url(__FILE__) . '../assets/css/metabox.css');
 
 			// js
-			wp_enqueue_script('metabox', plugin_dir_url(__FILE__) . '../js/metabox.js', array(), false, true);
+			wp_enqueue_script('metabox', plugin_dir_url(__FILE__) . '../assets/js/metabox.js', array(), false, true);
 			wp_localize_script('metabox', 'object', ['ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('wc_outfit_nonce')]);
 		}
 	}

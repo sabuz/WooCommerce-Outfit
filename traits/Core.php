@@ -9,7 +9,7 @@ trait Core {
 	 *
 	 * @since    1.0.0
 	 */
-	function init($taxonomy) {
+	function init() {
 		// Add rewrite rules
 		add_rewrite_endpoint($this->new_outfit_endpoint, EP_ROOT | EP_PAGES);
 		add_rewrite_endpoint($this->all_outfit_endpoint, EP_ROOT | EP_PAGES);
@@ -39,19 +39,18 @@ trait Core {
 				'exclude_from_search' => true,
 				'rewrite' => false,
 				'supports' => array('title', 'author', 'thumbnail'),
-				'taxonomies' => array('outfit_cats'),
+				'taxonomies' => array('outfit_tags'),
 			)
 		);
 
-		// Register custom taxonomy: outfit_cats.
+		// Register custom taxonomy: outfit_tags.
 		register_taxonomy(
-			'outfit_cats',
+			'outfit_tags',
 			'outfit',
 			array(
 				'show_ui' => true,
-				'show_tagcloud' => false,
-				'hierarchical' => true,
-				'rewrite' => array('slug' => 'style-gallery/' . $taxonomy),
+				'show_tagcloud' => true,
+				'rewrite' => false,
 				'show_admin_column' => true,
 			)
 		);
@@ -59,6 +58,14 @@ trait Core {
 		// Allow customer to upload files
 		$role = get_role('customer');
 		$role->add_cap('upload_files');
+	}
+
+	function append_query_string($url, $post) {
+		if ('outfit' == get_post_type($post)) {
+			// return add_query_arg($url, $post->ID);
+			return home_url('style-gallery/?view=' . $post->ID);
+		}
+		return $url;
 	}
 
 	/**

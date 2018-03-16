@@ -21,7 +21,7 @@ trait Template {
 
 		$html = '';
 
-		if (isset($_COOKIE['wc_outfit_success']) && $_COOKIE['wc_outfit_success'] == 'true')  {
+		if (isset($_COOKIE['wc_outfit_success']) && $_COOKIE['wc_outfit_success'] == 'true') {
 			$html .= '<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">' . __('Outfit submitted successfully.', 'xim') . '</div>
 
 			<script>
@@ -123,7 +123,7 @@ trait Template {
 			</div>';
 
 		// wp_nonce_field('post_nonce', 'post_nonce_field')
-		$html .=  '<input type="submit" value="' . __('Add Outfit', 'couture') . '">
+		$html .= '<input type="submit" value="' . __('Add Outfit', 'couture') . '">
 		</form>';
 
 		return $html;
@@ -145,7 +145,7 @@ trait Template {
 
 		//page-header start
 		if (isset($_GET['cat'])) {
-			$catData = get_term_by('slug', $_GET['cat'], 'outfit_cats');
+			$catData = get_term_by('slug', $_GET['cat'], 'outfit_tags');
 
 			echo '<h4 class="page-subtitle">' . ucwords($catData->name) . '</h4>';
 			echo '<div class="page-bar">';
@@ -257,7 +257,7 @@ trait Template {
 				'order' => 'desc',
 				'tax_query' => array(
 					array(
-						'taxonomy' => 'outfit_cats',
+						'taxonomy' => 'outfit_tags',
 						'field' => 'slug',
 						'terms' => $_GET['cat'],
 					),
@@ -320,35 +320,35 @@ trait Template {
 			while ($query->have_posts()): $query->the_post();
 				$author_data = $this->get_outfit_author_data($post->ID);
 				echo '<div class="grid-item col-sm-4" data-id="' . $post->ID . '">
-										<div class="gal-header">
-											<div class="gal-product clearfix">
-												<ul>
-													' . $this->hooked_products($post->ID, 4) . '
-												</ul>
-											</div>
-											<a class="gal-thumb clearfix">
-												<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-img" />
-											</a>
-										</div>
-										<div class="gal-footer clearfix">
-											<div class="pull-left">
-												<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
-													' . $author_data['nickname'][0] . '</a>
-												<span class="time">' . $this->outfit_posted_ago() . '</span>
-											</div>
-											<div class="pull-right">
-												<div class="gal-bubble">
-													<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
+					<div class="gal-header">
+						<div class="gal-product clearfix">
+							<ul>
+								' . $this->hooked_products($post->ID, 4) . '
+							</ul>
+						</div>
+						<a class="gal-thumb clearfix">
+							<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-img" />
+						</a>
+					</div>
+					<div class="gal-footer clearfix">
+						<div class="pull-left">
+							<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
+								' . $author_data['nickname'][0] . '</a>
+							<span class="time">' . $this->outfit_posted_ago() . '</span>
+						</div>
+						<div class="pull-right">
+							<div class="gal-bubble">
+								<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
 
-													<div class="bubble-content">
-														' . $this->share_buttons_html($post->ID) . '
-													</div>
-												</div>
+								<div class="bubble-content">
+									' . $this->share_buttons_html($post->ID) . '
+								</div>
+							</div>
 
-												' . $this->like_button_html($post->ID) . '
-											</div>
-										</div>
-									</div>';
+							' . $this->like_button_html($post->ID) . '
+						</div>
+					</div>
+				</div>';
 			endwhile;
 			echo '</div>';
 
@@ -520,10 +520,10 @@ trait Template {
 				<h2>' . __('Explore Shop & Outfit Photos', 'couture') . '</h2>
 
 				<div class="owl-carousel">';
-				while ($query->have_posts()): $query->the_post();
-					echo '<div class="item" data-id="' . get_the_ID() . '"><img src="' . $this->get_outfit_thumbnail(get_the_ID(), 'product-thumb') . '"></div>';
-				endwhile;
-				echo '</div>
+			while ($query->have_posts()): $query->the_post();
+				echo '<div class="item" data-id="' . get_the_ID() . '"><img src="' . $this->get_outfit_thumbnail(get_the_ID(), 'product-thumb') . '"></div>';
+			endwhile;
+			echo '</div>
 			</div>';
 		}
 
