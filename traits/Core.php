@@ -60,11 +60,19 @@ trait Core {
 		$role->add_cap('upload_files');
 	}
 
-	function append_query_string($url, $post) {
-		if ('outfit' == get_post_type($post)) {
-			// return add_query_arg($url, $post->ID);
+	function filter_post_type_link($url, $post) {
+		if (get_post_type($post) == 'outfit') {
 			return home_url('style-gallery/?view=' . $post->ID);
 		}
+
+		return $url;
+	}
+
+	function filter_term_link($url, $term, $taxonomy) {
+		if ($taxonomy == 'outfit_tags') {
+			return home_url('style-gallery/?tags=' . $term->slug);
+		}
+
 		return $url;
 	}
 
@@ -104,34 +112,34 @@ trait Core {
 	 *
 	 * @since    1.0.0
 	 */
-	function template_redirect() {
-		if (is_single() && get_query_var('post_type') == 'outfit') {
-			wp_redirect(home_url('404'), 301);
-			exit;
-		}
-	}
+	// function template_redirect() {
+	// 	if (is_single() && get_query_var('post_type') == 'outfit') {
+	// 		wp_redirect(home_url('404'), 301);
+	// 		exit;
+	// 	}
+	// }
 
 	/**
 	 * Remove single outfit permalink html.
 	 *
 	 * @since    1.0.0
 	 */
-	function remove_sample_permalink_html($permalink) {
-		return;
-	}
+	// function remove_sample_permalink_html($permalink) {
+	// 	return;
+	// }
 
 	/**
 	 * Remove outfit quick view.
 	 *
 	 * @since    1.0.0
 	 */
-	function filter_post_row_actions($actions, $post) {
-		if ($post->post_type == 'outfit') {
-			unset($actions['view']);
-		}
+	// function filter_post_row_actions($actions, $post) {
+	// 	if ($post->post_type == 'outfit') {
+	// 		unset($actions['view']);
+	// 	}
 
-		return $actions;
-	}
+	// 	return $actions;
+	// }
 
 	/**
 	 * Remove outfit post data on delete.
