@@ -40,6 +40,7 @@ trait Core {
 				'rewrite' => false,
 				'supports' => array('title', 'author', 'thumbnail'),
 				'taxonomies' => array('outfit_tags'),
+				'menu_icon' => 'dashicons-camera',
 			)
 		);
 
@@ -62,7 +63,7 @@ trait Core {
 
 	function filter_post_type_link($url, $post) {
 		if (get_post_type($post) == 'outfit') {
-			return home_url('style-gallery/?view=' . $post->ID);
+			return home_url(get_option('wc-outfit-page-slug') . '/?view=' . $post->ID);
 		}
 
 		return $url;
@@ -70,7 +71,7 @@ trait Core {
 
 	function filter_term_link($url, $term, $taxonomy) {
 		if ($taxonomy == 'outfit_tags') {
-			return home_url('style-gallery/?tags=' . $term->slug);
+			return home_url(get_option('wc-outfit-page-slug') . '/?tags=' . $term->slug);
 		}
 
 		return $url;
@@ -270,19 +271,29 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function install_pages() {
-		if ($post = get_page_by_path('style-gallery', OBJECT, 'page')) {
-			if (strpos($post->post_content, '[style-gallery]') !== false) {
-				return;
-			}
+		$post_id = null;
+		$post = get_post(get_option('wc-outfit-page-id'));
+
+		if (empty($post)) {
+			$post_id = wp_insert_post(array(
+				'post_title' => __('Style Gallery', 'xim'),
+				'post_type' => 'page',
+				'post_status' => 'publish',
+				'post_author' => get_current_user_id(),
+				'post_content' => '[style-gallery]',
+			));
+		} else if ($post->post_status == 'trash') {
+			wp_untrash_post($post->ID);
+
+			$post_id = $post->ID;
+		} else {
+			$post_id = $post->ID;
 		}
 
-		wp_insert_post(array(
-			'post_title' => __('Style Gallery', 'xim'),
-			'post_type' => 'page',
-			'post_status' => 'publish',
-			'post_author' => get_current_user_id(),
-			'post_content' => '[style-gallery]',
-		));
+		if (!empty($post_id)) {
+			update_option('wc-outfit-page-id', $post_id);
+			update_option('wc-outfit-page-slug', get_post_field('post_name', $post_id));
+		}
 	}
 
 }

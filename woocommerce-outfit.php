@@ -48,34 +48,13 @@ class Xim_Woo_Outfit_Activation {
 }
 
 register_activation_hook(__FILE__, function () {
+	/**
+	 * If WooCommerce is activated, initiate the activation class
+	 *
+	 * @since    1.0.0
+	 */
 	if (class_exists('WooCommerce')) {
-		/**
-		 * If WooCommerce is activated, initiate the activation class
-		 *
-		 * @since    1.0.0
-		 */
 		new Xim_Woo_Outfit_Activation;
-
-	} else {
-		/**
-		 * If WooCommerce is not activated, throw error and deactive the plugin
-		 *
-		 * @since    1.0.0
-		 */
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-		// Deactivate the plugin
-		deactivate_plugins(plugin_basename(__FILE__));
-
-		// Remove success notice
-		unset($_GET['activate']);
-
-		// Throw an error in the wordpress admin
-		add_action('admin_notices', function () {
-			$class = 'notice notice-error is-dismissible';
-			$message = __('<strong>WooCommerce Outfit</strong> requires <strong>WooCommerce</strong> plugin to be installed and activated.', 'xim');
-			printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
-		});
 	}
 });
 
@@ -195,6 +174,9 @@ add_action('plugins_loaded', function () {
 
 		// Deactivate the plugin
 		deactivate_plugins(plugin_basename(__FILE__));
+
+		// Remove success notice
+		unset($_GET['activate']);
 
 		// Throw an error in the wordpress admin
 		add_action('admin_notices', function () {
