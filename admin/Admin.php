@@ -133,9 +133,15 @@ trait Admin {
 				        	<th scope="row">Position</th>
 				        	<td>
 								<select name="wc-outfit-single-position" id="wc-outfit-single-position">
-									<option value="woocommerce_before_add_to_cart_form" <?php selected(get_option('wc-outfit-single-position')); ?>>Before Add To Cart</option>
-									<option value="woocommerce_before_variations_form" <?php selected(get_option('wc-outfit-single-position')); ?>>Before Variations Form</option>
-									<option value="woocommerce_after_single_variation" <?php selected(get_option('wc-outfit-single-position')); ?>>After Single Variation</option>
+									<option value="woocommerce_before_single_product" <?php selected(get_option('wc-outfit-single-position')); ?>>Before Single Product</option>
+									<option value="woocommerce_single_product_summary" <?php selected(get_option('wc-outfit-single-position')); ?>>Single Product Summary</option>
+									<option value="woocommerce_before_add_to_cart_form" <?php selected(get_option('wc-outfit-single-position')); ?>>Before Add To Cart Form</option>
+									<option value="woocommerce_before_add_to_cart_button" <?php selected(get_option('wc-outfit-single-position')); ?>>Before Add To Cart Button</option>
+									<option value="woocommerce_after_add_to_cart_button" <?php selected(get_option('wc-outfit-single-position')); ?>>After Add To Cart Button</option>
+									<option value="woocommerce_after_add_to_cart_form" <?php selected(get_option('wc-outfit-single-position')); ?>>After Add To Cart Form</option>
+									<option value="woocommerce_product_meta_end" <?php selected(get_option('wc-outfit-single-position')); ?>>After Product Meta</option>
+									<option value="woocommerce_after_single_product_summary" <?php selected(get_option('wc-outfit-single-position')); ?>>After Single Product Summary</option>
+									<option value="woocommerce_after_single_product" <?php selected(get_option('wc-outfit-single-position')); ?>>After Single Product</option>
 								</select>
 								<p class="description"><?php _e('Outfit listing position on single product page.', 'xim')?></p>
 							</td>
