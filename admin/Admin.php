@@ -25,6 +25,7 @@ trait Admin {
 			<h2 class="nav-tab-wrapper">
 	    		<a href="?page=wc_outfit&section=general" class="nav-tab <?php echo $section == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e('General', 'xim'); ?></a>
 	    		<a href="?page=wc_outfit&section=outfit" class="nav-tab <?php echo $section == 'outfit' ? 'nav-tab-active' : ''; ?>"><?php _e('Outfit', 'xim'); ?></a>
+	    		<a href="?page=wc_outfit&section=style-gallery" class="nav-tab <?php echo $section == 'style-gallery' ? 'nav-tab-active' : ''; ?>"><?php _e('Style Gallery', 'xim'); ?></a>
 			</h2>
 
 			<?php if ($section == 'outfit') { ?>
@@ -91,7 +92,7 @@ trait Admin {
 
 					<?php submit_button();?>
 				</form>
-			<?php } else { ?>				
+			<?php } else if ($section == 'style-gallery') { ?>
 				<form method="post" action="options.php">
 					<?php settings_fields('wc-outfit'); ?>
 					<?php do_settings_sections('wc_outfit'); ?>
@@ -106,9 +107,43 @@ trait Admin {
 								<p class="description"><?php _e('The base page that will be used in outfit permalinks.', 'xim')?></p>
 							</td>
 				        </tr>
+
+				        <tr valign="top">
+				        	<th scope="row">Thumbnail Size</th>
+				        	<td>
+								<input type="number" name="wc-outfit-gallery-thumb-w" id="wc-outfit-gallery-thumb-w" class="small-text" value="<?php echo get_option('wc-outfit-gallery-thumb-w', 480); ?>">
+								<label for="mailserver_port"><?php _e('x', 'xim'); ?></label>
+								<input type="number" name="wc-outfit-gallery-thumb-h" id="wc-outfit-gallery-thumb-h" class="small-text" value="<?php echo get_option('wc-outfit-gallery-thumb-h', 720); ?>">
+								<p class="description"><?php _e('Updating the settings will take effect for newly uploaded images.', 'xim')?></p>
+							</td>
+				        </tr>
 				    </table>
 					
+					<?php submit_button();?>
+				</form>
+			<?php } else { ?>				
+				<form method="post" action="options.php">
+					<?php settings_fields('wc-outfit'); ?>
+					<?php do_settings_sections('wc_outfit'); ?>
+
+					<h2><?php _e('Display', 'xim'); ?></h2>
+
+					<table class="form-table">
+				        <tr valign="top">
+				        	<th scope="row">Position</th>
+				        	<td>
+								<select name="wc-outfit-single-position" id="wc-outfit-single-position">
+									<option value="woocommerce_before_add_to_cart_form" <?php selected(get_option('wc-outfit-single-position')); ?>>Before Add To Cart</option>
+									<option value="woocommerce_before_variations_form" <?php selected(get_option('wc-outfit-single-position')); ?>>Before Variations Form</option>
+									<option value="woocommerce_after_single_variation" <?php selected(get_option('wc-outfit-single-position')); ?>>After Single Variation</option>
+								</select>
+								<p class="description"><?php _e('Outfit listing position on single product page.', 'xim')?></p>
+							</td>
+				        </tr>
+				    </table>
+
 					<h2><?php _e('API Keys', 'xim'); ?></h2>
+					<p><?php _e('This will be used for sharing photos on social media.', 'xim'); ?></p>
 
 					<table class="form-table">
 				        <tr valign="top">
@@ -132,13 +167,16 @@ trait Admin {
 	 * @since    1.0.0
 	 */
 	function register_settings() {
-		register_setting('wc-outfit', 'wc-outfit-page-id');
+		register_setting('wc-outfit', 'wc-outfit-single-position');
 		register_setting('wc-outfit', 'wc-outfit-fb-app-id');
 		register_setting('wc-outfit', 'wc-outfit-verify-submission');
 		register_setting('wc-outfit', 'wc-outfit-bought-only');
 		register_setting('wc-outfit', 'wc-outfit-tagging');
 		register_setting('wc-outfit', 'wc-outfit-customer-tagging');
 		register_setting('wc-outfit', 'wc-outfit-cleanup-gallery');
+		register_setting('wc-outfit', 'wc-outfit-page-id');
+		register_setting('wc-outfit', 'wc-outfit-gallery-thumb-w');
+		register_setting('wc-outfit', 'wc-outfit-gallery-thumb-h');
 	}
 
 	/**

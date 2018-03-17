@@ -238,7 +238,7 @@ trait Core {
 
 		if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'style-gallery')) {
 			if (isset($_GET['view'])) {
-				echo '<meta property="fb:app_id" content="fb_app_id" />
+				echo '<meta property="fb:app_id" content="' . get_option('wc-outfit-fb-app-id') . '" />
 				<meta property="og:url" content="' . get_the_permalink() . '?view=' . $_GET['view'] . '" />
 				<meta property="og:type" content="website" />
 				<meta property="og:title" content="' . get_the_title($_GET['view']) . '" />
