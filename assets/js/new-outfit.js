@@ -105,7 +105,7 @@ jQuery(document).ready(function() {
 	 */
 	jQuery('.selectId').on('change', function(e) {
 		e.preventDefault()
-		jQuery('#products').fadeTo("slow", 0.5)
+		jQuery('#products').empty()
 
 		var cat_id = jQuery(this).val()
 
@@ -113,13 +113,24 @@ jQuery(document).ready(function() {
 			cat: cat_id,
 			security: object.nonce
 		}).done(function(data) {
-			jQuery('#products').fadeTo('slow', 1)
-			jQuery('#products').empty()
+			var count = 0
+			var html = ''
 
 			for (var i in data) {
-				var html = '<a class="col-sm-4 item" data-id="' + data[i].id + '"><img src="' + data[i].thumb + '"><h3>' + data[i].title + '</h3></a>'
-				jQuery("#products").prepend(html)
+				if (count == 0 || count % 3 == 0) {
+					html += '<div class="row">'
+				}
+
+				html += '<a class="col-sm-4 item" data-id="' + data[i].id + '"><img src="' + data[i].thumb + '"><h3>' + data[i].title + '</h3></a>'
+
+				if ((count != 0 && count % 2 == 0) || (count == data.length - 1)) {
+					html += '</div>'
+				}
+
+				count += 1
 			}
+
+			jQuery("#products").prepend(html).fadeTo('slow', 1)
 		})
 	})
 

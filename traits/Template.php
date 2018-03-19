@@ -119,9 +119,7 @@ trait Template {
 			$html .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
 		endforeach;
 		$html .= '</select>
-				<div class="row">
-					<div id="products" class="products"></div>
-				</div>
+				<div id="products" class="products"></div>
 			</div>';
 
 		// wp_nonce_field('post_nonce', 'post_nonce_field')

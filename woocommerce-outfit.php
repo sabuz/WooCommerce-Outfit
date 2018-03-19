@@ -146,7 +146,7 @@ class Xim_Woo_Outfit_Init {
 		add_shortcode('outfits', array($this, 'template_outfits'));
 		add_shortcode('new-outfit', array($this, 'template_new_outfit'));
 		add_shortcode('style-gallery', array($this, 'template_style_gallery'));
-		add_action(get_option('wc-outfit-single-position'), array($this, 'template_single_product_listing'));
+		add_action(get_option('wc-outfit-single-position', 'woocommerce_after_single_product_summary'), array($this, 'template_single_product_listing'));
 
 		// Admin Page
 		if (is_admin()) {

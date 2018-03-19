@@ -45,16 +45,18 @@ trait Core {
 		);
 
 		// Register custom taxonomy: outfit_tags.
-		register_taxonomy(
-			'outfit_tags',
-			'outfit',
-			array(
-				'show_ui' => true,
-				'show_tagcloud' => true,
-				'rewrite' => false,
-				'show_admin_column' => true,
-			)
-		);
+		if (get_option('wc-outfit-tagging', 'on')) {
+			register_taxonomy(
+				'outfit_tags',
+				'outfit',
+				array(
+					'show_ui' => true,
+					'show_tagcloud' => true,
+					'rewrite' => false,
+					'show_admin_column' => true,
+				)
+			);
+		}
 
 		// Allow customer to upload files
 		$role = get_role('customer');
@@ -98,7 +100,7 @@ trait Core {
 		wp_register_script('isotope', plugin_dir_url(__FILE__) . '../assets/js/isotope.pkgd.min.js', array(), false, true);
 		wp_register_script('style-gallery', plugin_dir_url(__FILE__) . '../assets/js/style-gallery.js', array(), false, true);
 		wp_localize_script('single-product', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
-		wp_localize_script('style-gallery', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
+		wp_localize_script('style-gallery', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 
 		// All Outfits
 		wp_enqueue_style('wc-bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.css');

@@ -59,15 +59,13 @@ trait Ajax {
 	function ajax_post_like() {
 		check_ajax_referer('wc_outfit_nonce', 'security');
 
-		$this->toggle_post_like($_REQUEST['post_id']);
-		update_post_meta($_REQUEST['post_id'], 'likes', $this->get_num_post_like_db($_REQUEST['post_id']));
-
-		wp_send_json($this->get_num_post_like($_REQUEST['post_id']));
+		$count = $this->toggle_post_like($_REQUEST['post_id']);
+		update_post_meta($_REQUEST['post_id'], 'likes', $count);
+		wp_send_json($count, 200);
 	}
 
 	function nopriv_ajax_post_like() {
-		echo get_permalink(get_option('woocommerce_myaccount_page_id'));
-		die();
+		wp_send_json(get_permalink(get_option('woocommerce_myaccount_page_id')), 401);
 	}
 
 	/**
@@ -96,16 +94,16 @@ trait Ajax {
 
 		// update_user_meta($_REQUEST['user_id'], 'followers', $followers);
 		// update_user_meta($user, 'following', $following);
-		$this->toggle_follow_profile($_REQUEST['user_id']);
+		;
 
 		// wp_send_json(count($followers));
+		wp_send_json($this->toggle_follow_profile($_REQUEST['user_id']), 200);
 
 
 	}
 
 	function nopriv_ajax_follow_people() {
-		echo get_permalink(get_option('woocommerce_myaccount_page_id'));
-		die();
+		wp_send_json(get_permalink(get_option('woocommerce_myaccount_page_id')), 401);
 	}
 
 	/**

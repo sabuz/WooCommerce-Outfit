@@ -52,22 +52,14 @@ trait Database {
 		$table_name = $wpdb->prefix . $this->table_post_likes;
 		$user = get_current_user_id();
 
+		// insert or delete
 		if ($this->is_liked_outfit($post_id)) {
 			$wpdb->delete($table_name, array('post_id' => $post_id, 'user_id' => $user));
 		} else {
 			$wpdb->insert($table_name, array('post_id' => $post_id, 'user_id' => $user, 'created_at' => current_time('mysql')));
 		}
-	}
 
-	/**
-	 * Fetch num post like from table 'wc_outfit_post_likes'.
-	 *
-	 * @since    1.0.0
-	 */
-	function get_num_post_like_db($post_id) {
-		global $wpdb;
-
-		$table_name = $wpdb->prefix . $this->table_post_likes;
+		// fetch count from db
 		$wpdb->get_results("SELECT * FROM $table_name WHERE post_id = $post_id");
 
 		return $wpdb->num_rows;
@@ -143,11 +135,17 @@ trait Database {
 		$table_name = $wpdb->prefix . $this->table_community;
 		$user = get_current_user_id();
 
+		// insert or delete
 		if ($this->is_following($profile_id)) {
 			$wpdb->delete($table_name, array('user_id' => $user, 'profile_id' => $profile_id));
 		} else {
 			$wpdb->insert($table_name, array('user_id' => $user, 'profile_id' => $profile_id, 'created_at' => current_time('mysql')));
 		}
+
+		// fetch count from db
+		$wpdb->get_col("SELECT user_id FROM $table_name WHERE profile_id = $profile_id");
+
+		return $wpdb->num_rows;
 	}
 
 	// Check if following a user

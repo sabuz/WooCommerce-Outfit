@@ -64,7 +64,7 @@ trait Admin {
 					<?php do_settings_sections('wc_outfit');?>
 
 					<h2><?php _e('API Keys', 'xim'); ?></h2>
-					<p><?php _e('This will be used for sharing photos on social media.', 'xim'); ?></p>
+					<p><?php _e('This will be used for sharing outfit on social media.', 'xim'); ?></p>
 
 					<table class="form-table">
 				        <tr valign="top">
@@ -83,46 +83,47 @@ trait Admin {
 					<?php settings_fields('wc-outfit'); ?>
 					<?php do_settings_sections('wc_outfit'); ?>
 
-				    <h2>Outfit Submission</h2>
+				    <h2><?php _e('Outfit Submission', 'xim'); ?></h2>
 
 					<table class="form-table">
 				        <tr valign="top">
 							<th scope="row"><?php _e('Verify Submission', 'xim'); ?></th>
+
 							<td>
-								<input type="checkbox" name="wc-outfit-verify-submission" id="wc-outfit-verify-submission" <?php echo (get_option('wc-outfit-verify-submission') ? 'checked' : ''); ?>>
-								<label for="wc-outfit-verify-submission"><strong>Verify new submitted outfit</strong></label>
-								<p class="description">If enabled, Admin will have to verify outfits manually and publish them.</p>
+								<input type="checkbox" name="wc-outfit-verify-submission" id="wc-outfit-verify-submission" <?php echo (get_option('wc-outfit-verify-submission', 'on') ? 'checked' : ''); ?>>
+								<label for="wc-outfit-verify-submission"><strong><?php _e('Verify new submitted outfit', 'xim'); ?></strong></label>
+								<p class="description"><?php _e('If enabled, Admin will have to verify outfits manually and publish them.', 'xim'); ?></p>
 							</td>
 						</tr>
 
 						<tr valign="top">
 							<th scope="row"><?php _e('Bought Product Only', 'xim'); ?></th>
 							<td>
-								<input type="checkbox" name="wc-outfit-bought-only" id="wc-outfit-bought-only" <?php echo (get_option('wc-outfit-bought-only') ? 'checked' : ''); ?>>
-								<label for="wc-outfit-bought-only"><strong>Allow customer to attach bought product only</strong></label>
-								<p class="description">If enabled, customer will be able to attach the products they bought.</p>
+								<input type="checkbox" name="wc-outfit-bought-only" id="wc-outfit-bought-only" <?php echo (get_option('wc-outfit-bought-only', 'on') ? 'checked' : ''); ?>>
+								<label for="wc-outfit-bought-only"><strong><?php _e('Allow customer to attach bought product only', 'xim'); ?></strong></label>
+								<p class="description"><?php _e('If enabled, customer will be able to attach the products they bought.', 'xim'); ?></p>
 							</td>
 						</tr>
 					</table>
 
-					<h2>Tagging</h2>
+					<h2><?php _e('Tagging', 'xim'); ?></h2>
 
 					<table class="form-table">
 						<tr valign="top">
 							<th scope="row"><?php _e('Enable Tagging', 'xim'); ?></th>
 							<td>
-								<input type="checkbox" name="wc-outfit-tagging" id="wc-outfit-tagging" <?php echo (get_option('wc-outfit-tagging') ? 'checked' : ''); ?>>
-								<label for="wc-outfit-tagging"><strong>Enable Tag features</strong></label>
-								<p class="description">Enable product tagging option.</p>
+								<input type="checkbox" name="wc-outfit-tagging" id="wc-outfit-tagging" <?php echo (get_option('wc-outfit-tagging', 'on') ? 'checked' : ''); ?>>
+								<label for="wc-outfit-tagging"><strong><?php _e('Enable Tag features', 'xim'); ?></strong></label>
+								<p class="description"><?php _e('Enable product tagging option.', 'xim'); ?></p>
 							</td>
 						</tr>
 
 						<tr valign="top">
 							<th scope="row"><?php _e('Permission', 'xim'); ?></th>
 							<td>
-								<input type="checkbox" name="wc-outfit-customer-tagging" id="wc-outfit-customer-tagging" <?php echo (get_option('wc-outfit-customer-tagging') ? 'checked' : ''); ?>>
-								<label for="wc-outfit-customer-tagging"><strong>Allow customer to add tag</strong></label>
-								<p class="description">If enabled, customer will be able to add tag during submission of outfit.</p>
+								<input type="checkbox" name="wc-outfit-customer-tagging" id="wc-outfit-customer-tagging" <?php echo (get_option('wc-outfit-customer-tagging', 'on') ? 'checked' : ''); ?>>
+								<label for="wc-outfit-customer-tagging"><strong><?php _e('Allow customer to add tag', 'xim'); ?></strong></label>
+								<p class="description"><?php _e('If enabled, customer will be able to add tag during submission of outfit.', 'xim'); ?></p>
 							</td>
 						</tr>
 				    </table>
@@ -174,16 +175,16 @@ trait Admin {
 	 * @since    1.0.0
 	 */
 	function register_settings() {
-		register_setting('wc-outfit', 'wc-outfit-single-position');
-		register_setting('wc-outfit', 'wc-outfit-fb-app-id');
 		register_setting('wc-outfit', 'wc-outfit-verify-submission');
 		register_setting('wc-outfit', 'wc-outfit-bought-only');
 		register_setting('wc-outfit', 'wc-outfit-tagging');
 		register_setting('wc-outfit', 'wc-outfit-customer-tagging');
 		register_setting('wc-outfit', 'wc-outfit-cleanup-gallery');
+		register_setting('wc-outfit', 'wc-outfit-single-position');
 		register_setting('wc-outfit', 'wc-outfit-page-id');
 		register_setting('wc-outfit', 'wc-outfit-gallery-thumb-w');
 		register_setting('wc-outfit', 'wc-outfit-gallery-thumb-h');
+		register_setting('wc-outfit', 'wc-outfit-fb-app-id');
 	}
 
 	/**
