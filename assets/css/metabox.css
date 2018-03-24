@@ -3,8 +3,8 @@
 }
 
 .couture-metabox .row {
-	margin-left: -10px;
-	margin-right: -10px;
+	margin-left: -5px;
+	margin-right: -5px;
 }
 
 .couture-metabox .row:before,
@@ -25,8 +25,9 @@
 	position: relative;
 	width: 16.6666667%;
 	display: inline-block;
-	padding: 0 10px;
+	padding: 0 5px;
 	box-sizing: border-box;
+	margin-bottom: 10px;
 }
 
 .couture-metabox img {
@@ -42,7 +43,16 @@
 .couture-metabox .selected-product {
 	background-color: #f7f7f7;
 	border: 2px dashed #ededed;
-	padding: 10px;
+	padding: 10px 10px 0;
+}
+
+.couture-metabox .selected-product.empty:after {
+	content: 'No Product Selected';
+	display: block;
+	font-size: 18px;
+	line-height: 155px;
+	text-align: center;
+	color: #aaa;
 }
 
 .couture-metabox .selected-product .close {

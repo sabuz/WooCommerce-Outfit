@@ -5,7 +5,7 @@ jQuery('.selectId').on('change', function(e) {
 
 	var cat_id = jQuery(this).val();
 
-	jQuery.get(object.ajaxurl + '?action=wc_outfit_products_by_cat', {
+	jQuery.get(object.ajaxurl + '?action=wc_outfit_get_products_by_cat', {
 		cat: cat_id,
 		security: object.nonce
 	}).done(function(data) {
@@ -45,6 +45,10 @@ jQuery('#products').on('click', 'a', function(e) {
 			labels: 0
 		});
 		jQuery('#ids').val(JSON.stringify(ids));
+
+		if (ids.length > 0) {
+			$('.selected-product').removeClass('empty')
+		}
 	}
 });
 
@@ -61,6 +65,10 @@ jQuery('.selected-product').on('click', '.close', function() {
 
 	ids.splice(index, 1);
 	jQuery('#ids').val(JSON.stringify(ids));
+
+	if (ids.length == 0) {
+		$('.selected-product').addClass('empty')
+	}
 });
 
 // Switch
