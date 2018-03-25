@@ -14,9 +14,11 @@ trait Metabox {
 
 		if ($post_type == 'outfit') {
 			// css
+			wp_enqueue_style('select2', plugin_dir_url(__FILE__) . '../assets/css/select2.min.css');
 			wp_enqueue_style('metabox', plugin_dir_url(__FILE__) . '../assets/css/metabox.css');
 
 			// js
+			wp_enqueue_script('select2', plugin_dir_url(__FILE__) . '../assets/js/select2.min.js', array(), false, true);
 			wp_enqueue_script('metabox', plugin_dir_url(__FILE__) . '../assets/js/metabox.js', array(), false, true);
 			wp_localize_script('metabox', 'object', ['ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('wc_outfit_nonce')]);
 		}
@@ -42,38 +44,40 @@ trait Metabox {
 
 		$content = '';
 		$content .= wp_nonce_field('wc_outfit_meta_box_nonce', 'wc_outfit_meta_box_nonce');
-		$content .= '<div class="couture-metabox">';
-		$content .= '<div class="selected-product">';
-		$content .= '<div class="row">';
-		if (!empty($products)) {
-			foreach (json_decode($products) as $product) {
-				$content .= '<div class="col-6">';
-				$content .= '<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">';
-				$content .= '<a class="close" data-id="' . $product->id . '"></a>';
-				$content .= '<span class="switch ' . ($product->labels == 1 ? 'active' : 'inactive') . '" data-id="' . $product->id . '"></span>';
-				$content .= '</div>';
-			}
-		}
-		$content .= '</div>';
-		$content .= '</div>';
+		$content .= '<div class="wc-outfit-mb">
+			<div class="selected-products">
+				<div class="row">';
+				if (!empty($products)) {
+					foreach (json_decode($products) as $product) {
+						$content .= '<div class="col-4">
+							<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">
+							<a class="close" data-id="' . $product->id . '"></a>
+							<span class="switch ' . ($product->labels == 1 ? 'active' : 'inactive') . '" data-id="' . $product->id . '"></span>
+						</div>';
+					}
+				}
+				$content .= '</div>
+			</div>
 
-		$content .= '<div class="row">';
-		$content .= '<div class="col-1">';
-		$content .= '<select class="selectId">';
-		$content .= '<option selected disabled>Choose a category</option>';
-		foreach ($this->get_product_cats() as $cat) {
-			$content .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
-		}
-		$content .= '</select>';
-		$content .= '</div>';
-		$content .= '</div>';
+			<div class="row">
+				<div class="col-1">
+					<select class="select-cat">
+						<option></option>';
+						foreach ($this->get_product_cats() as $cat) {
+							$content .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
+						}
+					$content .= '</select>
+				</div>
+			</div>
 
-		$content .= '<div class="row">';
-		$content .= '<div id="products" class="products"></div>';
-		$content .= '</div>';
-		$content .= '</div>';
+			<div class="row">
+				<div class="product-list">
 
-		$content .= '<input type="hidden" name="ids" id="ids" value=' . $products . '>';
+				</div>
+			</div>
+
+			<input type="hidden" name="ids" id="ids" value=' . $products . '>
+		</div>';
 
 		echo $content;
 	}
@@ -88,7 +92,7 @@ trait Metabox {
 
 		$value = get_post_meta($post->ID, 'featured', true);
 
-		echo '<div class="couture-metabox">
+		echo '<div class="wc-outfit-mb">
 			<label for="featured">
 				<input type="checkbox" name="featured" id="featured" ' . (!empty($value) ? "checked" : "") . '/>
 				' . __('Make this post featured ?', 'xim') . '

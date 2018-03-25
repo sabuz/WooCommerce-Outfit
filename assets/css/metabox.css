@@ -1,19 +1,24 @@
-.couture-metabox {
-	padding: 10px 0;
+/*General*/
+.hidden {
+	display: none;
 }
 
-.couture-metabox .row {
-	margin-left: -5px;
-	margin-right: -5px;
+.wc-outfit-mb {
+	/*padding: 10px 0;*/
 }
 
-.couture-metabox .row:before,
-.couture-metabox .row:after {
+.wc-outfit-mb .row {
+	margin-left: -10px;
+	margin-right: -10px;
+}
+
+.wc-outfit-mb .row:before,
+.wc-outfit-mb .row:after {
 	display: table;
 	content: " ";
 }
 
-.couture-metabox .col-1 {
+.wc-outfit-mb .col-1 {
 	position: relative;
 	width: 100%;
 	display: inline-block;
@@ -21,32 +26,33 @@
 	box-sizing: border-box;
 }
 
-.couture-metabox .col-6 {
+.wc-outfit-mb .col-4 {
 	position: relative;
-	width: 16.6666667%;
+	width: 25%;
 	display: inline-block;
 	padding: 0 5px;
 	box-sizing: border-box;
 	margin-bottom: 10px;
 }
 
-.couture-metabox img {
+.wc-outfit-mb img {
 	max-width: 100%;
 	height: auto;
 }
 
 /*Select*/
-.couture-metabox .selectId {
+.wc-outfit-mb .selectId {
 	margin: 20px 0;
 }
 
-.couture-metabox .selected-product {
+.wc-outfit-mb .selected-products {
 	background-color: #f7f7f7;
 	border: 2px dashed #ededed;
 	padding: 10px 10px 0;
 }
 
-.couture-metabox .selected-product.empty:after {
+/*Selected Products*/
+.wc-outfit-mb .selected-products.empty:after {
 	content: 'No Product Selected';
 	display: block;
 	font-size: 18px;
@@ -55,7 +61,7 @@
 	color: #aaa;
 }
 
-.couture-metabox .selected-product .close {
+.wc-outfit-mb .selected-products .close {
 	display: inline-block;
 	position: absolute;
 	top: 8px;

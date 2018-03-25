@@ -19,7 +19,8 @@ trait Ajax {
 		$data = new WP_Query(array(
 			'post_type' => 'product',
 			'post_status' => 'publish',
-			'posts_per_page' => -1,
+			'posts_per_page' => 2,
+			'paged' => intval($_REQUEST['page']),
 			'tax_query' => array(
 				array(
 					'taxonomy' => 'product_cat',
@@ -32,14 +33,14 @@ trait Ajax {
 		));
 
 		if ($data->posts) {
-			foreach ($data->posts as $id) {
+			foreach ($data->posts as $key => $id) {
 				if (current_user_can('manage_options') || wc_customer_bought_product($user->user_email, $user->ID, $id)) {
-					$post_data = array();
-					$post_data['id'] = $id;
-					$post_data['title'] = get_the_title($id);
-					$post_data['thumb'] = $this->get_outfit_thumbnail($id, 'product-thumb');
+					$product = wc_get_product($id);
 
-					array_push($json, $post_data);
+					$json[$key]['id'] = $id;
+					$json[$key]['title'] = $product->get_title();
+					$json[$key]['thumb'] = $this->get_outfit_thumbnail($id, 'product-thumb');
+					$json[$key]['price_html'] = $product->get_price_html();
 				}
 			}
 		}
