@@ -4,35 +4,30 @@
 }
 
 .wc-outfit-mb {
-	/*padding: 10px 0;*/
-}
 
-.wc-outfit-mb .row {
-	margin-left: -10px;
-	margin-right: -10px;
+	/*padding: 10px 0;*/
 }
 
 .wc-outfit-mb .row:before,
 .wc-outfit-mb .row:after {
 	display: table;
 	content: " ";
+	clear: both;
 }
 
-.wc-outfit-mb .col-1 {
+.wc-outfit-mb .has-col {
+	margin-left: -10px;
+	margin-right: -10px;
+}
+
+.wc-outfit-mb .col {
 	position: relative;
-	width: 100%;
+	float: left;
 	display: inline-block;
+	width: 25%;
 	padding: 0 10px;
 	box-sizing: border-box;
-}
-
-.wc-outfit-mb .col-4 {
-	position: relative;
-	width: 25%;
-	display: inline-block;
-	padding: 0 5px;
-	box-sizing: border-box;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 
 .wc-outfit-mb img {
@@ -41,17 +36,17 @@
 }
 
 /*Select*/
-.wc-outfit-mb .selectId {
-	margin: 20px 0;
+.wc-outfit-mb .select-cat-wrap {
+	margin: 30px 0 20px;
 }
 
+/*Selected Products*/
 .wc-outfit-mb .selected-products {
 	background-color: #f7f7f7;
 	border: 2px dashed #ededed;
 	padding: 10px 10px 0;
 }
 
-/*Selected Products*/
 .wc-outfit-mb .selected-products.empty:after {
 	content: 'No Product Selected';
 	display: block;
@@ -70,6 +65,68 @@
 	height: 16px;
 	background: url(../img/close.png);
 	cursor: pointer;
+}
+
+/*Product List*/
+.wc-outfit-mb .product-list .item {
+	border: 1px solid #eee;
+	padding: 12px;
+	text-align: center;
+}
+
+.wc-outfit-mb .product-list .item .product-title {
+	font-size: 14px;
+	font-weight: 400;
+	color: #666;
+	margin: 15px 0 10px;
+	padding: 0;
+}
+
+.wc-outfit-mb .product-list .item .price {
+	font-size: 15px;
+	font-weight: 700;
+	margin: 0 0 10px;
+}
+
+.wc-outfit-mb .product-list .item .price del {
+	font-weight: 400;
+}
+
+.wc-outfit-mb .product-list .item .button {
+	display: block;
+	font-size: 14px;
+	line-height: 32px;
+	color: #fff;
+	background-color: #111;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	height: 32px;
+}
+
+/*pagination*/
+.pagination {
+	text-align: center;
+}
+
+.pagination a {
+	display: inline-block;
+	padding: 8px 12px;
+	border: 1px solid #eee;
+	font-size: 14px;
+	color: #aaa;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.pagination a:hover {
+	color: #111;
+}
+
+.pagination a.disabled {
+	color: #aaa;
+	cursor: not-allowed;
+	pointer-events: none;
 }
 
 /*Switch*/

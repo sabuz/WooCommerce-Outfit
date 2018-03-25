@@ -46,37 +46,39 @@ trait Metabox {
 		$content .= wp_nonce_field('wc_outfit_meta_box_nonce', 'wc_outfit_meta_box_nonce');
 		$content .= '<div class="wc-outfit-mb">
 			<div class="selected-products">
-				<div class="row">';
+				<div class="row has-col">';
 				if (!empty($products)) {
 					foreach (json_decode($products) as $product) {
-						$content .= '<div class="col-4">
-							<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">
-							<a class="close" data-id="' . $product->id . '"></a>
-							<span class="switch ' . ($product->labels == 1 ? 'active' : 'inactive') . '" data-id="' . $product->id . '"></span>
+						$content .= '<div class="col">
+							<div class="item">
+								<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">
+								<a class="close" data-id="' . $product->id . '"></a>
+								<span class="switch ' . ($product->labels == 1 ? 'active' : 'inactive') . '" data-id="' . $product->id . '"></span>
+							</div>
 						</div>';
 					}
 				}
 				$content .= '</div>
+				<input type="hidden" name="ids" class="ids" value=' . $products . '>
 			</div>
 
-			<div class="row">
-				<div class="col-1">
-					<select class="select-cat">
-						<option></option>';
-						foreach ($this->get_product_cats() as $cat) {
-							$content .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
-						}
-					$content .= '</select>
-				</div>
+			<div class="select-cat-wrap">
+				<select class="select-cat">
+					<option></option>';
+					foreach ($this->get_product_cats() as $cat) {
+						$content .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
+					}
+				$content .= '</select>
 			</div>
 
-			<div class="row">
-				<div class="product-list">
+			<div class="product-list">
 
-				</div>
 			</div>
 
-			<input type="hidden" name="ids" id="ids" value=' . $products . '>
+			<div class="pagination hidden">
+				<a href="#" class="prev" data-page="0">&lt; Prev</a>
+				<a href="#" class="next" data-page="0">Next &gt;</a>
+			</div>
 		</div>';
 
 		echo $content;

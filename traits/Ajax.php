@@ -16,10 +16,11 @@ trait Ajax {
 
 		$json = array();
 		$user = wp_get_current_user();
+		$term = get_term($_REQUEST['cat'], 'product_cat');
 		$data = new WP_Query(array(
 			'post_type' => 'product',
 			'post_status' => 'publish',
-			'posts_per_page' => 2,
+			'posts_per_page' => 12,
 			'paged' => intval($_REQUEST['page']),
 			'tax_query' => array(
 				array(
@@ -32,15 +33,17 @@ trait Ajax {
 			'fields' => 'ids',
 		));
 
+		$json['term'] = array('count' => $term->count, 'next' => (intval($_REQUEST['page']) * 12 >= $term->count ? false : true));
+
 		if ($data->posts) {
 			foreach ($data->posts as $key => $id) {
 				if (current_user_can('manage_options') || wc_customer_bought_product($user->user_email, $user->ID, $id)) {
 					$product = wc_get_product($id);
 
-					$json[$key]['id'] = $id;
-					$json[$key]['title'] = $product->get_title();
-					$json[$key]['thumb'] = $this->get_outfit_thumbnail($id, 'product-thumb');
-					$json[$key]['price_html'] = $product->get_price_html();
+					$json['products'][$key]['id'] = $id;
+					$json['products'][$key]['title'] = $product->get_title();
+					$json['products'][$key]['thumb'] = $this->get_outfit_thumbnail($id, 'product-thumb');
+					$json['products'][$key]['price_html'] = $product->get_price_html();
 				}
 			}
 		}
