@@ -17,8 +17,6 @@ jQuery(document).ready(function() {
 			page: 1,
 			security: object.nonce
 		}).success(function(data) {
-			jQuery('.product-list').empty()
-
 			if (data.products) {
 				for (var i in data.products) {
 					if (count == 0 || count % 4 == 0) {
@@ -35,7 +33,7 @@ jQuery(document).ready(function() {
 				}
 
 
-				jQuery('.product-list').html(html)
+				jQuery('.product-list').empty().html(html)
 
 				// pagination
 				jQuery('.pagination').removeClass('hidden')
@@ -47,7 +45,7 @@ jQuery(document).ready(function() {
 					jQuery('.pagination .next').attr('data-page', 1).addClass('disabled')
 				}
 			} else {
-				jQuery('.product-list').html('<p>Nothing found</p>')
+				jQuery('.product-list').empty().html('<p>Nothing found</p>')
 
 				// pagination
 				jQuery('.pagination').addClass('hidden')
@@ -69,14 +67,12 @@ jQuery(document).ready(function() {
 			page: page,
 			security: object.nonce
 		}).done(function(data) {
-			jQuery('.product-list').empty()
-
 			for (var i in data.products) {
 				if (count == 0 || count % 4 == 0) {
 					html += '<div class="row has-col">'
 				}
 
-				html += '<a class="col" data-id="' + data.products[i].id + '"><img src="' + data.products[i].thumb + '"></a>'
+				html += '<div class="col"><div class="item"><img src="' + data.products[i].thumb + '"/><h4 class="product-title">' + data.products[i].title + '</h4><p class="price">' + data.products[i].price_html + '</p><a class="button" data-id="' + data.products[i].id + '">Select</a></div></div>'
 
 				if ((count != 0 && count % 3 == 0) || (count == data.length - 1)) {
 					html += '</div>'
@@ -85,7 +81,7 @@ jQuery(document).ready(function() {
 				count += 1
 			}
 
-			jQuery('.product-list').html(html)
+			jQuery('.product-list').empty().html(html)
 
 			// pagination
 			if ((parseInt(page) - 1) == 0) {
@@ -107,7 +103,7 @@ jQuery(document).ready(function() {
 	if (ids.length > 0) {
 		ids = JSON.parse(ids)
 	} else {
-		var ids = []
+		ids = []
 	}
 
 	jQuery('.product-list').on('click', '.button', function(e) {
@@ -122,13 +118,16 @@ jQuery(document).ready(function() {
 		})
 
 		if (index == 0) {
-			var src = jQuery(this).find('img').attr('src')
-			jQuery('.selected-products>.row').append('<div class="col"><img src="' + src + '"/><a class="close" data-id="' + id + '"></a><span class="switch inactive" data-id="' + id + '"></span></div>')
+			// push id
 			ids.push({
 				id: parseInt(id),
 				labels: 0
 			})
 			jQuery('.selected-products .ids').val(JSON.stringify(ids))
+
+			// add selected product
+			var src = jQuery(this).parent('.item').find('img').attr('src')
+			jQuery('.selected-products>.row').append('<div class="col"><div class="item"><img src="' + src + '"/><a href="#" class="close" data-id="' + id + '"></a><a href="#" class="switch inactive" data-id="' + id + '"></a></div></div>')
 
 			if (ids.length > 0) {
 				$('.selected-products').removeClass('empty')
@@ -136,10 +135,29 @@ jQuery(document).ready(function() {
 		}
 	})
 
-	// Product Remove
-	jQuery('.selected-products').on('click', '.close', function() {
+	// Switch
+	jQuery('.selected-products').on('click', '.switch', function(e) {
+		e.preventDefault()
+
 		id = jQuery(this).attr('data-id')
-		jQuery(this).parent('.col').remove()
+		jQuery(this).toggleClass('active inactive')
+
+		var index = jQuery.map(ids, function(i, j) {
+			if (i.id == id) {
+				return j
+			}
+		})
+
+		ids[index].labels ^= 1
+		jQuery('.selected-products .ids').val(JSON.stringify(ids))
+	})
+
+	// Product Remove
+	jQuery('.selected-products').on('click', '.close', function(e) {
+		e.preventDefault()
+
+		id = jQuery(this).attr('data-id')
+		jQuery(this).parents('.col').remove()
 
 		var index = jQuery.map(ids, function(i, j) {
 			if (i.id == id) {
@@ -148,24 +166,10 @@ jQuery(document).ready(function() {
 		})
 
 		ids.splice(index, 1)
-		jQuery('#ids').val(JSON.stringify(ids))
+		jQuery('.selected-products .ids').val(JSON.stringify(ids))
 
 		if (ids.length == 0) {
 			$('.selected-products').addClass('empty')
 		}
-	})
-
-	// Switch
-	jQuery(document).on('click', '.switch', function() {
-		id = jQuery(this).attr('data-id')
-		jQuery(this).toggleClass('active inactive')
-		var index = jQuery.map(ids, function(i, j) {
-			if (i.id == id) {
-				return j
-			}
-		})
-
-		ids[index].labels ^= 1
-		jQuery('#ids').val(JSON.stringify(ids))
 	})
 })

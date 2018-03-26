@@ -52,8 +52,8 @@ trait Metabox {
 						$content .= '<div class="col">
 							<div class="item">
 								<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">
-								<a class="close" data-id="' . $product->id . '"></a>
-								<span class="switch ' . ($product->labels == 1 ? 'active' : 'inactive') . '" data-id="' . $product->id . '"></span>
+								<a href="#" class="close" data-id="' . $product->id . '"></a>
+								<a href="#" class="switch ' . ($product->labels == 1 ? 'active' : 'inactive') . '" data-id="' . $product->id . '"></a>
 							</div>
 						</div>';
 					}
@@ -97,7 +97,7 @@ trait Metabox {
 		echo '<div class="wc-outfit-mb">
 			<label for="featured">
 				<input type="checkbox" name="featured" id="featured" ' . (!empty($value) ? "checked" : "") . '/>
-				' . __('Make this post featured ?', 'xim') . '
+				' . __('Make this post featured?', 'xim') . '
 			</label>
 		</div>';
 	}
