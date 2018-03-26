@@ -74,56 +74,75 @@ trait Template {
 	 * @since    1.0.0
 	 */
 	function template_new_outfit($atts, $content = null) {
-		wp_enqueue_style('bootstrapValidator');
-		wp_enqueue_script('bootstrapValidator');
-		// wp_enqueue_script('filepicker');
+		// enqueue styles
+		wp_enqueue_style('bootstrap');
+		wp_enqueue_style('bootstrap-validator');
+		wp_enqueue_style('select2');
+		wp_enqueue_style('new-outfit');
+
+		// enqueue scripts
+		wp_enqueue_script('bootstrap');
+		wp_enqueue_script('bootstrap-validator');
+		wp_enqueue_script('select2');
 		wp_enqueue_script('new-outfit');
 
 		wp_enqueue_media();
 
 		$atts = shortcode_atts(array(), $atts);
 
-		$html = '<form id="newOutfitForm" method="post" enctype="multipart/form-data">
+		$html = '<form id="new-outfit-form" method="post">
 			<div class="form-group">
-				<label for="thumb">' . __('Outfit Image', 'couture') . '</label>
+				<label>' . __('Outfit Image', 'xim') . '</label>
 
 				<div class="row">
-					<div class="col-sm-8">
-						<input id="frontend-button" type="button" value="Select Image" class="button">
-						<input type="text" name="thumb" id="thumb" placeholder="No image selected">
-					</div>
-					<div class="col-sm-4">
-						<h4>Photo Guidelines</h4>
-						<ul>
-							<li>Lorem ipsum dolor set amet</li>
-							<li>Lorem ipsum dolor set amet</li>
-							<li>Lorem ipsum dolor set amet</li>
-						</ul>
+					<div class="col-sm-12">
+						<input id="upload-button" type="button" value="' . __('Select Image', 'xim') . '" class="button">
+						<input type="text" id="placeholder" placeholder="' . __('No image selected', 'xim') . '" disabled>
+						<input type="hidden" name="thumb" id="thumb">
 					</div>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label>' . __('Used Products:', 'couture') . '</label>
+				<label>' . __('Used Products', 'xim') . '</label>
 
-				<div class="chosen">
-					<div class="row"></div>
+				<div class="selected-products empty">
+					<div class="row">
+
+					</div>
+					<input type="hidden" name="ids" class="ids" value="">
 				</div>
-				<input type="hidden" name="ids" id="ids" value="">
+
+				<div class="select-cat-wrap">
+					<select class="select-cat">
+						<option></option>';
+						foreach ($this->get_product_cats() as $cat) {
+							$html .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
+						}
+					$html .= '</select>
+				</div>
+
+				<div class="product-list">
+
+				</div>
+
+				<div class="pagination hidden">
+					<a href="#" class="prev" data-page="0">&lt; Prev</a>
+					<a href="#" class="next" data-page="0">Next &gt;</a>
+				</div>
 			</div>
 
 			<div class="form-group">
-				<select class="selectId">
-					<option selected disabled>Choose a category</option>';
-		foreach ($this->get_product_cats() as $cat):
-			$html .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
-		endforeach;
-		$html .= '</select>
-				<div id="products" class="products"></div>
-			</div>';
+				<label>' . __('Tags', 'xim') . '</label>
 
-		// wp_nonce_field('post_nonce', 'post_nonce_field')
-		$html .= '<input type="submit" value="' . __('Add Outfit', 'couture') . '">
+				<select class="select-tag" multiple="multiple">
+					<option selected="selected">orange</option>
+					<option>white</option>
+					<option selected="selected">purple</option>
+				</select>
+			</div>
+
+			<input type="submit" value="' . __('Add Outfit', 'xim') . '">
 		</form>';
 
 		return $html;
@@ -149,7 +168,7 @@ trait Template {
 
 			echo '<h4 class="page-subtitle">' . ucwords($catData->name) . '</h4>';
 			echo '<div class="page-bar">';
-			echo '<strong>' . __('BE THE STYLIST: ', 'couture') . '</strong>' . __('Make it work at the office with posh professional styles!', 'couture');
+			echo '<strong>' . __('BE THE STYLIST: ', 'xim') . '</strong>' . __('Make it work at the office with posh professional styles!', 'xim');
 			echo '</div>';
 		} elseif (isset($_GET['user'])) {
 			$author_data = get_user_meta($_GET['user']);
@@ -168,10 +187,10 @@ trait Template {
 			echo '<a href="#" class="following" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_following($_GET['user']) . ' Following</a>';
 			echo '</div>';
 		} else {
-			echo '<h4 class="page-subtitle">' . __('Inspire and Admire', 'couture') . '</h4>';
+			echo '<h4 class="page-subtitle">' . __('Inspire and Admire', 'xim') . '</h4>';
 
 			echo '<div class="page-bar">';
-			echo '<strong>' . __('BE THE STYLIST: ', 'couture') . '</strong>' . __('Make it work at the office with posh professional styles!', 'couture');
+			echo '<strong>' . __('BE THE STYLIST: ', 'xim') . '</strong>' . __('Make it work at the office with posh professional styles!', 'xim');
 			echo '</div>';
 
 			echo '<div class="tab-btn">';
@@ -456,7 +475,7 @@ trait Template {
 
 							<div class="info">
 								<div class="pull-left">
-									<span class="time">' . __('Added ', 'couture') . $this->outfit_posted_ago($_GET['view']) . '</span>
+									<span class="time">' . __('Added ', 'xim') . $this->outfit_posted_ago($_GET['view']) . '</span>
 								</div>
 
 								<div class="pull-right">
@@ -517,7 +536,7 @@ trait Template {
 
 		if ($query->have_posts()) {
 			echo '<div class="single-product-carousel outfit">
-				<h2>' . __('Explore Shop & Outfit Photos', 'couture') . '</h2>
+				<h2>' . __('Explore Shop & Outfit Photos', 'xim') . '</h2>
 
 				<div class="owl-carousel">';
 			while ($query->have_posts()): $query->the_post();

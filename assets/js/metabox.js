@@ -1,10 +1,19 @@
 jQuery(document).ready(function() {
-	// Init select2
+
+	/**
+	 * Init Select2
+	 *
+	 * @since: 1.0.0
+	 */
 	jQuery('.select-cat').select2({
 		placeholder: 'Select a category'
 	})
 
-	// Select Product Category
+	/**
+	 * Load Products from category
+	 *
+	 * @since: 1.0.0
+	 */
 	jQuery('.select-cat').on('change', function(e) {
 		e.preventDefault()
 
@@ -53,7 +62,11 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	// Select Product Category - Pagination
+	/**
+	 * Load Products from category - Pagination
+	 *
+	 * @since: 1.0.0
+	 */
 	$('.pagination').on('click', 'a', function(e) {
 		e.preventDefault()
 
@@ -98,7 +111,11 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	// Select Product
+	/**
+	 * Push Product
+	 *
+	 * @since: 1.0.0
+	 */
 	var ids = jQuery('.selected-products .ids').val()
 	if (ids.length > 0) {
 		ids = JSON.parse(ids)
@@ -135,24 +152,11 @@ jQuery(document).ready(function() {
 		}
 	})
 
-	// Switch
-	jQuery('.selected-products').on('click', '.switch', function(e) {
-		e.preventDefault()
-
-		id = jQuery(this).attr('data-id')
-		jQuery(this).toggleClass('active inactive')
-
-		var index = jQuery.map(ids, function(i, j) {
-			if (i.id == id) {
-				return j
-			}
-		})
-
-		ids[index].labels ^= 1
-		jQuery('.selected-products .ids').val(JSON.stringify(ids))
-	})
-
-	// Product Remove
+	/**
+	 * Pop Product
+	 *
+	 * @since: 1.0.0
+	 */
 	jQuery('.selected-products').on('click', '.close', function(e) {
 		e.preventDefault()
 
@@ -171,5 +175,26 @@ jQuery(document).ready(function() {
 		if (ids.length == 0) {
 			$('.selected-products').addClass('empty')
 		}
+	})
+
+	/**
+	 * Switch Product Mode
+	 *
+	 * @since: 1.0.0
+	 */
+	jQuery('.selected-products').on('click', '.switch', function(e) {
+		e.preventDefault()
+
+		id = jQuery(this).attr('data-id')
+		jQuery(this).toggleClass('active inactive')
+
+		var index = jQuery.map(ids, function(i, j) {
+			if (i.id == id) {
+				return j
+			}
+		})
+
+		ids[index].labels ^= 1
+		jQuery('.selected-products .ids').val(JSON.stringify(ids))
 	})
 })

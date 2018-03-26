@@ -85,11 +85,19 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function enqueue_scripts() {
+		// global
+		wp_register_style('bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.min.css');
+		wp_enqueue_script('bootstrap', plugin_dir_url(__FILE__) . '../assets/js/bootstrap.min.js');
+
 		// Add new outfit
-		wp_register_style('bootstrapValidator', plugin_dir_url(__FILE__) . '../assets/css/bootstrapValidator.min.css');
-		wp_register_script('bootstrapValidator', plugin_dir_url(__FILE__) . '../assets/js/bootstrapValidator.min.js', array(), false, true);
-		wp_register_script('filepicker', plugin_dir_url(__FILE__) . '../assets/js/jquery.filepicker.js', array(), false, true);
+		wp_register_style('bootstrap-validator', plugin_dir_url(__FILE__) . '../assets/css/bootstrapValidator.min.css');
+		wp_register_style('select2', plugin_dir_url(__FILE__) . '../assets/css/select2.min.css');
+		wp_register_style('new-outfit', plugin_dir_url(__FILE__) . '../assets/css/new-outfit.css');
+		
+		wp_register_script('bootstrap-validator', plugin_dir_url(__FILE__) . '../assets/js/bootstrapValidator.min.js', array(), false, true);
+		wp_register_script('select2', plugin_dir_url(__FILE__) . '../assets/js/select2.min.js', array(), false, true);
 		wp_register_script('new-outfit', plugin_dir_url(__FILE__) . '../assets/js/new-outfit.js', array(), false, true);
+
 		wp_localize_script('new-outfit', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 
 		// Style Gallery
@@ -103,9 +111,9 @@ trait Core {
 		wp_localize_script('style-gallery', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 
 		// All Outfits
-		wp_enqueue_style('wc-bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.css');
+		// wp_enqueue_style('wc-bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.css');
 		wp_enqueue_style('owlCarousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.css');
-		wp_enqueue_script('wc-bootstrap', plugin_dir_url(__FILE__) . '../assets/js/bootstrap.js');
+		// wp_enqueue_script('wc-bootstrap', plugin_dir_url(__FILE__) . '../assets/js/bootstrap.js');
 		wp_enqueue_script('owlCarousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.js');
 		wp_enqueue_style('wc-style', plugin_dir_url(__FILE__) . '../assets/css/style.css');
 	}
