@@ -75,7 +75,7 @@ trait Metabox {
 
 			</div>
 
-			<div class="pagination hidden">
+			<div class="product-nav hidden">
 				<a href="#" class="prev" data-page="0">&lt; Prev</a>
 				<a href="#" class="next" data-page="0">Next &gt;</a>
 			</div>

@@ -67,7 +67,7 @@ jQuery(document).ready(function() {
 	 *
 	 * @since: 1.0.0
 	 */
-	$('.pagination').on('click', 'a', function(e) {
+	jQuery('.pagination').on('click', 'a', function(e) {
 		e.preventDefault()
 
 		var cat_id = jQuery('.select-cat').val()
@@ -147,7 +147,7 @@ jQuery(document).ready(function() {
 			jQuery('.selected-products>.row').append('<div class="col"><div class="item"><img src="' + src + '"/><a href="#" class="close" data-id="' + id + '"></a><a href="#" class="switch inactive" data-id="' + id + '"></a></div></div>')
 
 			if (ids.length > 0) {
-				$('.selected-products').removeClass('empty')
+				jQuery('.selected-products').removeClass('empty')
 			}
 		}
 	})
@@ -173,7 +173,7 @@ jQuery(document).ready(function() {
 		jQuery('.selected-products .ids').val(JSON.stringify(ids))
 
 		if (ids.length == 0) {
-			$('.selected-products').addClass('empty')
+			jQuery('.selected-products').addClass('empty')
 		}
 	})
 

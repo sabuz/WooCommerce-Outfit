@@ -426,6 +426,7 @@ trait Ajax {
 			));
 
 			if ($post_id) {
+				wp_set_object_terms($post_id, $data['tags'], 'outfit_tags');
 				set_post_thumbnail($post_id, $data['thumb']);
 				add_post_meta($post_id, 'products', $data['ids']);
 				wp_update_post(['ID' => $post_id, 'post_title' => 'Outfit ' . $post_id]);

@@ -90,13 +90,20 @@ trait Template {
 
 		$atts = shortcode_atts(array(), $atts);
 
+		$terms = get_terms(array(
+			'taxonomy' => 'outfit_tags',
+			'hide_empty' => false,
+		));
+
+		$terms = (empty($terms) ? array() : $terms);
+
 		$html = '<form id="new-outfit-form" method="post">
 			<div class="form-group">
 				<label>' . __('Outfit Image', 'xim') . '</label>
 
 				<div class="row">
 					<div class="col-sm-12">
-						<input id="upload-button" type="button" value="' . __('Select Image', 'xim') . '" class="button">
+						<input id="upload-button" type="button" value="' . __('Select Image', 'xim') . '">
 						<input type="text" id="placeholder" placeholder="' . __('No image selected', 'xim') . '" disabled>
 						<input type="hidden" name="thumb" id="thumb">
 					</div>
@@ -112,7 +119,9 @@ trait Template {
 					</div>
 					<input type="hidden" name="ids" class="ids" value="">
 				</div>
+			</div>
 
+			<div class="form-group">
 				<div class="select-cat-wrap">
 					<select class="select-cat">
 						<option></option>';
@@ -126,7 +135,7 @@ trait Template {
 
 				</div>
 
-				<div class="pagination hidden">
+				<div class="product-nav hidden">
 					<a href="#" class="prev" data-page="0">&lt; Prev</a>
 					<a href="#" class="next" data-page="0">Next &gt;</a>
 				</div>
@@ -135,11 +144,11 @@ trait Template {
 			<div class="form-group">
 				<label>' . __('Tags', 'xim') . '</label>
 
-				<select class="select-tag" multiple="multiple">
-					<option selected="selected">orange</option>
-					<option>white</option>
-					<option selected="selected">purple</option>
-				</select>
+				<select name="tags[]" class="select-tag" multiple="multiple">';
+					foreach ($terms as $term) {
+						$html .= '<option value="' . $term->slug . '">' . $term->name . '</option>';
+					}
+				$html .= '</select>
 			</div>
 
 			<input type="submit" value="' . __('Add Outfit', 'xim') . '">
@@ -339,35 +348,35 @@ trait Template {
 			while ($query->have_posts()): $query->the_post();
 				$author_data = $this->get_outfit_author_data($post->ID);
 				echo '<div class="grid-item col-sm-4" data-id="' . $post->ID . '">
-					<div class="gal-header">
-						<div class="gal-product clearfix">
-							<ul>
-								' . $this->hooked_products($post->ID, 4) . '
-							</ul>
-						</div>
-						<a class="gal-thumb clearfix">
-							<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-img" />
-						</a>
-					</div>
-					<div class="gal-footer clearfix">
-						<div class="pull-left">
-							<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
-								' . $author_data['nickname'][0] . '</a>
-							<span class="time">' . $this->outfit_posted_ago() . '</span>
-						</div>
-						<div class="pull-right">
-							<div class="gal-bubble">
-								<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
-
-								<div class="bubble-content">
-									' . $this->share_buttons_html($post->ID) . '
-								</div>
+						<div class="gal-header">
+							<div class="gal-product clearfix">
+								<ul>
+									' . $this->hooked_products($post->ID, 4) . '
+								</ul>
 							</div>
-
-							' . $this->like_button_html($post->ID) . '
+							<a class="gal-thumb clearfix">
+								<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-img" />
+							</a>
 						</div>
-					</div>
-				</div>';
+						<div class="gal-footer clearfix">
+							<div class="pull-left">
+								<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
+									' . $author_data['nickname'][0] . '</a>
+								<span class="time">' . $this->outfit_posted_ago() . '</span>
+							</div>
+							<div class="pull-right">
+								<div class="gal-bubble">
+									<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
+
+									<div class="bubble-content">
+										' . $this->share_buttons_html($post->ID) . '
+									</div>
+								</div>
+
+								' . $this->like_button_html($post->ID) . '
+							</div>
+						</div>
+					</div>';
 			endwhile;
 			echo '</div>';
 
