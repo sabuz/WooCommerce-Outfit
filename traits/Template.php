@@ -103,9 +103,8 @@ trait Template {
 
 				<div class="row">
 					<div class="col-sm-12">
-						<input id="upload-button" type="button" value="' . __('Select Image', 'xim') . '">
-						<input type="text" id="placeholder" placeholder="' . __('No image selected', 'xim') . '" disabled>
-						<input type="hidden" name="thumb" id="thumb">
+						<input id="upload-button" type="file" value="' . __('Select Image', 'xim') . '">
+						
 					</div>
 				</div>
 			</div>
@@ -164,6 +163,9 @@ trait Template {
 	 */
 	function template_style_gallery() {
 		global $post;
+
+		wp_enqueue_style('bootstrap');
+		wp_enqueue_script('bootstrap');
 
 		wp_enqueue_script('arctext');
 		wp_enqueue_script('infinite');
