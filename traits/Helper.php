@@ -107,26 +107,10 @@ trait Helper {
 		}
 
 		$content = '<div class="social-share">
+			<a href="http://www.facebook.com/sharer.php?u=' . esc_url($url) . '" target="_blank" class="fa fa-facebook"></a>
 			<a href="http://pinterest.com/pin/create/button/?url=' . esc_url($url) . '&media=' . $this->get_outfit_thumbnail($post_id, 'product-thumb') . '&description=' . get_the_title($post_id) . '" target="_blank" class="fa fa-pinterest-p"></a>
 			<a href="http://www.tumblr.com/share/link?url=' . esc_url($url) . '" target="_blank" class="fa fa-tumblr"></a>
-			<a href="http://www.facebook.com/sharer.php?u=' . esc_url($url) . '" target="_blank" class="fa fa-facebook"></a>
 		</div>';
-
-		return $content;
-	}
-
-	// Hooked products.
-	function hooked_products($post_id, $limit) {
-		$products = get_post_meta($post_id, 'products', true);
-		$content = '';
-
-		if (!empty($products)) {
-			$products = json_decode($products);
-			foreach (array_slice($products, 0, $limit) as $product) {
-				$src = wp_get_attachment_image_src(get_post_thumbnail_id($product->id), 'product-thumb');
-				$content .= '<li><a href="' . get_permalink($product->id) . '" target="_blank"><img src="' . $src[0] . '"></a></li>';
-			}
-		}
 
 		return $content;
 	}
@@ -136,66 +120,34 @@ trait Helper {
 		$products = get_post_meta($post_id, 'products', true);
 		$content = '';
 
-		// $content .= '<div class="owl-carousel">';
 		if (!empty($products)) {
 			foreach (json_decode($products) as $product) {
-				$content .= '<div class="item"><a href="' . get_permalink($product->id) . '">
-					<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">
-					<div class="ribbon ' . ($product->labels == 1 ? 'captured' : '') . '">' . ($product->labels == 1 ? 'Captured' : 'Similar') . '</div>
-					<h4 class="title">' . get_the_title($product->id) . '</h4></a>
+				$p = wc_get_product($product->id);
+
+				$content .= '<div class="item">
+					<a href="' . get_permalink($product->id) . '">
+						<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">
+						<div class="ribbon ' . ($product->labels == 1 ? 'captured' : '') . '">' . ($product->labels == 1 ? __('Captured', 'xim') : __('Similar', 'xim')) . '</div>
+						<h4 class="title">' . get_the_title($product->id) . '</h4>
+					</a>
+					<div class="price">' . $p->get_price_html() . '</div>
 				</div>';
-				//$content .= '<div class="price">' . wc_outfit_get_product_price($product->id) . '</div></a></div>';
 			}
 		}
-		// $content .= '</div>';
 
 		return $content;
 	}
 
-	// function modal_measurements($user) {
-	// 	$data = get_userdata($user);
-	// 	$arr = array();
+	function modal_tags($post_id) {
+		$content = '';
+		$tags = wp_get_post_terms($_GET['view'], 'outfit_tags');
 
-	// 	if ($data->pvt_height != 'true' && !empty($data->height_ft) && !empty($data->height_in)) {
-	// 		$arr['height'] = $data->height_ft . '\'' . $data->height_in . '\'\'';
-	// 	} else {
-	// 		$arr['height'] = '--';
-	// 	}
+		foreach ($tags as $tag) {
+			$content .= '<a href="' . home_url(get_option('wc-outfit-page-slug') . '/?tag=' . $tag->slug) . '" target="_blank">' . $tag->name . '</a>';
+		}
 
-	// 	if ($data->pvt_bra != 'true' && !empty($data->bra_size) && !empty($data->bra_cup)) {
-	// 		$arr['bra'] = $data->bra_size . $data->bra_cup;
-	// 	} else {
-	// 		$arr['bra'] = '--';
-	// 	}
-
-	// 	if ($data->pvt_waist != 'true' && !empty($data->waist)) {
-	// 		$arr['waist'] = $data->waist;
-	// 	} else {
-	// 		$arr['waist'] = '--';
-	// 	}
-
-	// 	if ($data->pvt_hips != 'true' && !empty($data->hips)) {
-	// 		$arr['hips'] = $data->hips;
-	// 	} else {
-	// 		$arr['hips'] = '--';
-	// 	}
-
-	// 	if ($data->pvt_shoe != 'true' && !empty($data->shoe)) {
-	// 		$arr['shoe'] = $data->shoe;
-	// 	} else {
-	// 		$arr['shoe'] = '--';
-	// 	}
-
-	// 	return $arr;
-	// }
-
-	// function modal_tags() {
-	// 	$tags = wp_get_post_categories();
-
-	// 	foreach ($tags as $tag) {
-
-	// 	}
-	// }
+		return $content;
+	}
 }
 
 ?>

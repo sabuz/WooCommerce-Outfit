@@ -167,82 +167,51 @@ trait Ajax {
 		$content = '';
 
 		if ($_REQUEST['view']) {
-			$author_id = $this->get_outfit_author_id($_REQUEST['view']);
-			$author_data = get_user_meta($author_id);
+			$author = $this->get_outfit_author_id($_REQUEST['view']);
+			$author_data = get_user_meta($author);
 
-			$content = '<div class="modal-body clearfix">';
-			$content .= '<div class="thumb">';
-			$content .= '<img src="' . $this->get_outfit_thumbnail($_REQUEST['view']) . '" />';
-			$content .= '</div>';
+			$content .= '<div class="modal-body clearfix">
+				<div class="thumb">
+					<img src="' . $this->get_outfit_thumbnail($_REQUEST['view']) . '" />
+				</div>
 
-			$content .= '<div class="details">';
-			$content .= '<div class="author clearfix">';
-			$content .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-			$content .= '<a href="' . $this->get_user_gallery_link($author_id) . '" class="name">';
-			$content .= $author_data['nickname'][0];
-			$content .= '</a>';
+				<div class="details">
+					<div class="author clearfix">
+						<a class="name" href="' . $this->get_user_gallery_link($author) . '">
+							' . ucfirst($author_data['nickname'][0]) . '
+						</a>';
 
-			if ($author_id != get_current_user_id()) {
-				$content .= '<a href="#" class="medal" data-id="' . $author_id . '">';
-				if ($this->is_following($author_id)) {
-					$content .= 'Unfollow';
-				} else {
-					$content .= 'Follow';
-				}
-				$content .= '</a>';
-			}
-			$content .= '</div>';
+						if ($author != get_current_user_id()) {
+							$content .= '<a href="#" class="medal" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'xim') : __('Follow', 'xim')) . '</a>';
+						}
 
-			// $content .= '<div class="measurement">';
-			// $content .= '<table class="table">';
-			// $content .= '<tr>';
-			// $content .= '<th>' . __('Height', 'couture') . '</th>';
-			// $content .= '<th>' . __('Bra', 'couture') . '</th>';
-			// $content .= '<th>' . __('Waist', 'couture') . '</th>';
-			// $content .= '<th>' . __('Hips', 'couture') . '</th>';
-			// $content .= '<th>' . __('Shoe', 'couture') . '</th>';
-			// $content .= '</tr>';
-			// $content .= '<tr>';
+						$content .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
 
-			// foreach (modal_measurements($author) as $key => $val) {
-			// 	$content .= '<td>' . $val . '</td>';
-			// }
+					<div class="hooked-products owl-carousel">
+						' . $this->modal_hooked_products($_REQUEST['view']) . '
+					</div>
 
-			// $content .= '</tr>';
-			// $content .= '</table>';
-			// $content .= '</div>';
+					<div class="tags">' . $this->modal_tags($_REQUEST['view']) . '</div>
 
-			$content .= '<div class="products owl-carousel">' . $this->modal_hooked_products($_REQUEST['view']) . '</div>';
+					<div class="footer-info">
+						<span class="time">' . __('Added ', 'xim') . $this->outfit_posted_ago($_REQUEST['view']) . '</span>
 
-			$content .= '<div class="tags">';
-
-			$tags = wp_get_post_categories($_GET['view']);
-			foreach ($tags as $tag) {
-				$tag = get_category($tag);
-				$content .= '<a href="' . home_url('style-gallery/?cat=' . strtolower($tag->name)) . '">' . $tag->name . '</a>';
-			}
-			$content .= '</div>';
-
-			$content .= '<div class="info">';
-			$content .= '<div class="pull-left">';
-			$content .= '<span class="time">' . __('Added ', 'couture') . $this->outfit_posted_ago($_REQUEST['view']) . '</span>';
-			$content .= '</div>';
-
-			$content .= '<div class="pull-right">';
-			$content .= $this->share_buttons_html($_REQUEST['view']);
-			$content .= $this->like_button_html($_REQUEST['view']);
-			$content .= '</div>';
-			$content .= '</div>';
-			$content .= '</div>';
-			$content .= '</div>';
-
-			if ($_REQUEST['pagination']) {
-				$content .= '<div class="modal-footer">
-				<a id="prev" data-id="">&laquo;</a>
-				See More
-				<a id="next" data-id="">&raquo;</a>
+						' . $this->like_button_html($_REQUEST['view']) . '
+						' . $this->share_buttons_html($_REQUEST['view']) . '
+					</div>
+				</div>
 			</div>';
-			}
+
+			// if ($_REQUEST['pagination']) {
+			// 	$content .= '<div class="modal-footer">
+			// 	<a id="prev" data-id="">&laquo;</a>
+			// 	See More
+			// 	<a id="next" data-id="">&raquo;</a>
+			// </div>';
+			// }
 
 		}
 
@@ -265,7 +234,7 @@ trait Ajax {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => 9,
+						'posts_per_page' => get_option('posts_per_page'),
 						'order' => 'desc',
 						'post__in' => $ids,
 						'paged' => $_REQUEST['paged'],
@@ -275,7 +244,7 @@ trait Ajax {
 				$args = array(
 					'post_type' => 'outfit',
 					'post_status' => 'publish',
-					'posts_per_page' => 9,
+					'posts_per_page' => get_option('posts_per_page'),
 					'order' => 'desc',
 					'author' => $_REQUEST['user'],
 					'paged' => $_REQUEST['paged'],
@@ -285,7 +254,7 @@ trait Ajax {
 			$args = array(
 				'post_type' => 'outfit',
 				'post_status' => 'publish',
-				'posts_per_page' => 9,
+				'posts_per_page' => get_option('posts_per_page'),
 				'order' => 'desc',
 				'tax_query' => array(
 					array(
@@ -302,7 +271,7 @@ trait Ajax {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => 9,
+						'posts_per_page' => get_option('posts_per_page'),
 						'order' => 'desc',
 						'meta_query' => array(
 							array(
@@ -320,7 +289,7 @@ trait Ajax {
 							$args = array(
 								'post_type' => 'outfit',
 								'post_status' => 'publish',
-								'posts_per_page' => 9,
+								'posts_per_page' => get_option('posts_per_page'),
 								'order' => 'desc',
 								'author__in' => $data,
 								'paged' => $_REQUEST['paged'],
@@ -333,7 +302,7 @@ trait Ajax {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => 9,
+						'posts_per_page' => get_option('posts_per_page'),
 						'meta_key' => 'likes',
 						'orderby' => 'meta_value_num',
 						'paged' => $_REQUEST['paged'],
@@ -344,7 +313,7 @@ trait Ajax {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => 9,
+						'posts_per_page' => get_option('posts_per_page'),
 						'post__in' => $ids,
 						'orderby' => 'post__in',
 						'paged' => $_REQUEST['paged'],
@@ -354,7 +323,7 @@ trait Ajax {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => 9,
+						'posts_per_page' => get_option('posts_per_page'),
 						'order' => 'desc',
 						'paged' => $_REQUEST['paged'],
 					);
@@ -364,38 +333,28 @@ trait Ajax {
 
 		$query = new WP_Query($args);
 
-		while ($query->have_posts()): $query->the_post();
+		while ($query->have_posts()) {
+			$query->the_post();
 			$author_data = $this->get_outfit_author_data($post->ID);
+			
 			echo '<div class="grid-item col-sm-4" data-id="' . $query->post->ID . '">
-				<div class="gal-header">
-					<div class="gal-product clearfix">
-						<ul>
-							' . $this->hooked_products($query->post->ID, 4) . '
-						</ul>
-					</div>
-					<a class="gal-thumb clearfix">
-						<img src="' . $this->get_outfit_thumbnail($query->post->ID) . '" class="gal-img" />
-					</a>
-				</div>
-				<div class="gal-footer clearfix">
-					<div class="pull-left">
-						<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">' . $author_data['nickname'][0] . '</a>
-						<span class="time">' . $this->outfit_posted_ago() . '</span>
-					</div>
-					<div class="pull-right">
-						<div class="gal-bubble">
-							<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
+				<div class="gal-item-inner-wrap">
+					<img src="' . $this->get_outfit_thumbnail($query->post->ID) . '" class="gal-item-thumb" />
 
-							<div class="bubble-content">
-								' . $this->share_buttons_html($query->post->ID) . '
-							</div>
+					<div class="gal-item-footer clearfix">
+						<div class="pull-left">
+							<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
+								' . $author_data['nickname'][0] . '</a>
+							<p class="time">' . $this->outfit_posted_ago() . '</p>
 						</div>
-
-						' . $this->like_button_html($query->post->ID) . '
+						<div class="pull-right">
+							' . $this->like_button_html($query->post->ID) . '
+						</div>
 					</div>
 				</div>
 			</div>';
-		endwhile;
+		}
+		
 		die();
 	}
 

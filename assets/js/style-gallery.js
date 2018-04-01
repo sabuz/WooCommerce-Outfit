@@ -1,10 +1,10 @@
 // Masnory
 jQuery(window).load(function() {
-	jQuery('.grid-item').each(function() {
-		jQuery(this).find('.gal-header').css('height', jQuery(this).find('.gal-img').outerHeight())
-	})
+	// jQuery('.grid-item').each(function() {
+	// 	jQuery(this).find('.gal-content').css('height', jQuery(this).find('.gal-img').outerHeight())
+	// })
 
-	jQuery('.grid').isotope({
+	jQuery('.grid-wrap').isotope({
 		itemSelector: '.grid-item',
 		columnWidth: '.col-sm-4',
 		percentPosition: true,
@@ -23,17 +23,12 @@ jQuery(window).load(function() {
 // 	jQuery('.sort').val(myParam)
 // }
 
-// Page Title
-jQuery('.page-title').arctext({
-	radius: 1000
-})
-
 jQuery('.page-title').on('click', function() {
 	window.location.href = object.homeurl + '/style-gallery/'
 })
 
 // Image Hover
-jQuery(document).on('hover', '.gal-header', function(e) {
+jQuery(document).on('hover', '.gal-content', function(e) {
 	jQuery(this).find('.gal-product').toggleClass('expanded')
 })
 
@@ -127,26 +122,27 @@ jQuery('.following').on('click', function(e) {
 })
 
 // Modal
-jQuery(document).on('click', '.gal-header', function() {
+jQuery(document).on('click', '.gal-item-thumb', function() {
 	view = jQuery(this).closest('.grid-item').attr('data-id')
 
 	jQuery.get(object.ajaxurl + '?action=wc_outfit_single_outfit_modal', {
 		view: view,
 		security: object.nonce
 	}).done(function(data) {
-		jQuery('#productModal .modal-content').empty().append(jQuery(data))
+		jQuery('#outfit-modal .modal-content').empty().append(jQuery(data))
 
-		jQuery('#productModal').modal({
+		jQuery('#outfit-modal').modal({
 			backdrop: 'static'
 		})
 
-		jQuery("#productModal .products").trigger('destroy.owl.carousel')
+		jQuery("#outfit-modal .hooked-products").trigger('destroy.owl.carousel')
 
 		setTimeout(function() {
-			jQuery("#productModal .products").owlCarousel({
-				items: 3,
-				margin: 20,
+			jQuery("#outfit-modal .hooked-products").owlCarousel({
+				items: 2,
+				margin: 10,
 				nav: true,
+				navText: ['<span class="fa fa-angle-left">', '<span class="fa fa-angle-right">'],
 				lazyLoad: true
 			})
 		}, 150)
@@ -170,7 +166,8 @@ jQuery('.more').on('click', '.button', function() {
 		current = parseInt(current) + 1
 
 		var obj = {
-			paged: current
+			paged: current,
+			security: object.nonce
 		}
 
 		if (typeof order !== typeof undefined && order !== false) {
@@ -192,13 +189,13 @@ jQuery('.more').on('click', '.button', function() {
 		jQuery.get(object.ajaxurl + '?action=wc_outfit_style_gallery', obj).done(function(data) {
 			data = jQuery(data).filter('div')
 
-			jQuery('.grid').append(data)
+			jQuery('.grid-wrap').append(data)
 
-			jQuery('.grid').imagesLoaded(function() {
-				jQuery('.grid-item').each(function() {
-					jQuery(this).find('.gal-header').css('height', jQuery(this).find('.gal-img').outerHeight())
-				})
-				jQuery('.grid').isotope('appended', data).isotope('layout')
+			jQuery('.grid-wrap').imagesLoaded(function() {
+				// jQuery('.grid-item').each(function() {
+				// 	jQuery(this).find('.gal-content').css('height', jQuery(this).find('.gal-img').outerHeight())
+				// })
+				jQuery('.grid-wrap').isotope('appended', data).isotope('layout')
 			})
 
 			target.removeClass('loading')
@@ -238,13 +235,13 @@ function ChangeUrl(page, url) {
 }
 
 var hasHistory = false
-jQuery(document).on('click', '.gal-header', function() {
+jQuery(document).on('click', '.gal-item-thumb', function() {
 	hasHistory = true
 	post_id = jQuery(this).closest('.grid-item').attr('data-id')
 	ChangeUrl("Title", object.homeurl + '/style-gallery/?view=' + post_id)
 })
 
-jQuery(document).on('click', '#productModal .close', function() {
+jQuery(document).on('click', '#outfit-modal .close', function() {
 	if (hasHistory == true) {
 		ChangeUrl("Title", history.back())
 	} else {

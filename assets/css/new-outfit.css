@@ -5,10 +5,6 @@
 }
 
 /*Form*/
-#new-outfit-form label {
-	font-weight: 700;
-}
-
 #new-outfit-form .form-group {
 	margin-bottom: 25px;
 }
@@ -206,7 +202,7 @@
 	border: none;
 	padding: 0;
 	border-radius: 0;
-	height: 35px;
+	height: 40px;
 	box-shadow: none;
 	cursor: pointer;
 }

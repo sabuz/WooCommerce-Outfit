@@ -85,72 +85,34 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function enqueue_scripts() {
-		// global
+		// style
 		wp_register_style('bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.min.css');
-		wp_enqueue_script('bootstrap', plugin_dir_url(__FILE__) . '../assets/js/bootstrap.min.js');
-
-		// Add new outfit
 		wp_register_style('bootstrap-validator', plugin_dir_url(__FILE__) . '../assets/css/bootstrapValidator.min.css');
+		wp_register_style('owlCarousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.css');
 		wp_register_style('select2', plugin_dir_url(__FILE__) . '../assets/css/select2.min.css');
-		wp_register_style('new-outfit', plugin_dir_url(__FILE__) . '../assets/css/new-outfit.css');
 		
+		wp_register_style('new-outfit', plugin_dir_url(__FILE__) . '../assets/css/new-outfit.css');
+		wp_register_style('outfit-modal', plugin_dir_url(__FILE__) . '../assets/css/modal.css');
+		wp_register_style('style-gallery', plugin_dir_url(__FILE__) . '../assets/css/style-gallery.css');
+		
+		// script
+		wp_register_script('bootstrap', plugin_dir_url(__FILE__) . '../assets/js/bootstrap.min.js', array(), false, true);
 		wp_register_script('bootstrap-validator', plugin_dir_url(__FILE__) . '../assets/js/bootstrapValidator.min.js', array(), false, true);
+		wp_register_script('owlCarousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.js', array(), false, true);
 		wp_register_script('select2', plugin_dir_url(__FILE__) . '../assets/js/select2.min.js', array(), false, true);
-		wp_register_script('new-outfit', plugin_dir_url(__FILE__) . '../assets/js/new-outfit.js', array(), false, true);
-
-		wp_localize_script('new-outfit', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
-
-		// Style Gallery
-		wp_register_script('single-product', plugin_dir_url(__FILE__) . '../assets/js/single-product.js', array(), false, true);
-		wp_register_script('arctext', plugin_dir_url(__FILE__) . '../assets/js/jquery.arctext.js', array(), false, true);
 		wp_register_script('infinite', plugin_dir_url(__FILE__) . '../assets/js/infinite.js', array(), false, true);
 		wp_register_script('imgLoaded', plugin_dir_url(__FILE__) . '../assets/js/imagesloaded.pkgd.min.js', array(), false, true);
 		wp_register_script('isotope', plugin_dir_url(__FILE__) . '../assets/js/isotope.pkgd.min.js', array(), false, true);
+		
+		wp_register_script('new-outfit', plugin_dir_url(__FILE__) . '../assets/js/new-outfit.js', array(), false, true);
+		wp_register_script('single-product', plugin_dir_url(__FILE__) . '../assets/js/single-product.js', array(), false, true);
 		wp_register_script('style-gallery', plugin_dir_url(__FILE__) . '../assets/js/style-gallery.js', array(), false, true);
+
+		// localize
+		wp_localize_script('new-outfit', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 		wp_localize_script('single-product', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 		wp_localize_script('style-gallery', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
-
-		// All Outfits
-		// wp_enqueue_style('wc-bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.css');
-		wp_enqueue_style('owlCarousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.css');
-		// wp_enqueue_script('wc-bootstrap', plugin_dir_url(__FILE__) . '../assets/js/bootstrap.js');
-		wp_enqueue_script('owlCarousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.js');
-		wp_enqueue_style('wc-style', plugin_dir_url(__FILE__) . '../assets/css/style.css');
 	}
-
-	/**
-	 * Disable single outfit view.
-	 *
-	 * @since    1.0.0
-	 */
-	// function template_redirect() {
-	// 	if (is_single() && get_query_var('post_type') == 'outfit') {
-	// 		wp_redirect(home_url('404'), 301);
-	// 		exit;
-	// 	}
-	// }
-
-	/**
-	 * Remove single outfit permalink html.
-	 *
-	 * @since    1.0.0
-	 */
-	// function remove_sample_permalink_html($permalink) {
-	// 	return;
-	// }
-
-	/**
-	 * Remove outfit quick view.
-	 *
-	 * @since    1.0.0
-	 */
-	// function filter_post_row_actions($actions, $post) {
-	// 	if ($post->post_type == 'outfit') {
-	// 		unset($actions['view']);
-	// 	}
-
-	// 	return $actions;
-	// }
 
 	/**
 	 * Remove outfit post data on delete.
@@ -218,7 +180,7 @@ trait Core {
 		global $post;
 
 		if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'style-gallery')) {
-			$classes[] = 'outfit-gallery';
+			$classes[] = 'wc-outfit-gallery';
 		}
 
 		return $classes;
@@ -265,7 +227,7 @@ trait Core {
 	 */
 	function wp_footer() {
 		if (is_product()) {
-			echo '<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+			echo '<div class="modal" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 

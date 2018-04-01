@@ -103,8 +103,9 @@ trait Template {
 
 				<div class="row">
 					<div class="col-sm-12">
-						<input id="upload-button" type="file" value="' . __('Select Image', 'xim') . '">
-						
+						<input id="upload-button" type="button" value="' . __('Select Image', 'xim') . '">
+ 						<input type="text" id="placeholder" placeholder="' . __('No image selected', 'xim') . '" disabled>
+ 						<input type="hidden" name="thumb" id="thumb">
 					</div>
 				</div>
 			</div>
@@ -165,9 +166,12 @@ trait Template {
 		global $post;
 
 		wp_enqueue_style('bootstrap');
-		wp_enqueue_script('bootstrap');
+		wp_enqueue_style('owlCarousel');
+		wp_enqueue_style('outfit-modal');
+		wp_enqueue_style('style-gallery');
 
-		wp_enqueue_script('arctext');
+		wp_enqueue_script('bootstrap');
+		wp_enqueue_script('owlCarousel');
 		wp_enqueue_script('infinite');
 		wp_enqueue_script('imgLoaded');
 		wp_enqueue_script('isotope');
@@ -260,7 +264,7 @@ trait Template {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => 9,
+						'posts_per_page' => get_option('posts_per_page'),
 						'order' => 'desc',
 						'post__in' => $ids,
 						'paged' => $paged,
@@ -273,7 +277,7 @@ trait Template {
 				$args = array(
 					'post_type' => 'outfit',
 					'post_status' => 'publish',
-					'posts_per_page' => 9,
+					'posts_per_page' => get_option('posts_per_page'),
 					'order' => 'desc',
 					'author' => $_GET['user'],
 					'paged' => $paged,
@@ -283,7 +287,7 @@ trait Template {
 			$args = array(
 				'post_type' => 'outfit',
 				'post_status' => 'publish',
-				'posts_per_page' => 9,
+				'posts_per_page' => get_option('posts_per_page'),
 				'order' => 'desc',
 				'tax_query' => array(
 					array(
@@ -300,7 +304,7 @@ trait Template {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => 9,
+						'posts_per_page' => get_option('posts_per_page'),
 						'order' => 'desc',
 						'meta_query' => array(
 							array(
@@ -318,7 +322,7 @@ trait Template {
 							$args = array(
 								'post_type' => 'outfit',
 								'post_status' => 'publish',
-								'posts_per_page' => 9,
+								'posts_per_page' => get_option('posts_per_page'),
 								'order' => 'desc',
 								'author__in' => $data,
 								'paged' => $paged,
@@ -335,7 +339,7 @@ trait Template {
 				$args = array(
 					'post_type' => 'outfit',
 					'post_status' => 'publish',
-					'posts_per_page' => 9,
+					'posts_per_page' => get_option('posts_per_page'),
 					'order' => 'desc',
 					'paged' => $paged,
 				);
@@ -345,50 +349,40 @@ trait Template {
 		$query = new WP_Query($args);
 
 		echo '<div class="row">';
+
 		if ($query->have_posts()) {
-			echo '<div class="grid">';
-			while ($query->have_posts()): $query->the_post();
+			echo '<div class="grid-wrap">';
+			while ($query->have_posts()) {
+				$query->the_post();
 				$author_data = $this->get_outfit_author_data($post->ID);
+
 				echo '<div class="grid-item col-sm-4" data-id="' . $post->ID . '">
-						<div class="gal-header">
-							<div class="gal-product clearfix">
-								<ul>
-									' . $this->hooked_products($post->ID, 4) . '
-								</ul>
-							</div>
-							<a class="gal-thumb clearfix">
-								<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-img" />
-							</a>
-						</div>
-						<div class="gal-footer clearfix">
+					<div class="gal-item-inner-wrap">
+						<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-item-thumb" />
+
+						<div class="gal-item-footer clearfix">
 							<div class="pull-left">
 								<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
 									' . $author_data['nickname'][0] . '</a>
-								<span class="time">' . $this->outfit_posted_ago() . '</span>
+								<p class="time">' . $this->outfit_posted_ago() . '</p>
 							</div>
 							<div class="pull-right">
-								<div class="gal-bubble">
-									<a href="#" class="bubble-btn"><i class="fa fa-share"></i></a>
-
-									<div class="bubble-content">
-										' . $this->share_buttons_html($post->ID) . '
-									</div>
-								</div>
-
 								' . $this->like_button_html($post->ID) . '
 							</div>
 						</div>
-					</div>';
-			endwhile;
+					</div>
+				</div>';
+			}
+
 			echo '</div>';
 
-			// echo '<div class="more">
-			// 	<button class="button" data-current="1" data-max="'. $query->max_num_pages .'"
-			// 		' (isset($_GET['order']) ? 'data-order=' . $_GET['order'] : '')
-			// 		(isset($_GET['user']) ? 'data-user=' . $_GET['user']: '')
-			// 		(isset($_GET['page'])? 'data-page=' . $_GET['page'] : '')
-			// 		(isset($_GET['cat']) ? 'data-cat=' . $_GET['cat'] : '') .'>Load More</button>
-			// </div>';
+			echo '<div class="more">
+				<button class="button" data-current="1" data-max="'. $query->max_num_pages .'"
+					' . (isset($_GET['order']) ? 'data-order=' . $_GET['order'] : '') .
+					(isset($_GET['user']) ? 'data-user=' . $_GET['user']: '') .
+					(isset($_GET['page'])? 'data-page=' . $_GET['page'] : '') .
+					(isset($_GET['cat']) ? 'data-cat=' . $_GET['cat'] : '') .'>Load More</button>
+			</div>';
 		} else {
 			if (@$_GET['page'] == 'following') {
 				echo '<div class="not-following">
@@ -438,91 +432,71 @@ trait Template {
 			$author = $this->get_outfit_author_id($_GET['view']);
 			$author_data = get_user_meta($author);
 
-			echo '<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-body clearfix">
-						<div class="thumb">
-							<img src="' . $this->get_outfit_thumbnail($_GET['view']) . '" />
-						</div>
-
-						<div class="details">
-							<div class="author clearfix">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-
-								<a class="name" href="' . $this->get_user_gallery_link($author) . '">
-									' . $author_data['nickname'][0] . '
-								</a>';
-
-			if ($author != get_current_user_id()) {
-				echo '<a href="#" class="medal" data-id="' . $author . '">';
-				if ($this->is_following($author)) {
-					echo 'Unfollow';
-				} else {
-					echo 'Follow';
-				}
-				echo '</a>';
-			}
-
-			echo '</div>
-
-
-							<div class="products owl-carousel">
-								' . $this->modal_hooked_products($_GET['view']) . '
+			echo '<div class="modal" id="outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-body clearfix">
+							<div class="thumb">
+								<img src="' . $this->get_outfit_thumbnail($_GET['view']) . '" />
 							</div>
 
-							<div class="tags">';
+							<div class="details">
+								<div class="author clearfix">
+									<a class="name" href="' . $this->get_user_gallery_link($author) . '">
+										' . ucfirst($author_data['nickname'][0]) . '
+									</a>';
 
-			$tags = wp_get_post_categories($_GET['view']);
+									if ($author != get_current_user_id()) {
+										echo '<a href="#" class="medal" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'xim') : __('Follow', 'xim')) . '</a>';
+									}
 
-			foreach ($tags as $tag) {
-				$tag = get_category($tag);
-				echo '<a href="' . home_url('style-gallery/?cat=' . strtolower($tag->name)) . '">' . $tag->name . '</a>';
-			}
-
-			echo '</div>
-
-							<div class="info">
-								<div class="pull-left">
-									<span class="time">' . __('Added ', 'xim') . $this->outfit_posted_ago($_GET['view']) . '</span>
+									echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
 								</div>
 
-								<div class="pull-right">
-									' . $this->share_buttons_html($_GET['view']) . '
+								<div class="hooked-products owl-carousel">
+									' . $this->modal_hooked_products($_GET['view']) . '
+								</div>
+
+								<div class="tags">' . $this->modal_tags($_GET['view']) . '</div>
+
+								<div class="footer-info">
+									<span class="time">' . __('Added ', 'xim') . $this->outfit_posted_ago($_GET['view']) . '</span>
+
 									' . $this->like_button_html($_GET['view']) . '
+									' . $this->share_buttons_html($_GET['view']) . '
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<script type="text/javascript">
-			jQuery(document).ready(function() {
-				jQuery(\'#productModal\').modal({
-					backdrop: \'static\',
-					show: true
-				});
+			<script type="text/javascript">
+				jQuery(document).ready(function() {
+					jQuery(\'#outfit-modal\').modal({
+						backdrop: \'static\',
+						show: true
+					});
 
-				jQuery("#productModal .products").owlCarousel({
-					items: 3,
-					margin: 10,
-					nav:true
-				});
-			})
-		</script>';
+					jQuery("#outfit-modal .hooked-products").owlCarousel({
+						items: 2,
+						margin: 10,
+						nav:true,
+						navText: [\'<span class="fa fa-angle-left">\', \'<span class="fa fa-angle-right">\']
+					});
+				})
+			</script>';
 
 		} else {
-			echo '<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
+			echo '<div class="modal" id="outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
 
+					</div>
 				</div>
-			</div>
-		</div>';
+			</div>';
 		}
 
 	}

@@ -1,0 +1,321 @@
+/*************************************
+ * Outfit Modal 
+ ************************************/
+#outfit-modal .modal-content {
+	border-radius: 0;
+}
+
+#outfit-modal .modal-body {
+	padding: 12px;
+}
+
+#outfit-modal .thumb {
+	width: 60%;
+	float: left;
+	display: inline-block;
+}
+
+#outfit-modal .thumb img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 0;
+}
+
+#outfit-modal .details {
+	width: 40%;
+	float: left;
+	display: inline-block;
+}
+
+/*author*/
+#outfit-modal .author {
+	margin: 5px 0 25px 15px;
+	line-height: 24px;
+}
+
+#outfit-modal .author .close {
+	float: right;
+	width: 24px;
+	height: 24px;
+	font-size: 24px;
+	line-height: 24px;
+	color: #999;
+	outline: none;
+	box-shadow: none;
+	padding: 0;
+	margin: 0;
+	background-color: #fff;
+}
+
+#outfit-modal .author .close:hover {
+	color: #555;
+}
+
+#outfit-modal .author .name {
+	font-size: 18px;
+	font-weight: 700;
+}
+
+#outfit-modal .author .medal {
+	font-size: 12px;
+	font-weight: 400;
+	background-color: #000;
+	color: #fff;
+	display: inline-block;
+	padding: 0 15px;
+	margin-left: 15px;
+}
+
+/*hooked products*/
+#outfit-modal .hooked-products {
+	margin: 0 0 35px 12px;
+}
+
+#outfit-modal .hooked-products .item {
+	display: none;
+	padding: 10px;
+	border: 1px solid #eee;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+#outfit-modal .hooked-products.owl-loaded .item {
+	display: block;
+}
+
+#outfit-modal .hooked-products img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 0;
+}
+
+#outfit-modal .hooked-products .title {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 18px;
+	color: #555;
+	margin: 5px 0 10px;
+	padding: 0;
+}
+
+/*ribbon*/
+#outfit-modal .hooked-products .ribbon {
+	font-family: 'Georgia';
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 12px;
+	text-align: center;
+	font-style: italic;
+	color: #fff;
+	display: inline-block;
+	z-index: 1;
+	outline: none;
+	padding: 6px 0;
+	position: relative;
+	width: 100px;
+	top: -10px;
+}
+
+#outfit-modal .hooked-products .ribbon:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 0;
+	background: rgba(0, 0, 0, 0);
+	border: 12px solid transparent;
+	border-left-color: rgba(0, 0, 0, 0);
+	border-top-color: #111;
+	border-bottom-color: #111;
+	border-right-color: rgba(0, 0, 0, 0);
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	z-index: -1;
+}
+
+/*price*/
+#outfit-modal .hooked-products .price {
+	font-size: 14px;
+	font-weight: 700;
+	color: #111;
+	margin: 0;
+}
+
+#outfit-modal .hooked-products .price del {
+	font-weight: 400;
+	color: #aaa;
+	margin-right: 3px;
+}
+
+#outfit-modal .hooked-products .price ins {
+	font-weight: 700;
+	text-decoration: none;
+}
+
+/*tags*/
+#outfit-modal .tags {
+	margin: 0 0 35px 12px;
+}
+
+#outfit-modal .tags a {
+	display: inline-block;
+	font-size: 13px;
+	line-height: 1;
+	color: #fff;
+	background-color: #000;
+	margin: 0 2px 0 0;
+	padding: 8px 12px;
+	outline: none;
+}
+
+/*footer*/
+#outfit-modal .footer-info {
+	position: absolute;
+	bottom: 12px;
+	right: 12px;
+	left: calc(60% + 12px);
+	height: 45px;
+	line-height: 45px;
+	border-top: 1px solid #eee;
+}
+
+#outfit-modal .footer-info .time {
+	font-size: 14px;
+	color: #999;
+	margin-right: 15px;
+}
+
+#outfit-modal .footer-info .post-like {
+	vertical-align: middle;
+	margin-right: 15px;
+}
+
+#outfit-modal .modal-footer {
+	text-align: center;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+#outfit-modal .modal-footer a {
+	font-size: 18px;
+	padding: 0 5px;
+	cursor: pointer;
+}
+
+/*Not Following Anyone*/
+.not-following p {
+	font-size: 16px;
+	text-align: center;
+	margin: 15px 0;
+}
+
+.not-following .item {
+	padding: 12px;
+	border: 1px solid #ededed;
+	margin-bottom: 60px;
+	text-align: center;
+}
+
+.not-following img {
+	margin-bottom: 10px;
+}
+
+.not-following .button {
+	font-size: 11px;
+	line-height: 24px;
+	padding: 0 15px;
+	margin-top: 10px;
+}
+
+/*Post Like*/
+.post-like {
+	display: inline-block;
+}
+
+.post-like .like-btn {
+	width: 25px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	color: #82c6c7;
+	float: left;
+	display: inline-block;
+	outline: none;
+}
+
+.post-like .like-btn.enabled {
+	color: #ff696a;
+}
+
+.post-like .like-btn .fa {
+	font-size: 18px;
+}
+
+.post-like .count {
+	min-width: 10px;
+	height: 30px;
+	font-size: 14px;
+	line-height: 30px;
+	text-align: center;
+	color: #999;
+	float: left;
+	display: inline-block;
+}
+
+/*Share Button*/
+.social-share {
+	display: inline-block;
+}
+
+.social-share a {
+	display: inline-block;
+	height: 24px;
+	width: 24px;
+	font-size: 12px;
+	line-height: 24px;
+	text-align: center;
+	color: #fff;
+	border-radius: 50px;
+	margin: 0 3px;
+}
+
+.social-share .fa-facebook {
+	background-color: #3b5998;
+}
+
+.social-share .fa-tumblr {
+	background-color: #35465c;
+}
+
+.social-share .fa-pinterest-p {
+	background-color: #bd081c;
+}
+
+/*owl carousel*/
+
+#outfit-modal .owl-carousel {
+	width: auto;
+}
+
+#outfit-modal .owl-nav {
+	margin-top: 15px;
+	text-align: center;
+}
+
+#outfit-modal .owl-carousel .owl-nav .owl-prev:before,
+#outfit-modal .owl-carousel .owl-nav .owl-next:before {
+	color: #fff;
+	font-size: 25px;
+}
+
+#outfit-modal .owl-carousel .owl-nav .owl-prev,
+#outfit-modal .owl-carousel .owl-nav .owl-next {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #fff;
+	border: 1px solid #eee;
+	margin: 0 2px;
+}
