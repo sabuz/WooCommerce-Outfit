@@ -504,6 +504,13 @@ trait Template {
 	function template_single_product_listing() {
 		global $post;
 
+		wp_enqueue_style('bootstrap');
+		wp_enqueue_style('owlCarousel');
+		wp_enqueue_style('outfit-modal');
+		wp_enqueue_style('single-product');
+		
+		wp_enqueue_script('bootstrap');
+		wp_enqueue_script('owlCarousel');
 		wp_enqueue_script('single-product');
 
 		$query = new WP_Query(array(
@@ -524,10 +531,29 @@ trait Template {
 				<h2>' . __('Explore Shop & Outfit Photos', 'xim') . '</h2>
 
 				<div class="owl-carousel">';
-			while ($query->have_posts()): $query->the_post();
-				echo '<div class="item" data-id="' . get_the_ID() . '"><img src="' . $this->get_outfit_thumbnail(get_the_ID(), 'product-thumb') . '"></div>';
-			endwhile;
-			echo '</div>
+				while ($query->have_posts()): $query->the_post();
+					// echo '<div class="item" data-id="' . get_the_ID() . '"><img src="' . $this->get_outfit_thumbnail(get_the_ID(), 'product-thumb') . '"></div>';
+
+					$author_data = $this->get_outfit_author_data($post->ID);
+
+					echo '<div class="grid-item" data-id="' . $post->ID . '">
+						<div class="gal-item-inner-wrap">
+							<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-item-thumb" />
+
+							<div class="gal-item-footer clearfix">
+								<div class="pull-left">
+									<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
+										' . $author_data['nickname'][0] . '</a>
+									<p class="time">' . $this->outfit_posted_ago() . '</p>
+								</div>
+								<div class="pull-right">
+									' . $this->like_button_html($post->ID) . '
+								</div>
+							</div>
+						</div>
+					</div>';
+				endwhile;
+				echo '</div>
 			</div>';
 		}
 

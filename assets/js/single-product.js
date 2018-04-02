@@ -2,14 +2,14 @@ jQuery(document).ready(function() {
 	// Carousel
 	jQuery('.outfit .owl-carousel').owlCarousel({
 		loop: false,
-		margin: 3,
+		margin: 10,
 		nav: true,
-		items: 5
+		items: 3
 	})
 })
 
 // Outfit Modal
-jQuery('.outfit').on('click', '.item', function() {
+jQuery('.outfit').on('click', '.grid-item', function() {
 	view = jQuery(this).attr('data-id')
 	next = jQuery(this).parent().next().find('.item').attr('data-id')
 	prev = jQuery(this).parent().prev().find('.item').attr('data-id')
@@ -20,19 +20,37 @@ jQuery('.outfit').on('click', '.item', function() {
 		pagination: true,
 		security: object.nonce
 	}).done(function(data) {
-		jQuery('#productModal .modal-content').empty().append(jQuery(data))
+		// jQuery('#productModal .modal-content').empty().append(jQuery(data))
 
-		jQuery('#productModal').modal({
+		// jQuery('#productModal').modal({
+		// 	backdrop: 'static'
+		// })
+
+		// jQuery("#producMtodal .products").trigger('destroy.owl.carousel')
+
+		// setTimeout(function() {
+		// 	jQuery("#productModal .products").owlCarousel({
+		// 		items: 3,
+		// 		margin: 20,
+		// 		nav: true,
+		// 		lazyLoad: true
+		// 	})
+		// }, 150)
+
+		jQuery('#outfit-modal .modal-content').empty().append(jQuery(data))
+
+		jQuery('#outfit-modal').modal({
 			backdrop: 'static'
 		})
 
-		jQuery("#producMtodal .products").trigger('destroy.owl.carousel')
+		jQuery("#outfit-modal .hooked-products").trigger('destroy.owl.carousel')
 
 		setTimeout(function() {
-			jQuery("#productModal .products").owlCarousel({
-				items: 3,
-				margin: 20,
+			jQuery("#outfit-modal .hooked-products").owlCarousel({
+				items: 2,
+				margin: 10,
 				nav: true,
+				navText: ['<span class="fa fa-angle-left">', '<span class="fa fa-angle-right">'],
 				lazyLoad: true
 			})
 		}, 150)

@@ -93,6 +93,7 @@ trait Core {
 		
 		wp_register_style('new-outfit', plugin_dir_url(__FILE__) . '../assets/css/new-outfit.css');
 		wp_register_style('outfit-modal', plugin_dir_url(__FILE__) . '../assets/css/modal.css');
+		wp_register_style('single-product', plugin_dir_url(__FILE__) . '../assets/css/single-product.css');
 		wp_register_style('style-gallery', plugin_dir_url(__FILE__) . '../assets/css/style-gallery.css');
 		
 		// script
@@ -227,8 +228,8 @@ trait Core {
 	 */
 	function wp_footer() {
 		if (is_product()) {
-			echo '<div class="modal" id="productModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-				<div class="modal-dialog" role="document">
+			echo '<div class="modal" id="outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 
 					</div>

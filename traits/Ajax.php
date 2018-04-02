@@ -205,13 +205,13 @@ trait Ajax {
 				</div>
 			</div>';
 
-			// if ($_REQUEST['pagination']) {
-			// 	$content .= '<div class="modal-footer">
-			// 	<a id="prev" data-id="">&laquo;</a>
-			// 	See More
-			// 	<a id="next" data-id="">&raquo;</a>
-			// </div>';
-			// }
+			if ($_REQUEST['pagination']) {
+				$content .= '<div class="modal-footer">
+				<a id="prev" data-id="">&laquo;</a>
+				See More
+				<a id="next" data-id="">&raquo;</a>
+			</div>';
+			}
 
 		}
 
