@@ -527,7 +527,7 @@ trait Template {
 		));
 
 		if ($query->have_posts()) {
-			echo '<div class="single-product-carousel outfit">
+			echo '<div class="single-product-carousel">
 				<h2>' . __('Explore Shop & Outfit Photos', 'xim') . '</h2>
 
 				<div class="owl-carousel">';

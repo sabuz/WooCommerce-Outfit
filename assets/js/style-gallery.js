@@ -23,14 +23,14 @@ jQuery(window).load(function() {
 // 	jQuery('.sort').val(myParam)
 // }
 
-jQuery('.page-title').on('click', function() {
-	window.location.href = object.homeurl + '/style-gallery/'
-})
+// jQuery('.page-title').on('click', function() {
+// 	window.location.href = object.homeurl + '/style-gallery/'
+// })
 
 // Image Hover
-jQuery(document).on('hover', '.gal-content', function(e) {
-	jQuery(this).find('.gal-product').toggleClass('expanded')
-})
+// jQuery(document).on('hover', '.gal-content', function(e) {
+// 	jQuery(this).find('.gal-product').toggleClass('expanded')
+// })
 
 // Like
 jQuery(document).on('click', '.like-btn', function(e) {
@@ -51,10 +51,10 @@ jQuery(document).on('click', '.like-btn', function(e) {
 })
 
 // Share Button
-jQuery(document).on('click', '.bubble-btn', function(e) {
-	e.preventDefault()
-	jQuery(this).siblings('.bubble-content').toggleClass('show')
-})
+// jQuery(document).on('click', '.bubble-btn', function(e) {
+// 	e.preventDefault()
+// 	jQuery(this).siblings('.bubble-content').toggleClass('show')
+// })
 
 // Follow
 jQuery(document).on('click', '.medal', function(e) {

@@ -173,6 +173,8 @@ trait Ajax {
 			$content .= '<div class="modal-body clearfix">
 				<div class="thumb">
 					<img src="' . $this->get_outfit_thumbnail($_REQUEST['view']) . '" />
+
+					' . ($_REQUEST['pagination'] ? '<a href="#" class="outfit-prev" data-id=""><span class="fa fa-angle-left"></span></a><a href="#" class="outfit-next" data-id=""><span class="fa fa-angle-right"></span></a>' : '') . '
 				</div>
 
 				<div class="details">
@@ -204,15 +206,6 @@ trait Ajax {
 					</div>
 				</div>
 			</div>';
-
-			if ($_REQUEST['pagination']) {
-				$content .= '<div class="modal-footer">
-				<a id="prev" data-id="">&laquo;</a>
-				See More
-				<a id="next" data-id="">&raquo;</a>
-			</div>';
-			}
-
 		}
 
 		echo $content;

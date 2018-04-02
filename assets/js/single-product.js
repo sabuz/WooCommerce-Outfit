@@ -1,92 +1,84 @@
 jQuery(document).ready(function() {
-	// Carousel
-	jQuery('.outfit .owl-carousel').owlCarousel({
+	// Init Carousel
+	jQuery('.single-product-carousel .owl-carousel').owlCarousel({
 		loop: false,
 		margin: 10,
+		items: 3,
 		nav: true,
-		items: 3
+		navText: ['<span class="fa fa-angle-left">', '<span class="fa fa-angle-right">']
 	})
-})
 
-// Outfit Modal
-jQuery('.outfit').on('click', '.grid-item', function() {
-	view = jQuery(this).attr('data-id')
-	next = jQuery(this).parent().next().find('.item').attr('data-id')
-	prev = jQuery(this).parent().prev().find('.item').attr('data-id')
-	console.log(view)
+	// Outfit Modal
+	jQuery('.single-product-carousel').on('click', '.grid-item', function() {
+		view = jQuery(this).attr('data-id')
+		next = jQuery(this).parent().next().find('.grid-item').attr('data-id')
+		prev = jQuery(this).parent().prev().find('.grid-item').attr('data-id')
+		console.log(next)
+		console.log(prev)
 
-	jQuery.get(object.ajaxurl + '?action=wc_outfit_single_outfit_modal', {
-		view: view,
-		pagination: true,
-		security: object.nonce
-	}).done(function(data) {
-		// jQuery('#productModal .modal-content').empty().append(jQuery(data))
+		jQuery.get(object.ajaxurl + '?action=wc_outfit_single_outfit_modal', {
+			view: view,
+			pagination: true,
+			security: object.nonce
+		}).done(function(data) {
+			jQuery('#outfit-modal .modal-content').empty().append(jQuery(data))
 
-		// jQuery('#productModal').modal({
-		// 	backdrop: 'static'
-		// })
+			jQuery('#outfit-modal').modal({
+				backdrop: 'static'
+			})
 
-		// jQuery("#producMtodal .products").trigger('destroy.owl.carousel')
+			jQuery("#outfit-modal .hooked-products").trigger('destroy.owl.carousel')
 
-		// setTimeout(function() {
-		// 	jQuery("#productModal .products").owlCarousel({
-		// 		items: 3,
-		// 		margin: 20,
-		// 		nav: true,
-		// 		lazyLoad: true
-		// 	})
-		// }, 150)
+			setTimeout(function() {
+				jQuery("#outfit-modal .hooked-products").owlCarousel({
+					items: 2,
+					margin: 10,
+					nav: true,
+					navText: ['<span class="fa fa-angle-left">', '<span class="fa fa-angle-right">'],
+					lazyLoad: true
+				})
+			}, 150)
 
-		jQuery('#outfit-modal .modal-content').empty().append(jQuery(data))
-
-		jQuery('#outfit-modal').modal({
-			backdrop: 'static'
+			jQuery('.outfit-prev').attr('data-id', prev)
+			jQuery('.outfit-next').attr('data-id', next)
 		})
-
-		jQuery("#outfit-modal .hooked-products").trigger('destroy.owl.carousel')
-
-		setTimeout(function() {
-			jQuery("#outfit-modal .hooked-products").owlCarousel({
-				items: 2,
-				margin: 10,
-				nav: true,
-				navText: ['<span class="fa fa-angle-left">', '<span class="fa fa-angle-right">'],
-				lazyLoad: true
-			})
-		}, 150)
-
-		jQuery('#next').attr('data-id', next)
-		jQuery('#prev').attr('data-id', prev)
-
 	})
-})
 
-jQuery(document).on('click', '#prev, #next', function() {
-	post_id = jQuery(this).attr('data-id')
+	// Modal Pagination
+	jQuery('#outfit-modal').on('click', '.outfit-prev, .outfit-next', function(e) {
+		e.preventDefault()
 
-	target = jQuery('.outfit').find('[data-id=' + post_id + ']')
-	next = jQuery(target).parent().next().find('.item').attr('data-id')
-	prev = jQuery(target).parent().prev().find('.item').attr('data-id')
+		post_id = jQuery(this).attr('data-id')
+		target = jQuery('.single-product-carousel').find('[data-id=' + post_id + ']')
+		next = jQuery(target).parent().next().find('.grid-item').attr('data-id')
+		prev = jQuery(target).parent().prev().find('.grid-item').attr('data-id')
 
-	jQuery.get(object.ajaxurl + '?action=wc_outfit_single_outfit_modal', {
-		view: post_id,
-		pagination: true,
-		security: object.nonce
-	}).done(function(data) {
-		jQuery('#productModal .modal-content').empty().append(jQuery(data))
-		jQuery("#productModal .products").trigger('destroy.owl.carousel')
+		jQuery.get(object.ajaxurl + '?action=wc_outfit_single_outfit_modal', {
+			view: post_id,
+			pagination: true,
+			security: object.nonce
+		}).done(function(data) {
+			jQuery('#outfit-modal .modal-content').empty().append(jQuery(data))
 
-		setTimeout(function() {
-			jQuery("#productModal .products").owlCarousel({
-				items: 3,
-				margin: 20,
-				nav: true,
-				lazyLoad: true
+			jQuery('#outfit-modal').modal({
+				backdrop: 'static'
 			})
-		}, 150)
 
-		jQuery('#next').attr('data-id', next)
-		jQuery('#prev').attr('data-id', prev)
+			jQuery("#outfit-modal .hooked-products").trigger('destroy.owl.carousel')
+
+			setTimeout(function() {
+				jQuery("#outfit-modal .hooked-products").owlCarousel({
+					items: 2,
+					margin: 10,
+					nav: true,
+					navText: ['<span class="fa fa-angle-left">', '<span class="fa fa-angle-right">'],
+					lazyLoad: true
+				})
+			}, 150)
+
+			jQuery('.outfit-prev').attr('data-id', prev)
+			jQuery('.outfit-next').attr('data-id', next)
+		})
 	})
 })
 
@@ -124,10 +116,7 @@ jQuery(document).on('click', '.medal', function(e) {
 				jQuery('.modal .medal').text(jQuery('.modal .medal').text() == 'Follow' ? 'Unfollow' : 'Follow')
 				jQuery('.medal span strong').text(jQuery('.medal span strong').text() == 'Follow' ? 'Unfollow' : 'Follow')
 			} else {
-				// window.location.href = data
-				jQuery('#loginModal').modal({
-					backdrop: 'static'
-				})
+				window.location.href = data
 			}
 		})
 	} else {

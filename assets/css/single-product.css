@@ -41,3 +41,26 @@
 	color: #aaa;
 	margin: 0;
 }
+
+/*nav*/
+.single-product-carousel .owl-nav {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.single-product-carousel .owl-carousel .owl-nav .owl-prev:before,
+.single-product-carousel .owl-carousel .owl-nav .owl-next:before {
+	color: #fff;
+	font-size: 25px;
+}
+
+.single-product-carousel .owl-carousel .owl-nav .owl-prev,
+.single-product-carousel .owl-carousel .owl-nav .owl-next {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	background-color: #fff;
+	border: 1px solid #eee;
+	margin: 0 2px;
+}

@@ -11,6 +11,7 @@
 
 #outfit-modal .thumb {
 	width: 60%;
+	position: relative;
 	float: left;
 	display: inline-block;
 }
@@ -191,16 +192,28 @@
 	margin-right: 15px;
 }
 
-#outfit-modal .modal-footer {
-	text-align: center;
-	font-size: 15px;
-	font-weight: 700;
+/*navigation*/
+#outfit-modal .outfit-prev,
+#outfit-modal .outfit-next {
+	position: absolute;
+	top: 50%;
+	margin-top: -10px;
 }
 
-#outfit-modal .modal-footer a {
-	font-size: 18px;
-	padding: 0 5px;
-	cursor: pointer;
+#outfit-modal .outfit-prev {
+	left: 10px;
+}
+
+#outfit-modal .outfit-next {
+	right: 10px;
+}
+
+#outfit-modal .outfit-prev .fa,
+#outfit-modal .outfit-next .fa {
+    font-size: 48px;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 0 1px 1px #999;
 }
 
 /*Not Following Anyone*/
@@ -293,7 +306,6 @@
 }
 
 /*owl carousel*/
-
 #outfit-modal .owl-carousel {
 	width: auto;
 }
