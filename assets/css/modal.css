@@ -1,6 +1,20 @@
 /*************************************
  * Outfit Modal 
  ************************************/
+#wc-outfit-modal a {
+	text-decoration: none;
+}
+
+#wc-outfit-modal a:hover,
+#wc-outfit-modal a:focus,
+#wc-outfit-modal button:hover,
+#wc-outfit-modal button:focus {
+	outline: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
 #wc-outfit-modal .modal-content {
 	border-radius: 0;
 }
@@ -9,55 +23,54 @@
 	padding: 12px;
 }
 
-#wc-outfit-modal .thumb {
+#wc-outfit-modal .wc-outfit-modal-thumb {
 	width: 60%;
 	position: relative;
 	float: left;
 	display: inline-block;
 }
 
-#wc-outfit-modal .thumb img {
+#wc-outfit-modal .wc-outfit-modal-thumb img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 0;
 }
 
-#wc-outfit-modal .details {
+#wc-outfit-modal .wc-outfit-modal-details {
 	width: 40%;
 	float: left;
 	display: inline-block;
 }
 
 /*author*/
-#wc-outfit-modal .author {
+#wc-outfit-modal .wc-outfit-modal-author-data {
 	margin: 5px 0 25px 15px;
 	line-height: 24px;
 }
 
-#wc-outfit-modal .author .close {
+#wc-outfit-modal .wc-outfit-modal-author-data .close {
 	float: right;
 	width: 24px;
 	height: 24px;
 	font-size: 24px;
 	line-height: 24px;
 	color: #999;
-	outline: none;
 	box-shadow: none;
 	padding: 0;
 	margin: 0;
 	background-color: #fff;
 }
 
-#wc-outfit-modal .author .close:hover {
+#wc-outfit-modal .wc-outfit-modal-author-data .close:hover {
 	color: #555;
 }
 
-#wc-outfit-modal .author .name {
+#wc-outfit-modal .wc-outfit-modal-author-data .outfit-author-name {
 	font-size: 18px;
 	font-weight: 700;
 }
 
-#wc-outfit-modal .author .medal {
+#wc-outfit-modal .wc-outfit-modal-author-data .wc-outfit-follow-btn {
 	font-size: 12px;
 	font-weight: 400;
 	background-color: #000;
@@ -68,11 +81,11 @@
 }
 
 /*hooked products*/
-#wc-outfit-modal .hooked-products {
+#wc-outfit-modal .wc-outfit-modal-hooked-products {
 	margin: 0 0 35px 12px;
 }
 
-#wc-outfit-modal .hooked-products .item {
+#wc-outfit-modal .wc-outfit-modal-hooked-products .item {
 	display: none;
 	padding: 10px;
 	border: 1px solid #eee;
@@ -80,17 +93,17 @@
 	text-align: center;
 }
 
-#wc-outfit-modal .hooked-products.owl-loaded .item {
+#wc-outfit-modal .wc-outfit-modal-hooked-products.owl-loaded .item {
 	display: block;
 }
 
-#wc-outfit-modal .hooked-products img {
+#wc-outfit-modal .wc-outfit-modal-hooked-products img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 0;
 }
 
-#wc-outfit-modal .hooked-products .title {
+#wc-outfit-modal .wc-outfit-modal-hooked-products .title {
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 18px;
@@ -99,8 +112,7 @@
 	padding: 0;
 }
 
-/*ribbon*/
-#wc-outfit-modal .hooked-products .ribbon {
+#wc-outfit-modal .wc-outfit-modal-hooked-products .ribbon {
 	font-family: 'Georgia';
 	font-size: 12px;
 	font-weight: normal;
@@ -110,14 +122,13 @@
 	color: #fff;
 	display: inline-block;
 	z-index: 1;
-	outline: none;
 	padding: 6px 0;
 	position: relative;
 	width: 100px;
 	top: -10px;
 }
 
-#wc-outfit-modal .hooked-products .ribbon:before {
+#wc-outfit-modal .wc-outfit-modal-hooked-products .ribbon:before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -135,31 +146,30 @@
 	z-index: -1;
 }
 
-/*price*/
-#wc-outfit-modal .hooked-products .price {
+#wc-outfit-modal .wc-outfit-modal-hooked-products .price {
 	font-size: 14px;
 	font-weight: 700;
 	color: #111;
 	margin: 0;
 }
 
-#wc-outfit-modal .hooked-products .price del {
+#wc-outfit-modal .wc-outfit-modal-hooked-products .price del {
 	font-weight: 400;
 	color: #aaa;
 	margin-right: 3px;
 }
 
-#wc-outfit-modal .hooked-products .price ins {
+#wc-outfit-modal .wc-outfit-modal-hooked-products .price ins {
 	font-weight: 700;
 	text-decoration: none;
 }
 
 /*tags*/
-#wc-outfit-modal .tags {
+#wc-outfit-modal .wc-outfit-modal-tags {
 	margin: 0 0 35px 12px;
 }
 
-#wc-outfit-modal .tags a {
+#wc-outfit-modal .wc-outfit-modal-tags a {
 	display: inline-block;
 	font-size: 13px;
 	line-height: 1;
@@ -167,11 +177,10 @@
 	background-color: #000;
 	margin: 0 2px 0 0;
 	padding: 8px 12px;
-	outline: none;
 }
 
 /*footer*/
-#wc-outfit-modal .footer-info {
+#wc-outfit-modal .wc-outfit-modal-footer-info {
 	position: absolute;
 	bottom: 12px;
 	right: 12px;
@@ -181,13 +190,13 @@
 	border-top: 1px solid #eee;
 }
 
-#wc-outfit-modal .footer-info .time {
+#wc-outfit-modal .wc-outfit-modal-footer-info .time {
 	font-size: 14px;
 	color: #999;
 	margin-right: 15px;
 }
 
-#wc-outfit-modal .footer-info .wc-outfit-rating {
+#wc-outfit-modal .wc-outfit-modal-footer-info .wc-outfit-rating {
 	vertical-align: middle;
 	margin-right: 15px;
 }
@@ -210,12 +219,11 @@
 
 #wc-outfit-modal .outfit-prev .fa,
 #wc-outfit-modal .outfit-next .fa {
-    font-size: 48px;
-    line-height: 1;
-    color: #fff;
-    text-shadow: 0 1px 1px #999;
+	font-size: 48px;
+	line-height: 1;
+	color: #fff;
+	text-shadow: 0 1px 1px #999;
 }
-
 
 /*owl carousel*/
 #wc-outfit-modal .owl-carousel {
@@ -278,32 +286,31 @@
 	display: inline-block;
 }
 
-.wc-outfit-rating .like-btn {
-	width: 25px;
-	height: 30px;
+.wc-outfit-rating .wc-outfit-rating-heart {
 	line-height: 30px;
 	text-align: center;
 	color: #82c6c7;
 	float: left;
 	display: inline-block;
-	outline: none;
+	width: 25px;
+	height: 30px;
 }
 
-.wc-outfit-rating .like-btn.enabled {
+.wc-outfit-rating .wc-outfit-rating-heart.enabled {
 	color: #ff696a;
 }
 
-.wc-outfit-rating .like-btn .fa {
+.wc-outfit-rating .wc-outfit-rating-heart .fa {
 	font-size: 18px;
 }
 
-.wc-outfit-rating .count {
-	min-width: 10px;
-	height: 30px;
+.wc-outfit-rating .wc-outfit-rating-count {
 	font-size: 14px;
 	line-height: 30px;
 	text-align: center;
 	color: #999;
 	float: left;
 	display: inline-block;
+	min-width: 10px;
+	height: 30px;
 }

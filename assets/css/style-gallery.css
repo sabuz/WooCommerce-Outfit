@@ -3,6 +3,18 @@
  * Style Gallery
  *
  *******************************************************/
+.wc-outfit-gallery a {
+	text-decoration: none;
+}
+
+.wc-outfit-gallery a:hover,
+.wc-outfit-gallery a:focus {
+	outline: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
 .wc-outfit-gallery .wc-outfit-gallery-header {
 	margin-bottom: 35px;
 }
@@ -29,8 +41,15 @@
 	margin-bottom: 20px;
 }
 
-.wc-outfit-gallery .wc-outfit-gallery-header  .wc-outfit-gallery-header-subtitle .medal {
-	
+.wc-outfit-gallery .wc-outfit-gallery-header .wc-outfit-gallery-header-subtitle .wc-outfit-follow-btn {
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1;
+	color: #fff;
+	background-color: #000;
+	display: inline-block;
+	padding: 4px 10px;
+	margin-left: 10px;
 }
 
 /*header - button*/
@@ -47,11 +66,6 @@
 	padding: 8px 12px;
 	border: 1px solid #eee;
 	margin: 0 1px;
-	/*-webkit-transition: background .3s ease;
-	-moz-transition: background .3s ease;
-	-o-transition: background .3s ease;
-	-ms-transition: background .3s ease;
-	transition: background .3s ease;*/
 }
 
 .wc-outfit-gallery .wc-outfit-gallery-header .wc-outfit-gallery-header-btn-group a:hover,
@@ -60,30 +74,30 @@
 }
 
 /*Grid Item*/
-.wc-outfit-gallery .grid-item {
+.wc-outfit-gallery .wc-outfit-gallery-item {
 	margin-bottom: 30px;
 	overflow: hidden;
 }
 
-.wc-outfit-gallery .grid-item .gal-item-inner-wrap {
+.wc-outfit-gallery .wc-outfit-gallery-item .item-inner-wrap {
 	padding: 12px;
 	border: 1px solid #eee;
 	background-color: #fff;
 }
 
-.wc-outfit-gallery .grid-item .gal-item-thumb {
+.wc-outfit-gallery .wc-outfit-gallery-item .item-thumb {
 	max-width: 100%;
 	height: auto;
 	cursor: zoom-in;
 }
 
 /*footer*/
-.wc-outfit-gallery .grid-item .gal-item-footer {
+.wc-outfit-gallery .wc-outfit-gallery-item .item-footer {
 	position: relative;
 	padding: 15px 0 0;
 }
 
-.wc-outfit-gallery .grid-item .gal-item-footer .author {
+.wc-outfit-gallery .wc-outfit-gallery-item .item-footer .author {
 	font-size: 14px;
 	font-weight: 700;
 	line-height: 1;
@@ -93,54 +107,31 @@
 	margin: 0 0 10px;
 }
 
-.wc-outfit-gallery .grid-item .gal-item-footer .author:hover {
+.wc-outfit-gallery .wc-outfit-gallery-item .item-footer .author:hover {
 	color: #555;
 }
 
-.wc-outfit-gallery .grid-item .gal-item-footer .time {
+.wc-outfit-gallery .wc-outfit-gallery-item .item-footer .time {
 	font-size: 12px;
 	line-height: 1;
 	color: #aaa;
 	margin: 0;
 }
 
-/*Load More Button*/
-.wc-outfit-gallery .more {
+/*Pagination*/
+.wc-outfit-gallery .wc-outfit-gallery-pagination {
 	display: block;
 	clear: both;
 	text-align: center;
 	margin: 40px 0;
 }
 
-.wc-outfit-gallery .more .loading,
-.wc-outfit-gallery .btn-more.loading {
-	background-image: url(img/facebook.gif);
-	background-repeat: no-repeat;
-	background-position: 50%;
-	color: transparent;
+.wc-outfit-gallery .wc-outfit-gallery-pagination .loading {
 }
 
-/*Not Following Anyone*/
-.not-following p {
+/*No Content Found*/
+.wc-outfit-no-content-found p {
 	font-size: 16px;
 	text-align: center;
 	margin: 15px 0;
-}
-
-.not-following .item {
-	text-align: center;
-	padding: 12px;
-	border: 1px solid #ededed;
-	margin-bottom: 60px;
-}
-
-.not-following img {
-	margin-bottom: 10px;
-}
-
-.not-following .button {
-	font-size: 11px;
-	line-height: 24px;
-	padding: 0 15px;
-	margin-top: 10px;
 }

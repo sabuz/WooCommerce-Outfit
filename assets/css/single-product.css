@@ -1,27 +1,27 @@
-.wc-outfit-single-carousel .grid-item {
+.wc-outfit-single-carousel .wc-outfit-gallery-item {
 	margin-bottom: 30px;
 	overflow: hidden;
 }
 
-.wc-outfit-single-carousel .grid-item .gal-item-inner-wrap {
+.wc-outfit-single-carousel .wc-outfit-gallery-item .item-inner-wrap {
 	padding: 12px;
 	border: 1px solid #eee;
 	background-color: #fff;
 }
 
-.wc-outfit-single-carousel .grid-item .gal-item-thumb {
+.wc-outfit-single-carousel .wc-outfit-gallery-item .item-thumb {
 	max-width: 100%;
 	height: auto;
 	cursor: zoom-in;
 }
 
 /*footer*/
-.wc-outfit-single-carousel .grid-item .gal-item-footer {
+.wc-outfit-single-carousel .wc-outfit-gallery-item .item-footer {
 	position: relative;
 	padding: 15px 0 0;
 }
 
-.wc-outfit-single-carousel .grid-item .gal-item-footer .author {
+.wc-outfit-single-carousel .wc-outfit-gallery-item .item-footer .author {
 	font-size: 14px;
 	font-weight: 700;
 	line-height: 1;
@@ -31,11 +31,11 @@
 	margin: 0 0 10px;
 }
 
-.wc-outfit-single-carousel .grid-item .gal-item-footer .author:hover {
+.wc-outfit-single-carousel .wc-outfit-gallery-item .item-footer .author:hover {
 	color: #555;
 }
 
-.wc-outfit-single-carousel .grid-item .gal-item-footer .time {
+.wc-outfit-single-carousel .wc-outfit-gallery-item .item-footer .time {
 	font-size: 12px;
 	line-height: 1;
 	color: #aaa;

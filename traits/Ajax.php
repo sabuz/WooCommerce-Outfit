@@ -171,20 +171,20 @@ trait Ajax {
 			$author_data = get_user_meta($author);
 
 			$content .= '<div class="modal-body clearfix">
-				<div class="thumb">
+				<div class="wc-outfit-modal-thumb">
 					<img src="' . $this->get_outfit_thumbnail($_REQUEST['view']) . '" />
 
 					' . ($_REQUEST['pagination'] ? '<a href="#" class="outfit-prev" data-id=""><span class="fa fa-angle-left"></span></a><a href="#" class="outfit-next" data-id=""><span class="fa fa-angle-right"></span></a>' : '') . '
 				</div>
 
-				<div class="details">
-					<div class="author clearfix">
+				<div class="wc-outfit-modal-details">
+					<div class="wc-outfit-modal-author-data clearfix">
 						<a class="name" href="' . $this->get_user_gallery_link($author) . '">
 							' . ucfirst($author_data['nickname'][0]) . '
 						</a>';
 
 						if ($author != get_current_user_id()) {
-							$content .= '<a href="#" class="medal" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'xim') : __('Follow', 'xim')) . '</a>';
+							$content .= '<a href="#" class="wc-outfit-follow-btn" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'xim') : __('Follow', 'xim')) . '</a>';
 						}
 
 						$content .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -192,13 +192,13 @@ trait Ajax {
 						</button>
 					</div>
 
-					<div class="hooked-products owl-carousel">
+					<div class="wc-outfit-modal-hooked-products owl-carousel">
 						' . $this->modal_hooked_products($_REQUEST['view']) . '
 					</div>
 
-					<div class="tags">' . $this->modal_tags($_REQUEST['view']) . '</div>
+					<div class="wc-outfit-modal-tags">' . $this->modal_tags($_REQUEST['view']) . '</div>
 
-					<div class="footer-info">
+					<div class="wc-outfit-modal-footer-info">
 						<span class="time">' . __('Added ', 'xim') . $this->outfit_posted_ago($_REQUEST['view']) . '</span>
 
 						' . $this->like_button_html($_REQUEST['view']) . '
@@ -330,11 +330,11 @@ trait Ajax {
 			$query->the_post();
 			$author_data = $this->get_outfit_author_data($post->ID);
 			
-			echo '<div class="grid-item col-sm-4" data-id="' . $query->post->ID . '">
-				<div class="gal-item-inner-wrap">
-					<img src="' . $this->get_outfit_thumbnail($query->post->ID) . '" class="gal-item-thumb" />
+			echo '<div class="wc-outfit-gallery-item col-sm-4" data-id="' . $query->post->ID . '">
+				<div class="item-inner-wrap">
+					<img src="' . $this->get_outfit_thumbnail($query->post->ID) . '" class="item-thumb" />
 
-					<div class="gal-item-footer clearfix">
+					<div class="item-footer clearfix">
 						<div class="pull-left">
 							<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
 								' . $author_data['nickname'][0] . '</a>

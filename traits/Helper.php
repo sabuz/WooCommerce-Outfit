@@ -80,24 +80,14 @@ trait Helper {
 		}
 
 		return add_query_arg($args, get_the_permalink(get_option('wc-outfit-page-id')));
-
-		// return home_url('style-gallery/?user=') . $user . $page;
 	}
 
 	// Like button html.
-	function like_button_html($post_id, $count = true) {
-		$content = '<div class="wc-outfit-rating">';
-
-		if ($this->is_liked_outfit($post_id)) {
-			$content .= '<a href="#" class="like-btn enabled" data-id="' . $post_id . '">';
-		} else {
-			$content .= '<a href="#" class="like-btn" data-id="' . $post_id . '">';
-		}
-		$content .= '<i class="fa fa-heart"></i></a>';
-		if ($count == true) {
-			$content .= '<span class="count">' . $this->get_num_post_like($post_id) . '</span>';
-		}
-		$content .= '</div>';
+	function like_button_html($post_id) {
+		$content = '<div class="wc-outfit-rating">
+			<a href="#" class="wc-outfit-rating-heart ' . (!$this->is_liked_outfit($post_id) ?: 'enabled') . '" data-id="' . $post_id . '"><i class="fa fa-heart"></i></a>
+			<span class="wc-outfit-rating-count">' . $this->get_num_post_like($post_id) . '</span>
+		</div>';
 
 		return $content;
 	}

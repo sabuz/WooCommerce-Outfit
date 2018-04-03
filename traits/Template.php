@@ -181,21 +181,21 @@ trait Template {
 			<div class="wc-outfit-gallery-header">';
 				echo '<h2 class="wc-outfit-gallery-header-title">' . __('Style Gallery', 'xim') . '</h2>';
 
-				if (isset($_GET['cat'])) {
-					$catData = get_term_by('slug', $_GET['cat'], 'outfit_tags');
+				if (isset($_GET['tag'])) {
+					$catData = get_term_by('slug', $_GET['tag'], 'outfit_tags');
 
-					echo '<h4 class="wc-outfit-gallery-header-subtitle">' . ucwords($catData->name) . '</h4>';
+					echo '<h4 class="wc-outfit-gallery-header-subtitle">' . $catData->name . '</h4>';
 				} elseif (isset($_GET['user'])) {
 					$author_data = get_user_meta($_GET['user']);
 					$current = (isset($_GET['page']) ? $_GET['page'] : 'photos');
 
-					echo '<h4 class="wc-outfit-gallery-header-subtitle">' . $author_data['nickname'][0] . ($_GET['user'] != get_current_user_id() ? '<a href="#" class="medal" data-id="' . $_GET['user'] . '">' . ($this->is_following($_GET['user']) ? 'Unfollow' : 'Follow') . '</a>' : '') . '</h4>';
+					echo '<h4 class="wc-outfit-gallery-header-subtitle">' . ucwords($author_data['nickname'][0]) . ($_GET['user'] != get_current_user_id() ? '<a href="#" class="wc-outfit-follow-btn" data-id="' . $_GET['user'] . '">' . ($this->is_following($_GET['user']) ? __('Unfollow', 'xim') : __('Follow', 'xim')) . '</a>' : '') . '</h4>';
 
 					echo '<div class="wc-outfit-gallery-header-btn-group">
-						<a href="' . $this->get_user_gallery_link($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">Photos</a>
-						<a href="' . $this->get_user_gallery_link($_GET['user'], 'likes') . '" class="' . ($current == 'likes' ? 'active' : '') . '">Liked Looks</a>
-						<a href="#" class="follower" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_followers($_GET['user']) . ' Followers</a>
-						<a href="#" class="following" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_following($_GET['user']) . ' Following</a>
+						<a href="' . $this->get_user_gallery_link($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">' . __('Photos', 'xim') . '</a>
+						<a href="' . $this->get_user_gallery_link($_GET['user'], 'likes') . '" class="' . ($current == 'likes' ? 'active' : '') . '">' . __('Liked Looks', 'xim') . '</a>
+						<a href="' . $this->get_user_gallery_link($_GET['user'], 'follower') . '" class="follower" data-user="' . $_GET['user'] . '">' . $this->get_num_followers($_GET['user']) . __(' Followers', 'xim') . '</a>
+						<a href="' . $this->get_user_gallery_link($_GET['user'], 'following') . '" class="following" data-user="' . $_GET['user'] . '">' . $this->get_num_following($_GET['user']) . __(' Following', 'xim') . '</a>
 					</div>';
 				} else {
 					$current = (isset($_GET['page']) ? $_GET['page'] : 'all');
@@ -208,15 +208,17 @@ trait Template {
 						<a href="' . add_query_arg('page', 'feat', get_the_permalink(get_option('wc-outfit-page-id'))) . '" class="' . ($current == 'feat' ? 'active' : '') . '">Featured</a>
 					</div>';
 				}
-			echo '</div>'; // .wc-outfit-gallery-header
+			echo '</div>'; //.wc-outfit-gallery-header
 
-			// Content begin
+			// Query
 			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
 			if (isset($_GET['user'])) {
 				if (@$_GET['page'] == 'likes') {
 					$ids = $this->get_liked_outfits($_GET['user']);
-					if (!empty($ids)) {
+					if (empty($ids)) {
+						$args = array();
+					} else {
 						$args = array(
 							'post_type' => 'outfit',
 							'post_status' => 'publish',
@@ -225,8 +227,6 @@ trait Template {
 							'post__in' => $ids,
 							'paged' => $paged,
 						);
-					} else {
-						$args = array();
 					}
 
 				} else {
@@ -239,7 +239,7 @@ trait Template {
 						'paged' => $paged,
 					);
 				}
-			} elseif (isset($_GET['cat'])) {
+			} elseif (isset($_GET['tag'])) {
 				$args = array(
 					'post_type' => 'outfit',
 					'post_status' => 'publish',
@@ -249,7 +249,7 @@ trait Template {
 						array(
 							'taxonomy' => 'outfit_tags',
 							'field' => 'slug',
-							'terms' => $_GET['cat'],
+							'terms' => $_GET['tag'],
 						),
 					),
 					'paged' => $paged,
@@ -288,7 +288,8 @@ trait Template {
 							}
 
 						} else {
-							wp_redirect(home_url('my-account'));
+							// wp_redirect(home_url('my-account'));
+							// exit();
 						}
 					}
 				} else {
@@ -304,87 +305,50 @@ trait Template {
 
 			$query = new WP_Query($args);
 
-			echo '<div class="row">';
-
 			if ($query->have_posts()) {
-				echo '<div class="grid-wrap">';
-				while ($query->have_posts()) {
-					$query->the_post();
-					$author_data = $this->get_outfit_author_data($post->ID);
+				echo '<div class="row">
+					<div class="wc-outfit-gallery-content">';
+						while ($query->have_posts()) {
+							$query->the_post();
+							$author_data = $this->get_outfit_author_data($post->ID);
 
-					echo '<div class="grid-item col-sm-4" data-id="' . $post->ID . '">
-						<div class="gal-item-inner-wrap">
-							<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-item-thumb" />
+							echo '<div class="wc-outfit-gallery-item col-sm-4" data-id="' . $post->ID . '">
+								<div class="item-inner-wrap">
+									<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="item-thumb" />
 
-							<div class="gal-item-footer clearfix">
-								<div class="pull-left">
-									<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
-										' . $author_data['nickname'][0] . '</a>
-									<p class="time">' . $this->outfit_posted_ago() . '</p>
+									<div class="item-footer clearfix">
+										<div class="pull-left">
+											<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
+												' . $author_data['nickname'][0] . '</a>
+											<p class="time">' . $this->outfit_posted_ago() . '</p>
+										</div>
+										<div class="pull-right">
+											' . $this->like_button_html($post->ID) . '
+										</div>
+									</div>
 								</div>
-								<div class="pull-right">
-									' . $this->like_button_html($post->ID) . '
-								</div>
-							</div>
-						</div>
+							</div>';
+						}
+					echo '</div>'; //.wc-outfit-gallery-content
+
+					echo '<div class="wc-outfit-gallery-pagination">
+						<button class="button" data-current="1" data-max="'. $query->max_num_pages .'"
+							' . (isset($_GET['user']) ? 'data-user=' . $_GET['user']: '') . (isset($_GET['page'])? 'data-page=' . $_GET['page'] : '') . (isset($_GET['tag']) ? 'data-tag=' . $_GET['tag'] : '') .'>' . __('Load More', 'xim') . '</button>
 					</div>';
-				}
-
-				echo '</div>';
-
-				echo '<div class="more">
-					<button class="button" data-current="1" data-max="'. $query->max_num_pages .'"
-						' . (isset($_GET['order']) ? 'data-order=' . $_GET['order'] : '') .
-						(isset($_GET['user']) ? 'data-user=' . $_GET['user']: '') .
-						(isset($_GET['page'])? 'data-page=' . $_GET['page'] : '') .
-						(isset($_GET['cat']) ? 'data-cat=' . $_GET['cat'] : '') .'>Load More</button>
-				</div>';
+				echo '</div>'; //.row
 			} else {
 				if (@$_GET['page'] == 'following') {
-					echo '<div class="not-following">
-					<div class="col-sm-12">
-						<p>' . __('You aren\'t following anyone -- let\'s fix that!') . '</p>
-						<p>' . __('Start Following Some Style Gallery Stars') . '</p>
-					</div>
-
-					<div class="col-sm-12">
-						<div class="row">';
-					get_template_part('inc/not-following');
-					echo '</div>
-					</div>
-				</div>';
+					echo '<div class="wc-outfit-no-content-found">
+						<p>' . __('You are not following anyone!', 'xim') . '</p>
+						<p>' . __('Let\'s fix that by start following some style gallery stars!', 'xim') . '</p>
+					</div>';
 				}
 			}
+		echo '</div>'; //.wc-outfit-gallery
 
-			wp_reset_postdata();
+		wp_reset_postdata();
 
-			echo '</div>';
-		echo '</div>';
-
-		// User modal
-		if (isset($_GET['user'])) {
-			$author_data = get_user_meta($_GET['user']);
-			echo '<div class="modal fade" id="fanModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-							<h4 class="modal-title" id="modalLabel">
-								' . $author_data['nickname'][0] . '
-							</h4>
-						</div>
-						<div class="modal-body">
-							<ul class="list-group">
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>';
-		}
-
-		// Product modal
+		// Outfit Modal
 		if (isset($_GET['view'])) {
 			$author = $this->get_outfit_author_id($_GET['view']);
 			$author_data = get_user_meta($author);
@@ -393,18 +357,18 @@ trait Template {
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-body clearfix">
-							<div class="thumb">
+							<div class="wc-outfit-modal-thumb">
 								<img src="' . $this->get_outfit_thumbnail($_GET['view']) . '" />
 							</div>
 
-							<div class="details">
-								<div class="author clearfix">
-									<a class="name" href="' . $this->get_user_gallery_link($author) . '">
+							<div class="wc-outfit-modal-details">
+								<div class="wc-outfit-modal-author-data clearfix">
+									<a class="outfit-author-name" href="' . $this->get_user_gallery_link($author) . '">
 										' . ucfirst($author_data['nickname'][0]) . '
 									</a>';
 
 									if ($author != get_current_user_id()) {
-										echo '<a href="#" class="medal" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'xim') : __('Follow', 'xim')) . '</a>';
+										echo '<a href="#" class="wc-outfit-follow-btn" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'xim') : __('Follow', 'xim')) . '</a>';
 									}
 
 									echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -412,13 +376,13 @@ trait Template {
 									</button>
 								</div>
 
-								<div class="hooked-products owl-carousel">
+								<div class="wc-outfit-modal-hooked-products owl-carousel">
 									' . $this->modal_hooked_products($_GET['view']) . '
 								</div>
 
-								<div class="tags">' . $this->modal_tags($_GET['view']) . '</div>
+								<div class="wc-outfit-modal-tags">' . $this->modal_tags($_GET['view']) . '</div>
 
-								<div class="footer-info">
+								<div class="wc-outfit-modal-footer-info">
 									<span class="time">' . __('Added ', 'xim') . $this->outfit_posted_ago($_GET['view']) . '</span>
 
 									' . $this->like_button_html($_GET['view']) . '
@@ -437,7 +401,7 @@ trait Template {
 						show: true
 					});
 
-					jQuery("#wc-outfit-modal .hooked-products").owlCarousel({
+					jQuery("#wc-outfit-modal .wc-outfit-modal-hooked-products").owlCarousel({
 						items: 2,
 						margin: 10,
 						nav:true,
@@ -447,7 +411,7 @@ trait Template {
 			</script>';
 
 		} else {
-			echo '<div class="modal" id="outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+			echo '<div class="modal" id="wc-outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 
@@ -455,7 +419,6 @@ trait Template {
 				</div>
 			</div>';
 		}
-
 	}
 
 	function template_single_product_listing() {
@@ -493,11 +456,11 @@ trait Template {
 
 					$author_data = $this->get_outfit_author_data($post->ID);
 
-					echo '<div class="grid-item" data-id="' . $post->ID . '">
-						<div class="gal-item-inner-wrap">
-							<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-item-thumb" />
+					echo '<div class="wc-outfit-gallery-item" data-id="' . $post->ID . '">
+						<div class="item-inner-wrap">
+							<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="item-thumb" />
 
-							<div class="gal-item-footer clearfix">
+							<div class="item-footer clearfix">
 								<div class="pull-left">
 									<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
 										' . $author_data['nickname'][0] . '</a>
