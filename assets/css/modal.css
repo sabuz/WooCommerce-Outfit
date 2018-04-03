@@ -1,40 +1,40 @@
 /*************************************
  * Outfit Modal 
  ************************************/
-#outfit-modal .modal-content {
+#wc-outfit-modal .modal-content {
 	border-radius: 0;
 }
 
-#outfit-modal .modal-body {
+#wc-outfit-modal .modal-body {
 	padding: 12px;
 }
 
-#outfit-modal .thumb {
+#wc-outfit-modal .thumb {
 	width: 60%;
 	position: relative;
 	float: left;
 	display: inline-block;
 }
 
-#outfit-modal .thumb img {
+#wc-outfit-modal .thumb img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 0;
 }
 
-#outfit-modal .details {
+#wc-outfit-modal .details {
 	width: 40%;
 	float: left;
 	display: inline-block;
 }
 
 /*author*/
-#outfit-modal .author {
+#wc-outfit-modal .author {
 	margin: 5px 0 25px 15px;
 	line-height: 24px;
 }
 
-#outfit-modal .author .close {
+#wc-outfit-modal .author .close {
 	float: right;
 	width: 24px;
 	height: 24px;
@@ -48,16 +48,16 @@
 	background-color: #fff;
 }
 
-#outfit-modal .author .close:hover {
+#wc-outfit-modal .author .close:hover {
 	color: #555;
 }
 
-#outfit-modal .author .name {
+#wc-outfit-modal .author .name {
 	font-size: 18px;
 	font-weight: 700;
 }
 
-#outfit-modal .author .medal {
+#wc-outfit-modal .author .medal {
 	font-size: 12px;
 	font-weight: 400;
 	background-color: #000;
@@ -68,11 +68,11 @@
 }
 
 /*hooked products*/
-#outfit-modal .hooked-products {
+#wc-outfit-modal .hooked-products {
 	margin: 0 0 35px 12px;
 }
 
-#outfit-modal .hooked-products .item {
+#wc-outfit-modal .hooked-products .item {
 	display: none;
 	padding: 10px;
 	border: 1px solid #eee;
@@ -80,17 +80,17 @@
 	text-align: center;
 }
 
-#outfit-modal .hooked-products.owl-loaded .item {
+#wc-outfit-modal .hooked-products.owl-loaded .item {
 	display: block;
 }
 
-#outfit-modal .hooked-products img {
+#wc-outfit-modal .hooked-products img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 0;
 }
 
-#outfit-modal .hooked-products .title {
+#wc-outfit-modal .hooked-products .title {
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 18px;
@@ -100,7 +100,7 @@
 }
 
 /*ribbon*/
-#outfit-modal .hooked-products .ribbon {
+#wc-outfit-modal .hooked-products .ribbon {
 	font-family: 'Georgia';
 	font-size: 12px;
 	font-weight: normal;
@@ -117,7 +117,7 @@
 	top: -10px;
 }
 
-#outfit-modal .hooked-products .ribbon:before {
+#wc-outfit-modal .hooked-products .ribbon:before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -136,30 +136,30 @@
 }
 
 /*price*/
-#outfit-modal .hooked-products .price {
+#wc-outfit-modal .hooked-products .price {
 	font-size: 14px;
 	font-weight: 700;
 	color: #111;
 	margin: 0;
 }
 
-#outfit-modal .hooked-products .price del {
+#wc-outfit-modal .hooked-products .price del {
 	font-weight: 400;
 	color: #aaa;
 	margin-right: 3px;
 }
 
-#outfit-modal .hooked-products .price ins {
+#wc-outfit-modal .hooked-products .price ins {
 	font-weight: 700;
 	text-decoration: none;
 }
 
 /*tags*/
-#outfit-modal .tags {
+#wc-outfit-modal .tags {
 	margin: 0 0 35px 12px;
 }
 
-#outfit-modal .tags a {
+#wc-outfit-modal .tags a {
 	display: inline-block;
 	font-size: 13px;
 	line-height: 1;
@@ -171,7 +171,7 @@
 }
 
 /*footer*/
-#outfit-modal .footer-info {
+#wc-outfit-modal .footer-info {
 	position: absolute;
 	bottom: 12px;
 	right: 12px;
@@ -181,107 +181,75 @@
 	border-top: 1px solid #eee;
 }
 
-#outfit-modal .footer-info .time {
+#wc-outfit-modal .footer-info .time {
 	font-size: 14px;
 	color: #999;
 	margin-right: 15px;
 }
 
-#outfit-modal .footer-info .post-like {
+#wc-outfit-modal .footer-info .wc-outfit-rating {
 	vertical-align: middle;
 	margin-right: 15px;
 }
 
 /*navigation*/
-#outfit-modal .outfit-prev,
-#outfit-modal .outfit-next {
+#wc-outfit-modal .outfit-prev,
+#wc-outfit-modal .outfit-next {
 	position: absolute;
 	top: 50%;
 	margin-top: -10px;
 }
 
-#outfit-modal .outfit-prev {
+#wc-outfit-modal .outfit-prev {
 	left: 10px;
 }
 
-#outfit-modal .outfit-next {
+#wc-outfit-modal .outfit-next {
 	right: 10px;
 }
 
-#outfit-modal .outfit-prev .fa,
-#outfit-modal .outfit-next .fa {
+#wc-outfit-modal .outfit-prev .fa,
+#wc-outfit-modal .outfit-next .fa {
     font-size: 48px;
     line-height: 1;
     color: #fff;
     text-shadow: 0 1px 1px #999;
 }
 
-/*Not Following Anyone*/
-.not-following p {
-	font-size: 16px;
-	text-align: center;
-	margin: 15px 0;
+
+/*owl carousel*/
+#wc-outfit-modal .owl-carousel {
+	width: auto;
 }
 
-.not-following .item {
-	padding: 12px;
-	border: 1px solid #ededed;
-	margin-bottom: 60px;
+#wc-outfit-modal .owl-nav {
+	margin-top: 15px;
 	text-align: center;
 }
 
-.not-following img {
-	margin-bottom: 10px;
+#wc-outfit-modal .owl-carousel .owl-nav .owl-prev:before,
+#wc-outfit-modal .owl-carousel .owl-nav .owl-next:before {
+	color: #fff;
+	font-size: 25px;
 }
 
-.not-following .button {
-	font-size: 11px;
-	line-height: 24px;
-	padding: 0 15px;
-	margin-top: 10px;
-}
-
-/*Post Like*/
-.post-like {
+#wc-outfit-modal .owl-carousel .owl-nav .owl-prev,
+#wc-outfit-modal .owl-carousel .owl-nav .owl-next {
 	display: inline-block;
-}
-
-.post-like .like-btn {
-	width: 25px;
+	width: 30px;
 	height: 30px;
 	line-height: 30px;
-	text-align: center;
-	color: #82c6c7;
-	float: left;
-	display: inline-block;
-	outline: none;
-}
-
-.post-like .like-btn.enabled {
-	color: #ff696a;
-}
-
-.post-like .like-btn .fa {
-	font-size: 18px;
-}
-
-.post-like .count {
-	min-width: 10px;
-	height: 30px;
-	font-size: 14px;
-	line-height: 30px;
-	text-align: center;
-	color: #999;
-	float: left;
-	display: inline-block;
+	background-color: #fff;
+	border: 1px solid #eee;
+	margin: 0 2px;
 }
 
 /*Share Button*/
-.social-share {
+.wc-outfit-social-share {
 	display: inline-block;
 }
 
-.social-share a {
+.wc-outfit-social-share a {
 	display: inline-block;
 	height: 24px;
 	width: 24px;
@@ -293,41 +261,49 @@
 	margin: 0 3px;
 }
 
-.social-share .fa-facebook {
+.wc-outfit-social-share .fa-facebook {
 	background-color: #3b5998;
 }
 
-.social-share .fa-tumblr {
+.wc-outfit-social-share .fa-tumblr {
 	background-color: #35465c;
 }
 
-.social-share .fa-pinterest-p {
+.wc-outfit-social-share .fa-pinterest-p {
 	background-color: #bd081c;
 }
 
-/*owl carousel*/
-#outfit-modal .owl-carousel {
-	width: auto;
-}
-
-#outfit-modal .owl-nav {
-	margin-top: 15px;
-	text-align: center;
-}
-
-#outfit-modal .owl-carousel .owl-nav .owl-prev:before,
-#outfit-modal .owl-carousel .owl-nav .owl-next:before {
-	color: #fff;
-	font-size: 25px;
-}
-
-#outfit-modal .owl-carousel .owl-nav .owl-prev,
-#outfit-modal .owl-carousel .owl-nav .owl-next {
+/*Post Rating*/
+.wc-outfit-rating {
 	display: inline-block;
-	width: 30px;
+}
+
+.wc-outfit-rating .like-btn {
+	width: 25px;
 	height: 30px;
 	line-height: 30px;
-	background-color: #fff;
-	border: 1px solid #eee;
-	margin: 0 2px;
+	text-align: center;
+	color: #82c6c7;
+	float: left;
+	display: inline-block;
+	outline: none;
+}
+
+.wc-outfit-rating .like-btn.enabled {
+	color: #ff696a;
+}
+
+.wc-outfit-rating .like-btn .fa {
+	font-size: 18px;
+}
+
+.wc-outfit-rating .count {
+	min-width: 10px;
+	height: 30px;
+	font-size: 14px;
+	line-height: 30px;
+	text-align: center;
+	color: #999;
+	float: left;
+	display: inline-block;
 }

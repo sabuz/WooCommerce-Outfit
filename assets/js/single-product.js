@@ -1,6 +1,6 @@
 jQuery(document).ready(function() {
 	// Init Carousel
-	jQuery('.single-product-carousel .owl-carousel').owlCarousel({
+	jQuery('.wc-outfit-single-carousel .owl-carousel').owlCarousel({
 		loop: false,
 		margin: 10,
 		items: 3,
@@ -9,7 +9,7 @@ jQuery(document).ready(function() {
 	})
 
 	// Outfit Modal
-	jQuery('.single-product-carousel').on('click', '.grid-item', function() {
+	jQuery('.wc-outfit-single-carousel').on('click', '.grid-item', function() {
 		view = jQuery(this).attr('data-id')
 		next = jQuery(this).parent().next().find('.grid-item').attr('data-id')
 		prev = jQuery(this).parent().prev().find('.grid-item').attr('data-id')
@@ -21,16 +21,16 @@ jQuery(document).ready(function() {
 			pagination: true,
 			security: object.nonce
 		}).done(function(data) {
-			jQuery('#outfit-modal .modal-content').empty().append(jQuery(data))
+			jQuery('#wc-outfit-modal .modal-content').empty().append(jQuery(data))
 
-			jQuery('#outfit-modal').modal({
+			jQuery('#wc-outfit-modal').modal({
 				backdrop: 'static'
 			})
 
-			jQuery("#outfit-modal .hooked-products").trigger('destroy.owl.carousel')
+			jQuery("#wc-outfit-modal .hooked-products").trigger('destroy.owl.carousel')
 
 			setTimeout(function() {
-				jQuery("#outfit-modal .hooked-products").owlCarousel({
+				jQuery("#wc-outfit-modal .hooked-products").owlCarousel({
 					items: 2,
 					margin: 10,
 					nav: true,
@@ -45,11 +45,11 @@ jQuery(document).ready(function() {
 	})
 
 	// Modal Pagination
-	jQuery('#outfit-modal').on('click', '.outfit-prev, .outfit-next', function(e) {
+	jQuery('#wc-outfit-modal').on('click', '.outfit-prev, .outfit-next', function(e) {
 		e.preventDefault()
 
 		post_id = jQuery(this).attr('data-id')
-		target = jQuery('.single-product-carousel').find('[data-id=' + post_id + ']')
+		target = jQuery('.wc-outfit-single-carousel').find('[data-id=' + post_id + ']')
 		next = jQuery(target).parent().next().find('.grid-item').attr('data-id')
 		prev = jQuery(target).parent().prev().find('.grid-item').attr('data-id')
 
@@ -58,16 +58,16 @@ jQuery(document).ready(function() {
 			pagination: true,
 			security: object.nonce
 		}).done(function(data) {
-			jQuery('#outfit-modal .modal-content').empty().append(jQuery(data))
+			jQuery('#wc-outfit-modal .modal-content').empty().append(jQuery(data))
 
-			jQuery('#outfit-modal').modal({
+			jQuery('#wc-outfit-modal').modal({
 				backdrop: 'static'
 			})
 
-			jQuery("#outfit-modal .hooked-products").trigger('destroy.owl.carousel')
+			jQuery("#wc-outfit-modal .hooked-products").trigger('destroy.owl.carousel')
 
 			setTimeout(function() {
-				jQuery("#outfit-modal .hooked-products").owlCarousel({
+				jQuery("#wc-outfit-modal .hooked-products").owlCarousel({
 					items: 2,
 					margin: 10,
 					nav: true,

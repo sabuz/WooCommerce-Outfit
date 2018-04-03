@@ -129,16 +129,16 @@ jQuery(document).on('click', '.gal-item-thumb', function() {
 		view: view,
 		security: object.nonce
 	}).done(function(data) {
-		jQuery('#outfit-modal .modal-content').empty().append(jQuery(data))
+		jQuery('#wc-outfit-modal .modal-content').empty().append(jQuery(data))
 
-		jQuery('#outfit-modal').modal({
+		jQuery('#wc-outfit-modal').modal({
 			backdrop: 'static'
 		})
 
-		jQuery("#outfit-modal .hooked-products").trigger('destroy.owl.carousel')
+		jQuery("#wc-outfit-modal .hooked-products").trigger('destroy.owl.carousel')
 
 		setTimeout(function() {
-			jQuery("#outfit-modal .hooked-products").owlCarousel({
+			jQuery("#wc-outfit-modal .hooked-products").owlCarousel({
 				items: 2,
 				margin: 10,
 				nav: true,
@@ -241,7 +241,7 @@ jQuery(document).on('click', '.gal-item-thumb', function() {
 	ChangeUrl("Title", object.homeurl + '/style-gallery/?view=' + post_id)
 })
 
-jQuery(document).on('click', '#outfit-modal .close', function() {
+jQuery(document).on('click', '#wc-outfit-modal .close', function() {
 	if (hasHistory == true) {
 		ChangeUrl("Title", history.back())
 	} else {

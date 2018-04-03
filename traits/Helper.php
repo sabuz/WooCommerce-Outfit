@@ -71,20 +71,22 @@ trait Helper {
 
 	// User gallery page link.
 	function get_user_gallery_link($user = null, $page = null) {
-		if (!$user) {
-			$user = get_current_user_id();
-		}
+		$args = array();
+
+		$args['user'] = ($user ? $user : get_current_user_id());
 
 		if ($page) {
-			$page = '&page=' . $page;
+			$args['page'] = $page;
 		}
 
-		return home_url('style-gallery/?user=') . $user . $page;
+		return add_query_arg($args, get_the_permalink(get_option('wc-outfit-page-id')));
+
+		// return home_url('style-gallery/?user=') . $user . $page;
 	}
 
 	// Like button html.
 	function like_button_html($post_id, $count = true) {
-		$content = '<div class="post-like">';
+		$content = '<div class="wc-outfit-rating">';
 
 		if ($this->is_liked_outfit($post_id)) {
 			$content .= '<a href="#" class="like-btn enabled" data-id="' . $post_id . '">';
@@ -106,7 +108,7 @@ trait Helper {
 			$url = home_url('style-gallery/?view=' . $post_id);
 		}
 
-		$content = '<div class="social-share">
+		$content = '<div class="wc-outfit-social-share">
 			<a href="http://www.facebook.com/sharer.php?u=' . esc_url($url) . '" target="_blank" class="fa fa-facebook"></a>
 			<a href="http://pinterest.com/pin/create/button/?url=' . esc_url($url) . '&media=' . $this->get_outfit_thumbnail($post_id, 'product-thumb') . '&description=' . get_the_title($post_id) . '" target="_blank" class="fa fa-pinterest-p"></a>
 			<a href="http://www.tumblr.com/share/link?url=' . esc_url($url) . '" target="_blank" class="fa fa-tumblr"></a>

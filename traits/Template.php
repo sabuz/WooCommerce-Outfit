@@ -177,231 +177,188 @@ trait Template {
 		wp_enqueue_script('isotope');
 		wp_enqueue_script('style-gallery');
 
-		//page-header start
-		if (isset($_GET['cat'])) {
-			$catData = get_term_by('slug', $_GET['cat'], 'outfit_tags');
+		echo '<div class="wc-outfit-gallery">
+			<div class="wc-outfit-gallery-header">';
+				echo '<h2 class="wc-outfit-gallery-header-title">' . __('Style Gallery', 'xim') . '</h2>';
 
-			echo '<h4 class="page-subtitle">' . ucwords($catData->name) . '</h4>';
-			echo '<div class="page-bar">';
-			echo '<strong>' . __('BE THE STYLIST: ', 'xim') . '</strong>' . __('Make it work at the office with posh professional styles!', 'xim');
-			echo '</div>';
-		} elseif (isset($_GET['user'])) {
-			$author_data = get_user_meta($_GET['user']);
+				if (isset($_GET['cat'])) {
+					$catData = get_term_by('slug', $_GET['cat'], 'outfit_tags');
 
-			echo '<h4 class="page-subtitle">' . $author_data['nickname'][0] . '</h4>';
+					echo '<h4 class="wc-outfit-gallery-header-subtitle">' . ucwords($catData->name) . '</h4>';
+				} elseif (isset($_GET['user'])) {
+					$author_data = get_user_meta($_GET['user']);
+					$current = (isset($_GET['page']) ? $_GET['page'] : 'photos');
 
-			echo '<div class="tab-btn">';
-			if (isset($_GET['page'])) {
-				$current = $_GET['page'];
-			} else {
-				$current = 'photos';
-			}
-			echo '<a href="' . $this->get_user_gallery_link($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">Photos</a>';
-			echo '<a href="' . $this->get_user_gallery_link($_GET['user'], 'likes') . '" class="' . ($current == 'likes' ? 'active' : '') . '">Liked Looks</a>';
-			echo '<a href="#" class="follower" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_followers($_GET['user']) . ' Followers</a>';
-			echo '<a href="#" class="following" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_following($_GET['user']) . ' Following</a>';
-			echo '</div>';
-		} else {
-			echo '<h4 class="page-subtitle">' . __('Inspire and Admire', 'xim') . '</h4>';
+					echo '<h4 class="wc-outfit-gallery-header-subtitle">' . $author_data['nickname'][0] . ($_GET['user'] != get_current_user_id() ? '<a href="#" class="medal" data-id="' . $_GET['user'] . '">' . ($this->is_following($_GET['user']) ? 'Unfollow' : 'Follow') . '</a>' : '') . '</h4>';
 
-			echo '<div class="page-bar">';
-			echo '<strong>' . __('BE THE STYLIST: ', 'xim') . '</strong>' . __('Make it work at the office with posh professional styles!', 'xim');
-			echo '</div>';
-
-			echo '<div class="tab-btn">';
-			if (isset($_GET['page'])) {
-				$current = $_GET['page'];
-			} else {
-				$current = 'all';
-			}
-
-			echo '<div class="filter">';
-			echo '<a href="' . home_url('style-gallery') . '" class="' . ($current == 'all' ? 'active' : '') . '">All</a>';
-			if (is_user_logged_in()) {
-				echo '<a href="' . home_url('style-gallery/?page=following') . '" class="' . ($current == 'following' ? 'active' : '') . '">Following</a>';
-			} else {
-				echo '<a href="#" data-toggle="modal" data-target="#loginModal">Following</a>';
-			}
-			echo '<a href="' . home_url('style-gallery/?page=feat') . '" class="' . ($current == 'feat' ? 'active' : '') . '">Featured</a>';
-			echo '</div>';
-			echo '</div>';
-		}
-
-		if (isset($_GET['user'])) {
-			if ($_GET['user'] != get_current_user_id()) {
-				echo '<a href="#" class="medal medal-big" data-id="' . $_GET['user'] . '">';
-				echo '<span><strong>';
-				if ($this->is_following($_GET['user'])) {
-					echo 'Unfollow';
+					echo '<div class="wc-outfit-gallery-header-btn-group">
+						<a href="' . $this->get_user_gallery_link($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">Photos</a>
+						<a href="' . $this->get_user_gallery_link($_GET['user'], 'likes') . '" class="' . ($current == 'likes' ? 'active' : '') . '">Liked Looks</a>
+						<a href="#" class="follower" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_followers($_GET['user']) . ' Followers</a>
+						<a href="#" class="following" data-user="' . $_GET['user'] . '" data-toggle="modal" data-target="#fanModal">' . $this->get_num_following($_GET['user']) . ' Following</a>
+					</div>';
 				} else {
-					echo 'Follow';
+					$current = (isset($_GET['page']) ? $_GET['page'] : 'all');
+
+					echo '<h4 class="wc-outfit-gallery-header-subtitle">' . __('Inspire and Admire', 'xim') . '</h4>';
+
+					echo '<div class="wc-outfit-gallery-header-btn-group">
+						<a href="' . get_the_permalink(get_option('wc-outfit-page-id')) . '" class="' . ($current == 'all' ? 'active' : '') . '">All</a>
+						<a href="' . add_query_arg('page', 'following', get_the_permalink(get_option('wc-outfit-page-id'))) . '" class="' . ($current == 'following' ? 'active' : '') . '">Following</a>
+						<a href="' . add_query_arg('page', 'feat', get_the_permalink(get_option('wc-outfit-page-id'))) . '" class="' . ($current == 'feat' ? 'active' : '') . '">Featured</a>
+					</div>';
 				}
-				echo '</strong></span>';
-				echo '</a>';
-			} else {
-				if (is_user_logged_in()) {
-					echo '<a href="' . esc_url(wc_get_endpoint_url('new-outfit', '', wc_get_page_permalink('myaccount'))) . '" class="medal medal-big" data-id="#"><span><strong>Add Your Photo</strong></span></a>';
-				} else {
-					echo '<a href="#" data-toggle="modal" data-target="#loginModal" class="medal medal-big" data-id="#"><span><strong>Add Your Photo</strong></span></a>';
-				}
-			}
-		} else {
-			if (is_user_logged_in()) {
-				echo '<a href="' . esc_url(wc_get_endpoint_url('new-outfit', '', wc_get_page_permalink('myaccount'))) . '" class="medal medal-big" data-id="#"><span><strong>Add Your Photo</strong></span></a>';
-			} else {
-				echo '<a href="#" data-toggle="modal" data-target="#loginModal" class="medal medal-big" data-id="#"><span><strong>Add Your Photo</strong></span></a>';
-			}
-		}
-		//page-header end
+			echo '</div>'; // .wc-outfit-gallery-header
 
-		// Content begin
-		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+			// Content begin
+			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
-		if (isset($_GET['user'])) {
-			if (@$_GET['page'] == 'likes') {
-				$ids = $this->get_liked_outfits($_GET['user']);
-				if (!empty($ids)) {
-					$args = array(
-						'post_type' => 'outfit',
-						'post_status' => 'publish',
-						'posts_per_page' => get_option('posts_per_page'),
-						'order' => 'desc',
-						'post__in' => $ids,
-						'paged' => $paged,
-					);
-				} else {
-					$args = array();
-				}
-
-			} else {
-				$args = array(
-					'post_type' => 'outfit',
-					'post_status' => 'publish',
-					'posts_per_page' => get_option('posts_per_page'),
-					'order' => 'desc',
-					'author' => $_GET['user'],
-					'paged' => $paged,
-				);
-			}
-		} elseif (isset($_GET['cat'])) {
-			$args = array(
-				'post_type' => 'outfit',
-				'post_status' => 'publish',
-				'posts_per_page' => get_option('posts_per_page'),
-				'order' => 'desc',
-				'tax_query' => array(
-					array(
-						'taxonomy' => 'outfit_tags',
-						'field' => 'slug',
-						'terms' => $_GET['cat'],
-					),
-				),
-				'paged' => $paged,
-			);
-		} else {
-			if (isset($_GET['page'])) {
-				if ($_GET['page'] == 'feat') {
-					$args = array(
-						'post_type' => 'outfit',
-						'post_status' => 'publish',
-						'posts_per_page' => get_option('posts_per_page'),
-						'order' => 'desc',
-						'meta_query' => array(
-							array(
-								'key' => 'featured',
-								'value' => 'yes',
-							),
-						),
-						'paged' => $paged,
-					);
-				} elseif ($_GET['page'] == 'following') {
-					if (is_user_logged_in()) {
-						$data = get_user_meta(get_current_user_id(), 'following', true);
-
-						if (!empty($data)) {
-							$args = array(
-								'post_type' => 'outfit',
-								'post_status' => 'publish',
-								'posts_per_page' => get_option('posts_per_page'),
-								'order' => 'desc',
-								'author__in' => $data,
-								'paged' => $paged,
-							);
-						} else {
-							$args = array();
-						}
-
+			if (isset($_GET['user'])) {
+				if (@$_GET['page'] == 'likes') {
+					$ids = $this->get_liked_outfits($_GET['user']);
+					if (!empty($ids)) {
+						$args = array(
+							'post_type' => 'outfit',
+							'post_status' => 'publish',
+							'posts_per_page' => get_option('posts_per_page'),
+							'order' => 'desc',
+							'post__in' => $ids,
+							'paged' => $paged,
+						);
 					} else {
-						wp_redirect(home_url('my-account'));
+						$args = array();
 					}
+
+				} else {
+					$args = array(
+						'post_type' => 'outfit',
+						'post_status' => 'publish',
+						'posts_per_page' => get_option('posts_per_page'),
+						'order' => 'desc',
+						'author' => $_GET['user'],
+						'paged' => $paged,
+					);
 				}
-			} else {
+			} elseif (isset($_GET['cat'])) {
 				$args = array(
 					'post_type' => 'outfit',
 					'post_status' => 'publish',
 					'posts_per_page' => get_option('posts_per_page'),
 					'order' => 'desc',
+					'tax_query' => array(
+						array(
+							'taxonomy' => 'outfit_tags',
+							'field' => 'slug',
+							'terms' => $_GET['cat'],
+						),
+					),
 					'paged' => $paged,
 				);
+			} else {
+				if (isset($_GET['page'])) {
+					if ($_GET['page'] == 'feat') {
+						$args = array(
+							'post_type' => 'outfit',
+							'post_status' => 'publish',
+							'posts_per_page' => get_option('posts_per_page'),
+							'order' => 'desc',
+							'meta_query' => array(
+								array(
+									'key' => 'featured',
+									'value' => 'yes',
+								),
+							),
+							'paged' => $paged,
+						);
+					} elseif ($_GET['page'] == 'following') {
+						if (is_user_logged_in()) {
+							$data = get_user_meta(get_current_user_id(), 'following', true);
+
+							if (!empty($data)) {
+								$args = array(
+									'post_type' => 'outfit',
+									'post_status' => 'publish',
+									'posts_per_page' => get_option('posts_per_page'),
+									'order' => 'desc',
+									'author__in' => $data,
+									'paged' => $paged,
+								);
+							} else {
+								$args = array();
+							}
+
+						} else {
+							wp_redirect(home_url('my-account'));
+						}
+					}
+				} else {
+					$args = array(
+						'post_type' => 'outfit',
+						'post_status' => 'publish',
+						'posts_per_page' => get_option('posts_per_page'),
+						'order' => 'desc',
+						'paged' => $paged,
+					);
+				}
 			}
-		}
 
-		$query = new WP_Query($args);
+			$query = new WP_Query($args);
 
-		echo '<div class="row">';
+			echo '<div class="row">';
 
-		if ($query->have_posts()) {
-			echo '<div class="grid-wrap">';
-			while ($query->have_posts()) {
-				$query->the_post();
-				$author_data = $this->get_outfit_author_data($post->ID);
+			if ($query->have_posts()) {
+				echo '<div class="grid-wrap">';
+				while ($query->have_posts()) {
+					$query->the_post();
+					$author_data = $this->get_outfit_author_data($post->ID);
 
-				echo '<div class="grid-item col-sm-4" data-id="' . $post->ID . '">
-					<div class="gal-item-inner-wrap">
-						<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-item-thumb" />
+					echo '<div class="grid-item col-sm-4" data-id="' . $post->ID . '">
+						<div class="gal-item-inner-wrap">
+							<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="gal-item-thumb" />
 
-						<div class="gal-item-footer clearfix">
-							<div class="pull-left">
-								<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
-									' . $author_data['nickname'][0] . '</a>
-								<p class="time">' . $this->outfit_posted_ago() . '</p>
-							</div>
-							<div class="pull-right">
-								' . $this->like_button_html($post->ID) . '
+							<div class="gal-item-footer clearfix">
+								<div class="pull-left">
+									<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
+										' . $author_data['nickname'][0] . '</a>
+									<p class="time">' . $this->outfit_posted_ago() . '</p>
+								</div>
+								<div class="pull-right">
+									' . $this->like_button_html($post->ID) . '
+								</div>
 							</div>
 						</div>
+					</div>';
+				}
+
+				echo '</div>';
+
+				echo '<div class="more">
+					<button class="button" data-current="1" data-max="'. $query->max_num_pages .'"
+						' . (isset($_GET['order']) ? 'data-order=' . $_GET['order'] : '') .
+						(isset($_GET['user']) ? 'data-user=' . $_GET['user']: '') .
+						(isset($_GET['page'])? 'data-page=' . $_GET['page'] : '') .
+						(isset($_GET['cat']) ? 'data-cat=' . $_GET['cat'] : '') .'>Load More</button>
+				</div>';
+			} else {
+				if (@$_GET['page'] == 'following') {
+					echo '<div class="not-following">
+					<div class="col-sm-12">
+						<p>' . __('You aren\'t following anyone -- let\'s fix that!') . '</p>
+						<p>' . __('Start Following Some Style Gallery Stars') . '</p>
+					</div>
+
+					<div class="col-sm-12">
+						<div class="row">';
+					get_template_part('inc/not-following');
+					echo '</div>
 					</div>
 				</div>';
+				}
 			}
+
+			wp_reset_postdata();
 
 			echo '</div>';
-
-			echo '<div class="more">
-				<button class="button" data-current="1" data-max="'. $query->max_num_pages .'"
-					' . (isset($_GET['order']) ? 'data-order=' . $_GET['order'] : '') .
-					(isset($_GET['user']) ? 'data-user=' . $_GET['user']: '') .
-					(isset($_GET['page'])? 'data-page=' . $_GET['page'] : '') .
-					(isset($_GET['cat']) ? 'data-cat=' . $_GET['cat'] : '') .'>Load More</button>
-			</div>';
-		} else {
-			if (@$_GET['page'] == 'following') {
-				echo '<div class="not-following">
-				<div class="col-sm-12">
-					<p>' . __('You aren\'t following anyone -- let\'s fix that!') . '</p>
-					<p>' . __('Start Following Some Style Gallery Stars') . '</p>
-				</div>
-
-				<div class="col-sm-12">
-					<div class="row">';
-				get_template_part('inc/not-following');
-				echo '</div>
-				</div>
-			</div>';
-			}
-		}
-
-		wp_reset_postdata();
-
 		echo '</div>';
 
 		// User modal
@@ -432,7 +389,7 @@ trait Template {
 			$author = $this->get_outfit_author_id($_GET['view']);
 			$author_data = get_user_meta($author);
 
-			echo '<div class="modal" id="outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+			echo '<div class="modal" id="wc-outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-body clearfix">
@@ -475,12 +432,12 @@ trait Template {
 
 			<script type="text/javascript">
 				jQuery(document).ready(function() {
-					jQuery(\'#outfit-modal\').modal({
+					jQuery(\'#wc-outfit-modal\').modal({
 						backdrop: \'static\',
 						show: true
 					});
 
-					jQuery("#outfit-modal .hooked-products").owlCarousel({
+					jQuery("#wc-outfit-modal .hooked-products").owlCarousel({
 						items: 2,
 						margin: 10,
 						nav:true,
@@ -527,7 +484,7 @@ trait Template {
 		));
 
 		if ($query->have_posts()) {
-			echo '<div class="single-product-carousel">
+			echo '<div class="wc-outfit-single-carousel">
 				<h2>' . __('Explore Shop & Outfit Photos', 'xim') . '</h2>
 
 				<div class="owl-carousel">';

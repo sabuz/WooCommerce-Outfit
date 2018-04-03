@@ -180,9 +180,9 @@ trait Core {
 	function filter_body_class($classes) {
 		global $post;
 
-		if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'style-gallery')) {
-			$classes[] = 'wc-outfit-gallery';
-		}
+		// if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'style-gallery')) {
+		// 	$classes[] = 'wc-outfit-gallery';
+		// }
 
 		return $classes;
 	}
@@ -228,7 +228,7 @@ trait Core {
 	 */
 	function wp_footer() {
 		if (is_product()) {
-			echo '<div class="modal" id="outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+			echo '<div class="modal" id="wc-outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 
