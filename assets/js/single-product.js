@@ -9,7 +9,7 @@ jQuery(document).ready(function() {
 	})
 
 	// Outfit Modal
-	jQuery('.wc-outfit-single-carousel').on('click', '.item-thumb', function() {
+	jQuery('.wc-outfit-single-carousel').on('click', '.wc-outfit-gallery-item-thumb', function() {
 		view = jQuery(this).parents('.wc-outfit-gallery-item').attr('data-id')
 		next = jQuery(this).parents('.owl-item').next().find('.wc-outfit-gallery-item').attr('data-id')
 		prev = jQuery(this).parents('.owl-item').prev().find('.wc-outfit-gallery-item').attr('data-id')

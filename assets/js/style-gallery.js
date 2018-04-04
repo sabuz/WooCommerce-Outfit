@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
 	// History Handler
 	var hasHistory = false
 
-	jQuery('.wc-outfit-gallery').on('click', '.item-thumb', function() {
+	jQuery('.wc-outfit-gallery').on('click', '.wc-outfit-gallery-item-thumb', function() {
 		hasHistory = true
 		post_id = jQuery(this).closest('.wc-outfit-gallery-item').attr('data-id')
 		ChangeUrl('Title', object.homeurl + '/style-gallery/?view=' + post_id)
@@ -76,7 +76,7 @@ jQuery(document).ready(function() {
 	})
 
 	// Modal
-	jQuery('.wc-outfit-gallery').on('click', '.item-thumb', function(e) {
+	jQuery('.wc-outfit-gallery').on('click', '.wc-outfit-gallery-item-thumb', function(e) {
 		view = jQuery(this).closest('.wc-outfit-gallery-item').attr('data-id')
 
 		jQuery.get(object.ajaxurl + '?action=wc_outfit_single_outfit_modal', {

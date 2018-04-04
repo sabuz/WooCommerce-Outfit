@@ -313,14 +313,14 @@ trait Template {
 							$author_data = $this->get_outfit_author_data($post->ID);
 
 							echo '<div class="wc-outfit-gallery-item col-sm-4" data-id="' . $post->ID . '">
-								<div class="item-inner-wrap">
-									<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="item-thumb" />
+								<div class="wc-outfit-gallery-item-inner-wrap">
+									<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="wc-outfit-gallery-item-thumb" />
 
-									<div class="item-footer clearfix">
+									<div class="wc-outfit-gallery-item-footer clearfix">
 										<div class="pull-left">
-											<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
+											<a class="wc-outfit-meta-author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
 												' . $author_data['nickname'][0] . '</a>
-											<p class="time">' . $this->outfit_posted_ago() . '</p>
+											<p class="wc-outfit-meta-time">' . $this->outfit_posted_ago() . '</p>
 										</div>
 										<div class="pull-right">
 											' . $this->like_button_html($post->ID) . '
@@ -457,14 +457,14 @@ trait Template {
 					$author_data = $this->get_outfit_author_data($post->ID);
 
 					echo '<div class="wc-outfit-gallery-item" data-id="' . $post->ID . '">
-						<div class="item-inner-wrap">
-							<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="item-thumb" />
+						<div class="wc-outfit-gallery-item-inner-wrap">
+							<img src="' . $this->get_outfit_thumbnail($post->ID) . '" class="wc-outfit-gallery-item-thumb" />
 
-							<div class="item-footer clearfix">
+							<div class="wc-outfit-gallery-item-footer clearfix">
 								<div class="pull-left">
-									<a class="author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
+									<a class="wc-outfit-meta-author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
 										' . $author_data['nickname'][0] . '</a>
-									<p class="time">' . $this->outfit_posted_ago() . '</p>
+									<p class="wc-outfit-meta-time">' . $this->outfit_posted_ago() . '</p>
 								</div>
 								<div class="pull-right">
 									' . $this->like_button_html($post->ID) . '
