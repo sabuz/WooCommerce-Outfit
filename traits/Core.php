@@ -101,7 +101,6 @@ trait Core {
 		wp_register_script('bootstrap-validator', plugin_dir_url(__FILE__) . '../assets/js/bootstrapValidator.min.js', array(), false, true);
 		wp_register_script('owlCarousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.js', array(), false, true);
 		wp_register_script('select2', plugin_dir_url(__FILE__) . '../assets/js/select2.min.js', array(), false, true);
-		wp_register_script('infinite', plugin_dir_url(__FILE__) . '../assets/js/infinite.js', array(), false, true);
 		wp_register_script('imgLoaded', plugin_dir_url(__FILE__) . '../assets/js/imagesloaded.pkgd.min.js', array(), false, true);
 		wp_register_script('isotope', plugin_dir_url(__FILE__) . '../assets/js/isotope.pkgd.min.js', array(), false, true);
 		

@@ -294,7 +294,7 @@ trait Ajax {
 				add_post_meta($post_id, 'products', $data['ids']);
 				wp_update_post(['ID' => $post_id, 'post_title' => 'Outfit ' . $post_id]);
 
-				$response['message'][] = 'Outfit submitted successfully.';
+				$response['message'][] = __('Outfit submitted successfully.', 'xim');
 				$response['status'] = 'success';
 			}
 		} else {

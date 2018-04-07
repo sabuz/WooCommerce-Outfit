@@ -172,7 +172,6 @@ trait Template {
 
 		wp_enqueue_script('bootstrap');
 		wp_enqueue_script('owlCarousel');
-		// wp_enqueue_script('infinite');
 		wp_enqueue_script('imgLoaded');
 		wp_enqueue_script('isotope');
 		wp_enqueue_script('style-gallery');
