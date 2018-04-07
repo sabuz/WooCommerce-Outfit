@@ -118,12 +118,40 @@
 	margin: 0;
 }
 
+/*User listing*/
+.wc-outfit-gallery .wc-outfit-gallery-user-item {
+	border: 1px solid #eee;
+	padding: 12px;
+	margin-bottom: 25px;
+	text-align: center;
+}
+
+.wc-outfit-gallery .wc-outfit-gallery-user-item .avatar {
+	display: inline-block;
+	border-radius: 50%;
+	background-color: #fff;
+	border: 1px solid #eee;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+.wc-outfit-gallery .wc-outfit-gallery-user-item h4 {
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1;
+	margin: 0;
+}
+
+.wc-outfit-gallery .wc-outfit-gallery-user-item a {
+	color: #111;
+}
+
 /*Pagination*/
 .wc-outfit-gallery .wc-outfit-gallery-pagination {
 	display: block;
 	clear: both;
 	text-align: center;
-	margin: 40px 0;
+	margin: 40px 0 20px;
 }
 
 .wc-outfit-gallery .wc-outfit-gallery-pagination .loading {

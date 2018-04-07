@@ -35,7 +35,6 @@ trait Helper {
 
 	// Get follower count
 	function get_num_followers($user_id) {
-		// $followers = get_user_meta($user_id, 'followers', true) ?: array();
 		$followers = $this->get_followers($user_id);
 
 		return count($followers);
@@ -43,7 +42,6 @@ trait Helper {
 
 	// Get following count
 	function get_num_following($user_id) {
-		// $following = get_user_meta($user_id, 'following', true) ?: array();
 		$following = $this->get_followings($user_id);
 
 		return count($following);
@@ -134,9 +132,16 @@ trait Helper {
 		$content = '';
 		$tags = wp_get_post_terms($_GET['view'], 'outfit_tags');
 
-		foreach ($tags as $tag) {
-			$content .= '<a href="' . home_url(get_option('wc-outfit-page-slug') . '/?tag=' . $tag->slug) . '" target="_blank">' . $tag->name . '</a>';
+		if (!empty($tags)) {
+			$content .= '<div class="wc-outfit-modal-tags">';
+			
+			foreach ($tags as $tag) {
+				$content .= '<a href="' . esc_url(add_query_arg('tags', $tag->slug, get_the_permalink(get_option('wc-outfit-page-id')))) . '" target="_blank">' . $tag->name . '</a>';
+			}
+			
+			$content .= '</div>';
 		}
+
 
 		return $content;
 	}

@@ -65,7 +65,7 @@ trait Core {
 
 	function filter_post_type_link($url, $post) {
 		if (get_post_type($post) == 'outfit') {
-			return home_url(get_option('wc-outfit-page-slug') . '/?view=' . $post->ID);
+			return add_query_arg('view', $post->ID, get_the_permalink(get_option('wc-outfit-page-id')));
 		}
 
 		return $url;
@@ -73,7 +73,7 @@ trait Core {
 
 	function filter_term_link($url, $term, $taxonomy) {
 		if ($taxonomy == 'outfit_tags') {
-			return home_url(get_option('wc-outfit-page-slug') . '/?tags=' . $term->slug);
+			return add_query_arg('tags', $term->slug, get_the_permalink(get_option('wc-outfit-page-id')));
 		}
 
 		return $url;
@@ -112,7 +112,7 @@ trait Core {
 		// localize
 		wp_localize_script('new-outfit', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 		wp_localize_script('single-product', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
-		wp_localize_script('style-gallery', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
+		wp_localize_script('style-gallery', 'object', array('ajax_url' => admin_url('admin-ajax.php'), 'home_url' => home_url(), 'style_gallery_url' => get_the_permalink(get_option('wc-outfit-page-id')), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 	}
 
 	/**
@@ -265,7 +265,6 @@ trait Core {
 
 		if (!empty($post_id)) {
 			update_option('wc-outfit-page-id', $post_id);
-			update_option('wc-outfit-page-slug', get_post_field('post_name', $post_id));
 		}
 	}
 

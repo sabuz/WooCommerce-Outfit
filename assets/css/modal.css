@@ -40,6 +40,7 @@
 	width: 40%;
 	float: left;
 	display: inline-block;
+	margin-bottom: 45px;
 }
 
 /*author*/
@@ -190,7 +191,7 @@
 	border-top: 1px solid #eee;
 }
 
-#wc-outfit-modal .wc-outfit-modal-footer-info .time {
+#wc-outfit-modal .wc-outfit-modal-footer-info .wc-outfit-meta-time {
 	font-size: 14px;
 	color: #999;
 	margin-right: 15px;
@@ -235,12 +236,6 @@
 	text-align: center;
 }
 
-#wc-outfit-modal .owl-carousel .owl-nav .owl-prev:before,
-#wc-outfit-modal .owl-carousel .owl-nav .owl-next:before {
-	color: #fff;
-	font-size: 25px;
-}
-
 #wc-outfit-modal .owl-carousel .owl-nav .owl-prev,
 #wc-outfit-modal .owl-carousel .owl-nav .owl-next {
 	display: inline-block;
@@ -250,6 +245,12 @@
 	background-color: #fff;
 	border: 1px solid #eee;
 	margin: 0 2px;
+}
+
+#wc-outfit-modal .owl-carousel .owl-nav .owl-prev:before,
+#wc-outfit-modal .owl-carousel .owl-nav .owl-next:before {
+	color: #fff;
+	font-size: 25px;
 }
 
 /*Share Button*/
@@ -297,7 +298,7 @@
 }
 
 .wc-outfit-rating .wc-outfit-rating-heart.enabled {
-	color: #ff696a;
+	color: #cd2122;
 }
 
 .wc-outfit-rating .wc-outfit-rating-heart .fa {

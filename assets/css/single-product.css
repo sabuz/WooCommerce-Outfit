@@ -15,7 +15,6 @@
 	cursor: zoom-in;
 }
 
-/*footer*/
 .wc-outfit-single-carousel .wc-outfit-gallery-item .wc-outfit-gallery-item-footer {
 	position: relative;
 	padding: 15px 0 0;
@@ -42,7 +41,7 @@
 	margin: 0;
 }
 
-/*nav*/
+/*owl carousel*/
 .wc-outfit-single-carousel .owl-nav {
 	margin-top: 15px;
 	text-align: center;
