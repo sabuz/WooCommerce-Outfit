@@ -98,32 +98,6 @@ trait Database {
 		return $wpdb->get_col("SELECT post_id FROM $table_name WHERE user_id = $user_id");
 	}
 
-	// Deprecated
-	function most_liked_outfits($order = 'most-liked-day') {
-		global $wpdb;
-
-		$liked_table = $wpdb->prefix . $this->table_post_likes;
-		$post_table = $wpdb->prefix . 'posts';
-
-		if ($order == 'most-liked-day') {
-			$date = date('Y-m-d 00:00:01');
-		} else {
-			$date = date('Y-m-d 00:00:01', strtotime('last week'));
-		}
-
-		$liked = $wpdb->get_col("SELECT post_id, COUNT(post_id) AS `likes` FROM $liked_table GROUP BY post_id ORDER BY likes DESC, created_at DESC");
-
-		$liked_today = $wpdb->get_col("SELECT post_id, COUNT(post_id) AS `likes` FROM $liked_table WHERE created_at > '$date' GROUP BY post_id ORDER BY likes DESC, created_at DESC");
-
-		// $posts = $wpdb->get_col("SELECT ID FROM $post_table WHERE post_type = '$type' ORDER BY post_date DESC");
-
-		$reminder_liked = array_diff($liked, $liked_today);
-		// $reminder_unliked = array_diff($posts, $reminder_liked);
-		// $reminder_unliked = array_diff($reminder_unliked, $liked_today);
-
-		return array_merge($liked_today, $reminder_liked);
-	}
-
 	/**
 	 * Insert/delete follow.
 	 *
