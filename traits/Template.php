@@ -103,8 +103,6 @@ trait Template {
 
 				<div class="row">
 					<div class="col-sm-12">
-						<input id="upload-button" type="button" value="' . __('Select Image', 'xim') . '">
- 						<input type="text" id="placeholder" placeholder="' . __('No image selected', 'xim') . '" disabled>
  						<input type="file" name="thumb" id="thumb">
 					</div>
 				</div>

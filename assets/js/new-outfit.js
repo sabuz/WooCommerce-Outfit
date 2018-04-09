@@ -1,4 +1,6 @@
 jQuery(document).ready(function() {
+	var _URL = window.URL || window.webkitURL
+
 	/**
 	 * Validator rules
 	 *
@@ -12,6 +14,26 @@ jQuery(document).ready(function() {
 					notEmpty: {
 						message: 'Outfit photo is required'
 					},
+					file: {
+						extension: 'jpg,jpeg,png',
+						type: 'image/jpeg,image/png',
+						message: 'Choose a valid JPG/JPEG/PNG file'
+					},
+					callback: {
+						message: 'Wrong answer',
+						callback: function(value, validator, $field) {
+							image = new Image()
+							image.src = _URL.createObjectURL(document.getElementById("thumb").files[0])
+							
+							image.onload = function() {
+								if (this.width < 767 || this.height < 500) {
+									console.log('small')
+								}
+							}
+
+							return false
+						}
+					}
 				}
 			},
 
@@ -39,43 +61,6 @@ jQuery(document).ready(function() {
 		width: '100%'
 	})
 
-
-	/**
-	 * Media Upload Handle
-	 *
-	 * @since: 1.0.0
-	 */
-	// var file_frame
-
-	// jQuery('#new-outfit-form').on('click', '#upload-button', function(e) {
-	// 	e.preventDefault()
-
-	// 	// if the file_frame has already been created, just reuse it
-	// 	if (file_frame) {
-	// 		file_frame.open()
-	// 		return
-	// 	}
-
-	// 	file_frame = wp.media.frames.file_frame = wp.media({
-	// 		title: jQuery(this).data('uploader_title'),
-	// 		button: {
-	// 			text: jQuery(this).data('uploader_button_text'),
-	// 		},
-	// 		multiple: false
-	// 	})
-
-	// 	file_frame.on('select', function() {
-	// 		attachment = file_frame.state().get('selection').first().toJSON()
-
-	// 		// do something with the file here
-	// 		jQuery('#placeholder').val(attachment.filename)
-	// 		jQuery('#thumb').val(attachment.id)
-	// 		jQuery('#new-outfit-form').bootstrapValidator('revalidateField', 'thumb')
-	// 	})
-
-	// 	file_frame.open()
-	// })
-
 	/**
 	 * Submit Outfit
 	 *
@@ -85,40 +70,24 @@ jQuery(document).ready(function() {
 		if (e.isDefaultPrevented()) {
 			return
 		} else {
-			// var formData = jQuery(this).serialize()
-
-			// jQuery.ajax({
-			// 	url: object.ajaxurl + '?action=wc_outfit_post_outfit',
-			// 	type: 'POST',
-			// 	data: {
-			// 		form_data: formData,
-			// 		security: object.nonce
-			// 	},
-			// 	success: function(response) {
-			// 		if (response.status == 'success') {
-			// 			var time = new Date()
-			// 			time.setHours(time.getHours() + 1)
-			// 			document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
-			// 			window.location.replace(object.myaccount_url + 'outfits')
-			// 		}
-			// 	},
-			// })
-
-			// return false
-
 			var form_data = new FormData(this)
 			form_data.append('security', object.nonce)
 
 			jQuery.ajax({
-				url: object.ajaxurl + '?action=wc_outfit_post_outfit',
 				type: 'POST',
+				url: object.ajaxurl + '?action=wc_outfit_post_outfit',
 				data: form_data,
-				success: function(data) {
-					console.log(data)
-				},
 				cache: false,
 				contentType: false,
-				processData: false
+				processData: false,
+				success: function(response) {
+					if (response.status == 'success') {
+						var time = new Date()
+						time.setHours(time.getHours() + 1)
+						document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
+						window.location.replace(object.myaccount_url + 'outfits')
+					}
+				}
 			});
 
 			return false;
