@@ -45,36 +45,36 @@ jQuery(document).ready(function() {
 	 *
 	 * @since: 1.0.0
 	 */
-	var file_frame
+	// var file_frame
 
-	jQuery('#new-outfit-form').on('click', '#upload-button', function(e) {
-		e.preventDefault()
+	// jQuery('#new-outfit-form').on('click', '#upload-button', function(e) {
+	// 	e.preventDefault()
 
-		// if the file_frame has already been created, just reuse it
-		if (file_frame) {
-			file_frame.open()
-			return
-		}
+	// 	// if the file_frame has already been created, just reuse it
+	// 	if (file_frame) {
+	// 		file_frame.open()
+	// 		return
+	// 	}
 
-		file_frame = wp.media.frames.file_frame = wp.media({
-			title: jQuery(this).data('uploader_title'),
-			button: {
-				text: jQuery(this).data('uploader_button_text'),
-			},
-			multiple: false
-		})
+	// 	file_frame = wp.media.frames.file_frame = wp.media({
+	// 		title: jQuery(this).data('uploader_title'),
+	// 		button: {
+	// 			text: jQuery(this).data('uploader_button_text'),
+	// 		},
+	// 		multiple: false
+	// 	})
 
-		file_frame.on('select', function() {
-			attachment = file_frame.state().get('selection').first().toJSON()
+	// 	file_frame.on('select', function() {
+	// 		attachment = file_frame.state().get('selection').first().toJSON()
 
-			// do something with the file here
-			jQuery('#placeholder').val(attachment.filename)
-			jQuery('#thumb').val(attachment.id)
-			jQuery('#new-outfit-form').bootstrapValidator('revalidateField', 'thumb')
-		})
+	// 		// do something with the file here
+	// 		jQuery('#placeholder').val(attachment.filename)
+	// 		jQuery('#thumb').val(attachment.id)
+	// 		jQuery('#new-outfit-form').bootstrapValidator('revalidateField', 'thumb')
+	// 	})
 
-		file_frame.open()
-	})
+	// 	file_frame.open()
+	// })
 
 	/**
 	 * Submit Outfit
@@ -85,26 +85,43 @@ jQuery(document).ready(function() {
 		if (e.isDefaultPrevented()) {
 			return
 		} else {
-			var formData = jQuery(this).serialize()
+			// var formData = jQuery(this).serialize()
+
+			// jQuery.ajax({
+			// 	url: object.ajaxurl + '?action=wc_outfit_post_outfit',
+			// 	type: 'POST',
+			// 	data: {
+			// 		form_data: formData,
+			// 		security: object.nonce
+			// 	},
+			// 	success: function(response) {
+			// 		if (response.status == 'success') {
+			// 			var time = new Date()
+			// 			time.setHours(time.getHours() + 1)
+			// 			document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
+			// 			window.location.replace(object.myaccount_url + 'outfits')
+			// 		}
+			// 	},
+			// })
+
+			// return false
+
+			var form_data = new FormData(this)
+			form_data.append('security', object.nonce)
 
 			jQuery.ajax({
 				url: object.ajaxurl + '?action=wc_outfit_post_outfit',
 				type: 'POST',
-				data: {
-					form_data: formData,
-					security: object.nonce
+				data: form_data,
+				success: function(data) {
+					console.log(data)
 				},
-				success: function(response) {
-					if (response.status == 'success') {
-						var time = new Date()
-						time.setHours(time.getHours() + 1)
-						document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
-						window.location.replace(object.myaccount_url + 'outfits')
-					}
-				},
-			})
+				cache: false,
+				contentType: false,
+				processData: false
+			});
 
-			return false
+			return false;
 		}
 	})
 

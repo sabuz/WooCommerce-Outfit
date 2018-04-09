@@ -270,38 +270,115 @@ trait Ajax {
 	function ajax_post_outfit() {
 		check_ajax_referer('wc_outfit_nonce', 'security');
 		
-		$data = $response = array();
-		parse_str($_REQUEST['form_data'], $data);
+		// $data = $response = array();
+		// parse_str($_REQUEST['form_data'], $data);
 
-		if (empty($data['ids'])) {
-			$response['message'][] = __('Products are required.', 'xim');
-		}
+		// if (empty($data['ids'])) {
+		// 	$response['message'][] = __('Products are required.', 'xim');
+		// }
 
-		if (empty($data['thumb'])) {
-			$response['message'][] = __('Outfit photo is required.', 'xim');
-		}
+		// if (empty($data['thumb'])) {
+		// 	$response['message'][] = __('Outfit photo is required.', 'xim');
+		// }
 
-		if (count($response) == 0) {
-			$post_id = wp_insert_post(array(
-				'post_title' => '',
-				'post_type' => 'outfit',
-				'post_status' => 'pending',
-			));
+		// if (count($response) == 0) {
+		// 	$post_id = wp_insert_post(array(
+		// 		'post_title' => '',
+		// 		'post_type' => 'outfit',
+		// 		'post_status' => 'pending',
+		// 	));
 
-			if ($post_id) {
-				wp_set_object_terms($post_id, $data['tags'], 'outfit_tags');
-				set_post_thumbnail($post_id, $data['thumb']);
-				add_post_meta($post_id, 'products', $data['ids']);
-				wp_update_post(['ID' => $post_id, 'post_title' => 'Outfit ' . $post_id]);
+		// 	if ($post_id) {
+		// 		wp_set_object_terms($post_id, $data['tags'], 'outfit_tags');
+		// 		set_post_thumbnail($post_id, $data['thumb']);
+		// 		add_post_meta($post_id, 'products', $data['ids']);
+		// 		wp_update_post(['ID' => $post_id, 'post_title' => 'Outfit ' . $post_id]);
 
-				$response['message'][] = __('Outfit submitted successfully.', 'xim');
-				$response['status'] = 'success';
-			}
-		} else {
-			$response['status'] = 'failed';
-		}
+		// 		$response['message'][] = __('Outfit submitted successfully.', 'xim');
+		// 		$response['status'] = 'success';
+		// 	}
+		// } else {
+		// 	$response['status'] = 'failed';
+		// }
 
-		wp_send_json($response);
+		// wp_send_json($response);
+
+
+		// check_ajax_referer('wc_outfit_nonce', 'security');
+		
+		
+
+
+
+
+		// $msg = array();
+
+		// if (!isset($_REQUEST['ids'])) {
+		// 	$msg[] = 'Products are required';
+		// }
+
+		// if (!file_exists($_FILES['thumb']['tmp_name'])) {
+		// 	$msg[] = 'Thumbnail are required';
+		// }
+
+		// if (count($msg) == 0) {
+		// 	$post_args = array(
+		// 		'post_title' => '',
+		// 		'post_type' => 'outfit',
+		// 		'post_status' => 'pending',
+		// 	);
+
+		// 	$post_id = wp_insert_post($post_args);
+
+		// 	if ($post_id) {
+
+		// 		// Including file library if not exist
+		// 		if (!function_exists('wp_handle_upload')) {
+		// 			require_once ABSPATH . 'wp-admin/includes/file.php';
+		// 		}
+
+		// 		// Uploading file to server
+		// 		$movefile = wp_handle_upload($_FILES['thumb'], ['test_form' => false]);
+
+		// 		// If uploading success & No error
+		// 		if ($movefile && !isset($movefile['error'])) {
+		// 			$filename = $movefile['file'];
+		// 			$filetype = wp_check_filetype(basename($filename), null);
+		// 			$wp_upload_dir = wp_upload_dir();
+
+		// 			$attachment = array(
+		// 				'guid' => $wp_upload_dir['url'] . '/' . basename($filename),
+		// 				'post_mime_type' => $filetype['type'],
+		// 				'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
+		// 				'post_content' => '',
+		// 				'post_status' => 'inherit',
+		// 			);
+
+		// 			// Adding file to media
+		// 			$attach_id = wp_insert_attachment($attachment, $filename);
+
+		// 			// If attachment success
+		// 			if ($attach_id) {
+		// 				require_once ABSPATH . 'wp-admin/includes/image.php';
+
+		// 				// Updating attachment metadata
+		// 				$attach_data = wp_generate_attachment_metadata($attach_id, $filename);
+		// 				wp_update_attachment_metadata($attach_id, $attach_data);
+
+		// 				set_post_thumbnail($post_id, $attach_id);
+		// 				add_post_meta($post_id, 'products', $_REQUEST['ids']);
+		// 				wp_update_post(['ID' => $post_id, 'post_title' => 'Outfit ' . $post_id]);
+		// 			}
+
+		// 			$msg[] = 'Success';
+		// 		} else {
+		// 			$msg[] = $movefile['error'];
+		// 		}
+		// 	}
+		// }
+
+		// wp_send_json($msg);
+		wp_send_json($_REQUEST);
 	}
 }
 
