@@ -57,10 +57,6 @@ trait Core {
 				)
 			);
 		}
-
-		// Allow customer to upload files
-		$role = get_role('customer');
-		$role->add_cap('upload_files');
 	}
 
 	function filter_post_type_link($url, $post) {
