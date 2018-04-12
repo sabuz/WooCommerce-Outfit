@@ -1,6 +1,4 @@
 jQuery(document).ready(function() {
-	var _URL = window.URL || window.webkitURL
-
 	/**
 	 * Validator rules
 	 *
@@ -18,21 +16,6 @@ jQuery(document).ready(function() {
 						extension: 'jpg,jpeg,png',
 						type: 'image/jpeg,image/png',
 						message: 'Choose a valid JPG/JPEG/PNG file'
-					},
-					callback: {
-						message: 'Wrong answer',
-						callback: function(value, validator, $field) {
-							image = new Image()
-							image.src = _URL.createObjectURL(document.getElementById("thumb").files[0])
-							
-							image.onload = function() {
-								if (this.width < 767 || this.height < 500) {
-									console.log('small')
-								}
-							}
-
-							return false
-						}
 					}
 				}
 			},
@@ -59,6 +42,12 @@ jQuery(document).ready(function() {
 
 	jQuery('.select-tag').select2({
 		width: '100%'
+	})
+
+	jQuery('[data-toggle="popover"]').popover({
+		animation: false,
+		html: true,
+		trigger: 'hover'
 	})
 
 	/**

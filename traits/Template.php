@@ -104,6 +104,7 @@ trait Template {
 				<div class="row">
 					<div class="col-sm-12">
  						<input type="file" name="thumb" id="thumb">
+ 						<span class="fa fa-question-circle" data-toggle="popover" data-placement="left" data-content="<ol><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li></ol>"></span>
 					</div>
 				</div>
 			</div>
