@@ -243,10 +243,9 @@ jQuery(document).ready(function() {
 		ids.splice(index, 1)
 
 		if (ids.length == 0) {
-			jQuery('#ids').val('')
-			jQuery('.selected-products').addClass('empty')
+			jQuery('.selected-products').addClass('empty').children('.ids').val('')
 		} else {
-			jQuery('#ids').val(JSON.stringify(ids))
+			jQuery('.selected-products .ids').val(JSON.stringify(ids))
 		}
 
 		jQuery('#new-outfit-form').bootstrapValidator('revalidateField', 'ids')

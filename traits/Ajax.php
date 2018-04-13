@@ -313,7 +313,7 @@ trait Ajax {
 					);
 
 					// Adding file to media
-					$attach_id = wp_insert_attachment($attachment, $filename);
+					$attach_id = wp_insert_attachment($attachment, $filename, $post_id);
 
 					// If attachment success
 					if ($attach_id) {
