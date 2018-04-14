@@ -104,6 +104,15 @@ trait Admin {
 								<p class="description"><?php _e('If enabled, customer will be able to attach the products they bought.', 'xim'); ?></p>
 							</td>
 						</tr>
+
+						<tr valign="top">
+							<th scope="row"><?php _e('Submission Guideline', 'xim'); ?></th>
+
+							<td>
+								<?php wp_editor(get_option('wc-outfit-submission-guideline'), 'wc-outfit-submission-guideline', array('wpautop' => false, 'media_buttons' => false, 'teeny' => true)); ?>
+								<p class="description"><?php _e('Add guideline for uploading outfit photos.', 'xim'); ?></p>
+							</td>
+						</tr>
 					</table>
 
 					<h2><?php _e('Tagging', 'xim'); ?></h2>
@@ -177,6 +186,7 @@ trait Admin {
 	function register_settings() {
 		register_setting('wc-outfit', 'wc-outfit-verify-submission');
 		register_setting('wc-outfit', 'wc-outfit-bought-only');
+		register_setting('wc-outfit', 'wc-outfit-submission-guideline');
 		register_setting('wc-outfit', 'wc-outfit-tagging');
 		register_setting('wc-outfit', 'wc-outfit-customer-tagging');
 		register_setting('wc-outfit', 'wc-outfit-cleanup-gallery');

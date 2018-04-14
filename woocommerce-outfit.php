@@ -85,8 +85,6 @@ class Xim_Woo_Outfit_Init {
 		// add_filter('get_sample_permalink_html', array($this, 'remove_sample_permalink_html'));
 		// add_filter('post_row_actions', array($this, 'filter_post_row_actions'), 10, 2);
 		add_action('before_delete_post', array($this, 'before_delete_post'));
-		add_filter('body_class', array($this, 'filter_body_class'));
-		add_filter('ajax_query_attachments_args', array($this, 'ajax_query_attachments_args'));
 		add_filter('wp_footer', array($this, 'wp_footer'));
 		add_filter('wp_head', array($this, 'wp_head'));
 		add_filter('post_type_link', array($this, 'filter_post_type_link'), 10, 2);

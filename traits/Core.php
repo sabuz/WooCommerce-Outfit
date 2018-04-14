@@ -189,35 +189,6 @@ trait Core {
 	}
 
 	/**
-	 * Push class to body on style gallery page.
-	 *
-	 * @since    1.0.0
-	 */
-	function filter_body_class($classes) {
-		global $post;
-
-		// if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'style-gallery')) {
-		// 	$classes[] = 'wc-outfit-gallery';
-		// }
-
-		return $classes;
-	}
-
-	/**
-	 * Ensure users only see their own media
-	 *
-	 * @since    1.0.0
-	 */
-	function ajax_query_attachments_args($query) {
-		// admins get to see everything
-		if (!current_user_can('manage_options')) {
-			$query['author'] = get_current_user_id();
-		}
-
-		return $query;
-	}
-
-	/**
 	 * wp_head hook
 	 *
 	 * @since    1.0.0

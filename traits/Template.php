@@ -101,7 +101,7 @@ trait Template {
 				<div class="row">
 					<div class="col-sm-12">
  						<input type="file" name="thumb" id="thumb">
- 						<span class="wc-outfit-icon wc-outfit-icon-question-circle" data-toggle="popover" data-placement="left" data-content="<ol><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li></ol>"></span>
+ 						<span class="wc-outfit-icon wc-outfit-icon-question-circle" data-toggle="popover" data-placement="left" data-content="' . get_option('wc-outfit-submission-guideline') . '"></span>
 					</div>
 				</div>
 			</div>
@@ -304,6 +304,7 @@ trait Template {
 				}
 			}
 
+
 			$query = new WP_Query($args);
 
 			if ($query->have_posts()) {
@@ -329,6 +330,9 @@ trait Template {
 								</div>
 							</div>';
 						}
+
+						wp_reset_postdata();
+
 					echo '</div>'; //.wc-outfit-gallery-content
 
 					echo '<div class="wc-outfit-gallery-pagination">
@@ -372,8 +376,6 @@ trait Template {
 			}
 
 		echo '</div>'; //.wc-outfit-gallery
-
-		wp_reset_postdata();
 
 		// Outfit Modal
 		if (isset($_GET['view'])) {
