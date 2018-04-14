@@ -50,7 +50,7 @@ trait Template {
 							<td>' . get_the_ID() . '</td>
 							<td>' . the_title('', '', false) . '</td>
 							<td>' . get_the_date() . '</td>
-							<td>' . get_post_status() . '</td>
+							<td>' . ucfirst(get_post_status()) . '</td>
 							<td><a href="' . get_the_permalink() . '" target="_blank">' . __('View', 'xim') . '</a></td>
 						</tr>';
 			}
@@ -75,6 +75,7 @@ trait Template {
 	 */
 	function template_new_outfit($atts, $content = null) {
 		// enqueue styles
+		wp_enqueue_style('wc-outfit-icon');
 		wp_enqueue_style('bootstrap');
 		wp_enqueue_style('bootstrap-validator');
 		wp_enqueue_style('select2');
@@ -85,10 +86,6 @@ trait Template {
 		wp_enqueue_script('bootstrap-validator');
 		wp_enqueue_script('select2');
 		wp_enqueue_script('new-outfit');
-
-		wp_enqueue_media();
-
-		$atts = shortcode_atts(array(), $atts);
 
 		$terms = get_terms(array(
 			'taxonomy' => 'outfit_tags',
@@ -104,7 +101,7 @@ trait Template {
 				<div class="row">
 					<div class="col-sm-12">
  						<input type="file" name="thumb" id="thumb">
- 						<span class="fa fa-question-circle" data-toggle="popover" data-placement="left" data-content="<ol><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li></ol>"></span>
+ 						<span class="wc-outfit-icon wc-outfit-icon-question-circle" data-toggle="popover" data-placement="left" data-content="<ol><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li><li>Lorem ipsum dolor sit amet, consectetur adipisicing elit</li></ol>"></span>
 					</div>
 				</div>
 			</div>
@@ -164,6 +161,7 @@ trait Template {
 	function template_style_gallery() {
 		global $post;
 
+		wp_enqueue_style('wc-outfit-icon');
 		wp_enqueue_style('bootstrap');
 		wp_enqueue_style('owlCarousel');
 		wp_enqueue_style('outfit-modal');
@@ -200,9 +198,9 @@ trait Template {
 					echo '<h4 class="wc-outfit-gallery-header-subtitle">' . __('Inspire and Admire', 'xim') . '</h4>';
 
 					echo '<div class="wc-outfit-gallery-header-btn-group">
-						<a href="' . get_the_permalink(get_option('wc-outfit-page-id')) . '" class="' . ($current == 'all' ? 'active' : '') . '">All</a>
-						<a href="' . add_query_arg('page', 'following', get_the_permalink(get_option('wc-outfit-page-id'))) . '" class="' . ($current == 'following' ? 'active' : '') . '">Following</a>
-						<a href="' . add_query_arg('page', 'feat', get_the_permalink(get_option('wc-outfit-page-id'))) . '" class="' . ($current == 'feat' ? 'active' : '') . '">Featured</a>
+						<a href="' . get_the_permalink(get_option('wc-outfit-page-id')) . '" class="' . ($current == 'all' ? 'active' : '') . '">' . __('All', 'xim') . '</a>
+						<a href="' . add_query_arg('page', 'following', get_the_permalink(get_option('wc-outfit-page-id'))) . '" class="' . ($current == 'following' ? 'active' : '') . '">' . __('Following', 'xim') . '</a>
+						<a href="' . add_query_arg('page', 'feat', get_the_permalink(get_option('wc-outfit-page-id'))) . '" class="' . ($current == 'feat' ? 'active' : '') . '">' . __('Featured', 'xim') . '</a>
 					</div>';
 				}
 			echo '</div>'; //.wc-outfit-gallery-header
@@ -433,7 +431,7 @@ trait Template {
 						items: 2,
 						margin: 10,
 						nav:true,
-						navText: [\'<span class="fa fa-angle-left">\', \'<span class="fa fa-angle-right">\']
+						navText: [\'<span class="wc-outfit-icon wc-outfit-icon-angle-left">\', \'<span class="wc-outfit-icon wc-outfit-icon-angle-right">\']
 					});
 				})
 			</script>';
@@ -452,6 +450,7 @@ trait Template {
 	function template_single_product_listing() {
 		global $post;
 
+		wp_enqueue_style('wc-outfit-icon');
 		wp_enqueue_style('bootstrap');
 		wp_enqueue_style('owlCarousel');
 		wp_enqueue_style('outfit-modal');
@@ -476,7 +475,7 @@ trait Template {
 
 		if ($query->have_posts()) {
 			echo '<div class="wc-outfit-single-carousel">
-				<h2>' . __('Explore Shop & Outfit Photos', 'xim') . '</h2>
+				<h3>' . __('Explore Shop & Outfit Photos', 'xim') . '</h3>
 
 				<div class="owl-carousel">';
 				while ($query->have_posts()) {

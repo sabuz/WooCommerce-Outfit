@@ -9,7 +9,7 @@ jQuery(document).ready(function() {
 		margin: 10,
 		items: 3,
 		nav: true,
-		navText: ['<span class="fa fa-angle-left">', '<span class="fa fa-angle-right">']
+		navText: ['<span class="wc-outfit-icon wc-outfit-icon-angle-left">', '<span class="wc-outfit-icon wc-outfit-icon-angle-right">']
 	})
 
 	/**
@@ -40,7 +40,7 @@ jQuery(document).ready(function() {
 					items: 2,
 					margin: 10,
 					nav: true,
-					navText: ['<span class="fa fa-angle-left">', '<span class="fa fa-angle-right">'],
+					navText: ['<span class="wc-outfit-icon wc-outfit-icon-angle-left">', '<span class="wc-outfit-icon wc-outfit-icon-angle-right">'],
 					lazyLoad: true
 				})
 			}, 100)
@@ -81,7 +81,7 @@ jQuery(document).ready(function() {
 					items: 2,
 					margin: 10,
 					nav: true,
-					navText: ['<span class="fa fa-angle-left">', '<span class="fa fa-angle-right">'],
+					navText: ['<span class="wc-outfit-icon wc-outfit-icon-angle-left">', '<span class="wc-outfit-icon wc-outfit-icon-angle-right">'],
 					lazyLoad: true
 				})
 			}, 100)

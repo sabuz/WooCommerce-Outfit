@@ -83,7 +83,7 @@ trait Helper {
 	// Like button html.
 	function like_button_html($post_id) {
 		$content = '<div class="wc-outfit-rating">
-			<a href="#" class="wc-outfit-rating-heart ' . (!$this->is_liked_outfit($post_id) ?: 'enabled') . '" data-id="' . $post_id . '"><i class="fa fa-heart"></i></a>
+			<a href="#" class="wc-outfit-rating-heart ' . (!$this->is_liked_outfit($post_id) ?: 'enabled') . '" data-id="' . $post_id . '"><i class="wc-outfit-icon wc-outfit-icon-heart"></i></a>
 			<span class="wc-outfit-rating-count">' . $this->get_num_post_like($post_id) . '</span>
 		</div>';
 
@@ -97,9 +97,9 @@ trait Helper {
 		}
 
 		$content = '<div class="wc-outfit-social-share">
-			<a href="http://www.facebook.com/sharer.php?u=' . esc_url($url) . '" target="_blank" class="fa fa-facebook"></a>
-			<a href="http://pinterest.com/pin/create/button/?url=' . esc_url($url) . '&media=' . $this->get_outfit_thumbnail($post_id, 'product-thumb') . '&description=' . get_the_title($post_id) . '" target="_blank" class="fa fa-pinterest-p"></a>
-			<a href="http://www.tumblr.com/share/link?url=' . esc_url($url) . '" target="_blank" class="fa fa-tumblr"></a>
+			<a href="http://www.facebook.com/sharer.php?u=' . esc_url($url) . '" target="_blank" class="wc-outfit-icon wc-outfit-icon-facebook"></a>
+			<a href="http://pinterest.com/pin/create/button/?url=' . esc_url($url) . '&media=' . $this->get_outfit_thumbnail($post_id, 'product-thumb') . '&description=' . get_the_title($post_id) . '" target="_blank" class="wc-outfit-icon wc-outfit-icon-pinterest-p"></a>
+			<a href="http://www.tumblr.com/share/link?url=' . esc_url($url) . '" target="_blank" class="wc-outfit-icon wc-outfit-icon-tumblr"></a>
 		</div>';
 
 		return $content;

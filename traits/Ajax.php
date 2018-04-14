@@ -48,11 +48,11 @@ trait Ajax {
 			}
 		}
 
-		wp_send_json($json);
+		wp_send_json($json, 200);
 	}
 
 	function nopriv_ajax_get_products_by_cat() {
-		wp_send_json(array());
+		wp_send_json(array(), 401);
 	}
 
 	/**
@@ -104,7 +104,7 @@ trait Ajax {
 				<div class="wc-outfit-modal-thumb">
 					<img src="' . $this->get_outfit_thumbnail($_REQUEST['view']) . '" />
 
-					' . ($_REQUEST['pagination'] ? '<a href="#" class="outfit-prev" data-id=""><span class="fa fa-angle-left"></span></a><a href="#" class="outfit-next" data-id=""><span class="fa fa-angle-right"></span></a>' : '') . '
+					' . ($_REQUEST['pagination'] ? '<a href="#" class="outfit-prev" data-id=""><span class="wc-outfit-icon wc-outfit-icon-angle-left"></span></a><a href="#" class="outfit-next" data-id=""><span class="wc-outfit-icon wc-outfit-icon-angle-right"></span></a>' : '') . '
 				</div>
 
 				<div class="wc-outfit-modal-details">
@@ -149,6 +149,8 @@ trait Ajax {
 	 */
 	function ajax_style_gallery() {
 		check_ajax_referer('wc_outfit_nonce', 'security');
+
+		$content = '';
 
 		if ($_REQUEST['user']) {
 			if (@$_REQUEST['page'] == 'likes') {
@@ -241,7 +243,7 @@ trait Ajax {
 		while ($query->have_posts()) {
 			$query->the_post();
 			
-			echo '<div class="wc-outfit-gallery-item col-sm-4" data-id="' . $query->post->ID . '">
+			$content .= '<div class="wc-outfit-gallery-item col-sm-4" data-id="' . $query->post->ID . '">
 				<div class="wc-outfit-gallery-item-inner-wrap">
 					<img src="' . $this->get_outfit_thumbnail($query->post->ID) . '" class="wc-outfit-gallery-item-thumb" />
 
@@ -259,6 +261,7 @@ trait Ajax {
 			</div>';
 		}
 		
+		echo $content;
 		die();
 	}
 
@@ -338,7 +341,7 @@ trait Ajax {
 			}
 		}
 
-		wp_send_json($response);
+		wp_send_json($response, 200);
 	}
 }
 

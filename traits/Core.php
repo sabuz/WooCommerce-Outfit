@@ -82,6 +82,7 @@ trait Core {
 	 */
 	function enqueue_scripts() {
 		// style
+		wp_register_style('wc-outfit-icon', plugin_dir_url(__FILE__) . '../assets/css/wc-outfit-icon.css');
 		wp_register_style('bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.min.css');
 		wp_register_style('bootstrap-validator', plugin_dir_url(__FILE__) . '../assets/css/bootstrapValidator.min.css');
 		wp_register_style('owlCarousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.css');
@@ -159,9 +160,9 @@ trait Core {
 		global $wp_query;
 
 		if (isset($wp_query->query_vars[$this->all_outfit_endpoint]) && in_the_loop()) {
-			$title = 'Outfits';
+			$title = __('Outfits', 'xim');
 		} elseif (isset($wp_query->query_vars[$this->new_outfit_endpoint]) && in_the_loop()) {
-			$title = 'Add New Outfit';
+			$title = __('Add New Outfit', 'xim');
 		}
 
 		return $title;
