@@ -10,12 +10,12 @@ jQuery(document).ready(function() {
 				excluded: false,
 				validators: {
 					notEmpty: {
-						message: 'Outfit photo is required'
+						message: wc_outfit_tr_obj.thumb_req
 					},
 					file: {
 						extension: 'jpg,jpeg,png',
 						type: 'image/jpeg,image/png',
-						message: 'Choose a valid JPG/JPEG/PNG file'
+						message: wc_outfit_tr_obj.invalid_thumb
 					}
 				}
 			},
@@ -24,7 +24,7 @@ jQuery(document).ready(function() {
 				excluded: false,
 				validators: {
 					notEmpty: {
-						message: 'Products are required'
+						message: wc_outfit_tr_obj.ids_req
 					}
 				}
 			},
@@ -37,7 +37,7 @@ jQuery(document).ready(function() {
 	 * @since: 1.0.0
 	 */
 	jQuery('.select-cat').select2({
-		placeholder: 'Select a category'
+		placeholder: wc_outfit_tr_obj.select_placeholder
 	})
 
 	jQuery('.select-tag').select2({
@@ -60,11 +60,11 @@ jQuery(document).ready(function() {
 			return
 		} else {
 			var form_data = new FormData(this)
-			form_data.append('security', object.nonce)
+			form_data.append('security', wc_outfit_tr_obj.nonce)
 
 			jQuery.ajax({
 				type: 'POST',
-				url: object.ajaxurl + '?action=wc_outfit_post_outfit',
+				url: wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_post_outfit',
 				data: form_data,
 				cache: false,
 				contentType: false,
@@ -74,7 +74,7 @@ jQuery(document).ready(function() {
 						var time = new Date()
 						time.setHours(time.getHours() + 1)
 						document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
-						window.location.replace(object.myaccount_url + 'outfits')
+						window.location.replace(wc_outfit_tr_obj.myaccount_url + 'outfits')
 					}
 				}
 			});
@@ -95,10 +95,10 @@ jQuery(document).ready(function() {
 		var html = ''
 		var count = 0
 
-		jQuery.get(object.ajaxurl + '?action=wc_outfit_get_products_by_cat', {
+		jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_get_products_by_cat', {
 			cat: cat_id,
 			page: 1,
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).success(function(data) {
 			if (data.products) {
 				for (var i in data.products) {
@@ -149,10 +149,10 @@ jQuery(document).ready(function() {
 		var count = 0
 		var html = ''
 
-		jQuery.get(object.ajaxurl + '?action=wc_outfit_get_products_by_cat', {
+		jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_get_products_by_cat', {
 			cat: cat_id,
 			page: page,
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).done(function(data) {
 			for (var i in data.products) {
 				if (count == 0 || count % 3 == 0) {

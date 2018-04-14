@@ -106,9 +106,29 @@ trait Core {
 		wp_register_script('style-gallery', plugin_dir_url(__FILE__) . '../assets/js/style-gallery.js', array(), false, true);
 
 		// localize
-		wp_localize_script('new-outfit', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
-		wp_localize_script('single-product', 'object', array('ajaxurl' => admin_url('admin-ajax.php'), 'homeurl' => home_url(), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
-		wp_localize_script('style-gallery', 'object', array('ajax_url' => admin_url('admin-ajax.php'), 'home_url' => home_url(), 'style_gallery_url' => get_the_permalink(get_option('wc-outfit-page-id')), 'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
+		wp_localize_script('new-outfit', 'wc_outfit_tr_obj', array(
+			'ajax_url' => admin_url('admin-ajax.php'),
+			'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')),
+			'nonce' => wp_create_nonce('wc_outfit_nonce'),
+			'thumb_req' => __('Outfit photo is required', 'xim'),
+			'invalid_thumb' => __('Choose a valid JPG/JPEG/PNG file', 'xim'),
+			'ids_req' => __('Products are required', 'xim'),
+			'select_placeholder' => __('Select a category', 'xim')
+		));
+
+		wp_localize_script('single-product', 'wc_outfit_tr_obj', array(
+			'ajax_url' => admin_url('admin-ajax.php'),
+			'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')),
+			'nonce' => wp_create_nonce('wc_outfit_nonce'),
+		));
+
+		wp_localize_script('style-gallery', 'wc_outfit_tr_obj', array(
+			'ajax_url' => admin_url('admin-ajax.php'),
+			'home_url' => home_url(),
+			'style_gallery_url' => get_the_permalink(get_option('wc-outfit-page-id')),
+			'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')),
+			'nonce' => wp_create_nonce('wc_outfit_nonce')
+		));
 	}
 
 	/**

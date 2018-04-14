@@ -22,10 +22,10 @@ jQuery(document).ready(function() {
 		var next = jQuery(this).parents('.owl-item').next().find('.wc-outfit-gallery-item').attr('data-id')
 		var prev = jQuery(this).parents('.owl-item').prev().find('.wc-outfit-gallery-item').attr('data-id')
 
-		jQuery.get(object.ajaxurl + '?action=wc_outfit_single_outfit_modal', {
+		jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_single_outfit_modal', {
 			view: view,
 			pagination: true,
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).done(function(data) {
 			jQuery('#wc-outfit-modal .modal-content').empty().html(jQuery(data))
 
@@ -63,10 +63,10 @@ jQuery(document).ready(function() {
 		var next = jQuery(target).parent().next().find('.wc-outfit-gallery-item').attr('data-id')
 		var prev = jQuery(target).parent().prev().find('.wc-outfit-gallery-item').attr('data-id')
 
-		jQuery.get(object.ajaxurl + '?action=wc_outfit_single_outfit_modal', {
+		jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_single_outfit_modal', {
 			view: post_id,
 			pagination: true,
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).done(function(data) {
 			jQuery('#wc-outfit-modal .modal-content').empty().html(jQuery(data))
 
@@ -101,14 +101,14 @@ jQuery(document).ready(function() {
 
 		var target = jQuery(this)
 
-		jQuery.post(object.ajaxurl + '?action=wc_outfit_post_like', {
+		jQuery.post(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_post_like', {
 			post_id: target.attr('data-id'),
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).done(function(response) {
 			target.toggleClass('enabled').siblings('.wc-outfit-rating-count').html(response)
 		}).fail(function(xhr) {
 			if (xhr.status == 401) {
-				window.location.href = object.myaccount_url
+				window.location.href = wc_outfit_tr_obj.myaccount_url
 			}
 		})
 	})
@@ -123,14 +123,14 @@ jQuery(document).ready(function() {
 
 		var user_id = jQuery(this).attr('data-id')
 
-		jQuery.get(object.ajaxurl + '?action=wc_outfit_follow_people', {
+		jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_follow_people', {
 			user_id: user_id,
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).done(function(data) {
 			jQuery('.wc-outfit-follow-btn').text(jQuery('.wc-outfit-follow-btn').text() == 'Follow' ? 'Unfollow' : 'Follow')
 		}).fail(function(xhr) {
 			if (xhr.status == 401) {
-				window.location.href = object.myaccount_url
+				window.location.href = wc_outfit_tr_obj.myaccount_url
 			}
 		})
 	})

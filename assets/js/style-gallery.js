@@ -12,7 +12,7 @@ function updateUrl(page, url) {
 }
 
 jQuery(document).ready(function() {
-	var hasHistory = false
+	var has_history = false
 	var current = parseInt(jQuery('.wc-outfit-gallery-pagination .button').attr('data-current'))
 	var max = parseInt(jQuery('.wc-outfit-gallery-pagination .button').attr('data-max'))
 
@@ -46,12 +46,12 @@ jQuery(document).ready(function() {
 		view = jQuery(this).closest('.wc-outfit-gallery-item').attr('data-id')
 
 		// update url
-		hasHistory = true
-		updateUrl('Style Gallery', object.style_gallery_url + '?view=' + view)
+		has_history = true
+		updateUrl('Style Gallery', wc_outfit_tr_obj.style_gallery_url + '?view=' + view)
 
-		jQuery.get(object.ajax_url + '?action=wc_outfit_single_outfit_modal', {
+		jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_single_outfit_modal', {
 			view: view,
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).done(function(data) {
 			jQuery('#wc-outfit-modal .modal-content').empty().append(jQuery(data))
 
@@ -79,10 +79,10 @@ jQuery(document).ready(function() {
 	 * @since: 1.0.0
 	 */
 	jQuery('#wc-outfit-modal').on('click', '.close', function() {
-		if (hasHistory == true) {
+		if (has_history == true) {
 			updateUrl('Style Gallery', history.back())
 		} else {
-			updateUrl('Style Gallery', object.style_gallery_url)
+			updateUrl('Style Gallery', wc_outfit_tr_obj.style_gallery_url)
 		}
 	})
 
@@ -96,16 +96,16 @@ jQuery(document).ready(function() {
 
 		var user_id = jQuery(this).attr('data-id')
 
-		jQuery.get(object.ajax_url + '?action=wc_outfit_follow_people', {
+		jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_follow_people', {
 			user_id: user_id,
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).done(function(data) {
 			jQuery('.wc-outfit-num-follower').html(data + ' Followers')
 			jQuery('.wc-outfit-gallery-header .wc-outfit-follow-btn').text(jQuery('.wc-outfit-gallery-header .wc-outfit-follow-btn').text() == 'Follow' ? 'Unfollow' : 'Follow')
 			jQuery('.modal .wc-outfit-follow-btn').text(jQuery('.modal  .wc-outfit-follow-btn').text() == 'Follow' ? 'Unfollow' : 'Follow')
 		}).fail(function(xhr) {
 			if (xhr.status == 401) {
-				window.location.href = object.myaccount_url
+				window.location.href = wc_outfit_tr_obj.myaccount_url
 			}
 		})
 	})
@@ -120,14 +120,14 @@ jQuery(document).ready(function() {
 
 		var target = jQuery(this)
 
-		jQuery.post(object.ajax_url + '?action=wc_outfit_post_like', {
+		jQuery.post(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_post_like', {
 			post_id: target.attr('data-id'),
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).done(function(data) {
 			target.toggleClass('enabled').siblings('.wc-outfit-rating-count').html(data)
 		}).fail(function(xhr) {
 			if (xhr.status == 401) {
-				window.location.href = object.myaccount_url
+				window.location.href = wc_outfit_tr_obj.myaccount_url
 			}
 		})
 	})
@@ -152,7 +152,7 @@ jQuery(document).ready(function() {
 
 			var obj = {
 				paged: current,
-				security: object.nonce
+				security: wc_outfit_tr_obj.nonce
 			}
 
 			if (typeof user !== typeof undefined && user !== false) {
@@ -167,7 +167,7 @@ jQuery(document).ready(function() {
 				obj.tag = tag
 			}
 
-			jQuery.get(object.ajax_url + '?action=wc_outfit_style_gallery', obj).done(function(data) {
+			jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_style_gallery', obj).done(function(data) {
 				var data = jQuery(data).filter('div')
 
 				jQuery('.wc-outfit-gallery-content').append(data)
