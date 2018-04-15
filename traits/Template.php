@@ -44,20 +44,21 @@ trait Template {
 				</thead>
 
 				<tbody>';
-			while ($query->have_posts()) {
-				$query->the_post();
-				$html .= '<tr>
+					while ($query->have_posts()) {
+						$query->the_post();
+						$html .= '<tr>
 							<td>' . get_the_ID() . '</td>
 							<td>' . the_title('', '', false) . '</td>
 							<td>' . get_the_date() . '</td>
 							<td>' . ucfirst(get_post_status()) . '</td>
 							<td><a href="' . get_the_permalink() . '" target="_blank">' . __('View', 'xim') . '</a></td>
 						</tr>';
-			}
-			$html .= '</tbody>
-			</table>';
+					}
+					
+					wp_reset_postdata();
 
-			wp_reset_postdata();
+				$html .= '</tbody>
+			</table>';
 		} else {
 			$html .= '<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">
 				<a class="woocommerce-Button button" href="' . esc_url(wc_get_endpoint_url('outfits/new-outfit')) . '">' . __('Add new', 'xim') . '</a>
@@ -500,10 +501,12 @@ trait Template {
 						</div>
 					</div>';
 				}
+
+				wp_reset_postdata();
+				
 				echo '</div>
 			</div>';
 		}
 
-		wp_reset_postdata();
 	}
 }

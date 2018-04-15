@@ -38,7 +38,7 @@ trait Admin {
 					
 					<table class="form-table">
 				        <tr valign="top">
-				        	<th scope="row">Style Gallery Page</th>
+				        	<th scope="row"><?php _e('Style Gallery Page', 'xim'); ?></th>
 				        	<td>
 								<?php wp_dropdown_pages(array('name' => 'wc-outfit-page-id', 'selected' => get_option('wc-outfit-page-id')))?>
 								<p class="description"><?php _e('The base page that will be used in outfit permalinks.', 'xim')?></p>
@@ -46,7 +46,21 @@ trait Admin {
 				        </tr>
 
 				        <tr valign="top">
-				        	<th scope="row">Thumbnail Size</th>
+				        	<th scope="row"><?php _e('Page Title', 'xim'); ?></th>
+				        	<td>
+								<input type="text" name="wc-outfit-page-title" id="wc-outfit-page-title" value="<?php echo get_option('wc-outfit-page-title'); ?>" placeholder="<?php _e('Style Gallery', 'xim'); ?>">
+							</td>
+				        </tr>
+
+				        <tr valign="top">
+				        	<th scope="row"><?php _e('Page Subtitle/Slogan', 'xim'); ?></th>
+				        	<td>
+								<input type="text" name="wc-outfit-page-slogan" id="wc-outfit-page-slogan" value="<?php echo get_option('wc-outfit-page-slogan'); ?>" placeholder="<?php _e('Inspire and Admire', 'xim'); ?>">
+							</td>
+				        </tr>
+
+				        <tr valign="top">
+				        	<th scope="row"><?php _e('Thumbnail Size', 'xim'); ?></th>
 				        	<td>
 								<input type="number" name="wc-outfit-gallery-thumb-w" id="wc-outfit-gallery-thumb-w" class="small-text" value="<?php echo get_option('wc-outfit-gallery-thumb-w', 480); ?>">
 								<label for="mailserver_port"><?php _e('x', 'xim'); ?></label>
@@ -68,7 +82,7 @@ trait Admin {
 
 					<table class="form-table">
 				        <tr valign="top">
-				        	<th scope="row">Facebook App ID</th>
+				        	<th scope="row"><?php _e('Facebook App ID', 'xim'); ?></th>
 				        	<td>
 								<input type="text" name="wc-outfit-fb-app-id" id="wc-outfit-fb-app-id" value="<?php echo get_option('wc-outfit-fb-app-id'); ?>">
 								<p class="description"><?php _e('Get your Facebook app id from <a href="https://developers.facebook.com/" target="_blank">here</a>', 'xim')?></p>
@@ -109,7 +123,7 @@ trait Admin {
 							<th scope="row"><?php _e('Submission Guideline', 'xim'); ?></th>
 
 							<td>
-								<?php wp_editor(get_option('wc-outfit-submission-guideline'), 'wc-outfit-submission-guideline', array('wpautop' => false, 'media_buttons' => false, 'teeny' => true)); ?>
+								<?php wp_editor(get_option('wc-outfit-submission-guideline'), 'wc-outfit-submission-guideline', array('wpautop' => false, 'media_buttons' => false, 'teeny' => true, 'textarea_rows' => 8)); ?>
 								<p class="description"><?php _e('Add guideline for uploading outfit photos.', 'xim'); ?></p>
 							</td>
 						</tr>
@@ -137,15 +151,15 @@ trait Admin {
 						</tr>
 				    </table>
 
-				    <h2>Image Gallery</h2>
+				    <h2><?php _e('Image Gallery', 'xim'); ?></h2>
 
 					<table class="form-table">
 						<tr valign="top">
 							<th scope="row"><?php _e('Cleanup Gallery', 'xim'); ?></th>
 							<td>
 								<input type="checkbox" name="wc-outfit-cleanup-gallery" id="wc-outfit-cleanup-gallery" <?php echo (get_option('wc-outfit-cleanup-gallery') ? 'checked' : ''); ?>>
-								<label for="wc-outfit-cleanup-gallery"><strong>Remove Image from gallery if submission rejected</strong></label>
-								<p class="description">If enabled, attached image will be removed from gallery if a submission is rejected.</p>
+								<label for="wc-outfit-cleanup-gallery"><strong><?php _e('Remove Image from gallery if submission rejected', 'xim'); ?></strong></label>
+								<p class="description"><?php _e('If enabled, attached image will be removed from gallery if a submission is rejected.', 'xim'); ?></p>
 							</td>
 						</tr>
 				    </table>
@@ -154,7 +168,7 @@ trait Admin {
 
 					<table class="form-table">
 				        <tr valign="top">
-				        	<th scope="row">Position</th>
+				        	<th scope="row"><?php _e('Position', 'xim'); ?></th>
 				        	<td>
 								<select name="wc-outfit-single-position" id="wc-outfit-single-position">
 									<option value="woocommerce_before_single_product" <?php selected(get_option('wc-outfit-single-position'), 'woocommerce_before_single_product', true); ?>>Before Single Product</option>
@@ -192,6 +206,8 @@ trait Admin {
 		register_setting('wc-outfit', 'wc-outfit-cleanup-gallery');
 		register_setting('wc-outfit', 'wc-outfit-single-position');
 		register_setting('wc-outfit', 'wc-outfit-page-id');
+		register_setting('wc-outfit', 'wc-outfit-page-title');
+		register_setting('wc-outfit', 'wc-outfit-page-slogan');
 		register_setting('wc-outfit', 'wc-outfit-gallery-thumb-w');
 		register_setting('wc-outfit', 'wc-outfit-gallery-thumb-h');
 		register_setting('wc-outfit', 'wc-outfit-fb-app-id');
