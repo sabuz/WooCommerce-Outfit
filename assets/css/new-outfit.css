@@ -77,6 +77,12 @@
 	color: #fff;
 }
 
+/*popover*/
+#new-outfit-form .popover ul,
+#new-outfit-form .popover ol {
+	margin: 0 0 15px 15px;
+}
+
 /*help block*/
 #new-outfit-form .wc-outfit-icon {
 	float: right;
