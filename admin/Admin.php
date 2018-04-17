@@ -136,7 +136,7 @@ trait Admin {
 							<td>
 								<input type="checkbox" name="wc-outfit-customer-tagging" id="wc-outfit-customer-tagging" <?php echo (get_option('wc-outfit-customer-tagging', 'on') ? 'checked' : ''); ?>>
 								<label for="wc-outfit-customer-tagging"><strong><?php _e('Allow customer to add tag', 'xim'); ?></strong></label>
-								<p class="description"><?php _e('If enabled, customer will be able to add tag during submission of outfit.', 'xim'); ?></p>
+								<p class="description"><?php _e('If enabled, customer will be able to add tag during submission of outfit. Requires Tag features enabled.', 'xim'); ?></p>
 							</td>
 						</tr>
 				    </table>
@@ -147,7 +147,7 @@ trait Admin {
 						<tr valign="top">
 							<th scope="row"><?php _e('Cleanup Gallery', 'xim'); ?></th>
 							<td>
-								<input type="checkbox" name="wc-outfit-cleanup-gallery" id="wc-outfit-cleanup-gallery" <?php echo (get_option('wc-outfit-cleanup-gallery') ? 'checked' : ''); ?>>
+								<input type="checkbox" name="wc-outfit-cleanup-gallery" id="wc-outfit-cleanup-gallery" <?php echo (get_option('wc-outfit-cleanup-gallery', 'on') ? 'checked' : ''); ?>>
 								<label for="wc-outfit-cleanup-gallery"><strong><?php _e('Remove Image from gallery if submission rejected', 'xim'); ?></strong></label>
 								<p class="description"><?php _e('If enabled, attached image will be removed from gallery if a submission is rejected.', 'xim'); ?></p>
 							</td>

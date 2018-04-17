@@ -15,6 +15,7 @@ jQuery(document).ready(function() {
 					file: {
 						extension: 'jpg,jpeg,png',
 						type: 'image/jpeg,image/png',
+						maxSize: (parseInt(wc_outfit_tr_obj.upload_limit) * 1024) * 1024,
 						message: wc_outfit_tr_obj.invalid_thumb
 					}
 				}
@@ -74,7 +75,7 @@ jQuery(document).ready(function() {
 						var time = new Date()
 						time.setHours(time.getHours() + 1)
 						document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
-						window.location.replace(wc_outfit_tr_obj.myaccount_url + '/outfits')
+						window.location.replace(wc_outfit_tr_obj.outfits_url)
 					}
 				}
 			});

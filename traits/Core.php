@@ -17,8 +17,11 @@ trait Core {
 		// flush rewrite rules
 		if (get_transient('wc_outfit_flush_rewrite_rules_flag') == true) {
 			flush_rewrite_rules();
-			set_transient('wc_outfit_flush_rewrite_rules_flag', false, 604800);
+			set_transient('wc_outfit_flush_rewrite_rules_flag', false, 86400);
 		}
+
+		// Set required variable
+		$this->style_gallery_url = get_the_permalink(get_option('wc-outfit-page-id'));
 
 		// Register post type: outfit
 		register_post_type('outfit',
@@ -57,11 +60,14 @@ trait Core {
 				)
 			);
 		}
+
+		// Add image size
+		add_image_size('wc-outfit-single-listing', 300, 320, true);
 	}
 
 	function filter_post_type_link($url, $post) {
-		if (get_post_type($post) == 'outfit') {
-			return add_query_arg('view', $post->ID, get_the_permalink(get_option('wc-outfit-page-id')));
+		if ($post->post_type == 'outfit') {
+			return add_query_arg('view', $post->ID, $this->style_gallery_url);
 		}
 
 		return $url;
@@ -69,7 +75,7 @@ trait Core {
 
 	function filter_term_link($url, $term, $taxonomy) {
 		if ($taxonomy == 'outfit_tags') {
-			return add_query_arg('tags', $term->slug, get_the_permalink(get_option('wc-outfit-page-id')));
+			return add_query_arg('tags', $term->slug, $this->style_gallery_url);
 		}
 
 		return $url;
@@ -108,12 +114,13 @@ trait Core {
 		// localize
 		wp_localize_script('new-outfit', 'wc_outfit_tr_obj', array(
 			'ajax_url' => admin_url('admin-ajax.php'),
-			'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')),
+			'outfits_url' => wc_get_endpoint_url('outfits'),
 			'nonce' => wp_create_nonce('wc_outfit_nonce'),
 			'thumb_req' => __('Outfit photo is required', 'xim'),
 			'invalid_thumb' => __('Choose a valid JPG/JPEG/PNG file', 'xim'),
 			'ids_req' => __('Products are required', 'xim'),
-			'select_placeholder' => __('Select a category', 'xim')
+			'select_placeholder' => __('Select a category', 'xim'),
+			'upload_limit' => ini_get('upload_max_filesize'),
 		));
 
 		wp_localize_script('single-product', 'wc_outfit_tr_obj', array(
@@ -125,7 +132,7 @@ trait Core {
 		wp_localize_script('style-gallery', 'wc_outfit_tr_obj', array(
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'home_url' => home_url(),
-			'style_gallery_url' => get_the_permalink(get_option('wc-outfit-page-id')),
+			'style_gallery_url' => $this->style_gallery_url,
 			'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')),
 			'nonce' => wp_create_nonce('wc_outfit_nonce')
 		));
@@ -137,7 +144,7 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function before_delete_post($post_id) {
-		if (get_post_type($post_id) == 'outfit' && get_option('wc-outfit-cleanup-gallery', 'on')) {
+		if (get_option('wc-outfit-cleanup-gallery', 'on') && get_post_type($post_id) == 'outfit') {
 			// delete post attachment
 			wp_delete_attachment(get_post_thumbnail_id($post_id), true);
 		}

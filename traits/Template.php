@@ -138,7 +138,7 @@ trait Template {
 				</div>
 			</div>';
 
-			if (get_option('wc-outfit-customer-tagging')) {
+			if (get_option('wc-outfit-tagging', 'on') && get_option('wc-outfit-customer-tagging', 'on')) {
 				$html .= '<div class="form-group">
 					<label>' . __('Tags', 'xim') . '</label>
 
@@ -488,7 +488,7 @@ trait Template {
 					
 					echo '<div class="wc-outfit-gallery-item" data-id="' . $query->post->ID . '">
 						<div class="wc-outfit-gallery-item-inner-wrap">
-							<img src="' . $this->get_outfit_thumbnail($query->post->ID) . '" class="wc-outfit-gallery-item-thumb" />
+							<img src="' . $this->get_outfit_thumbnail($query->post->ID, 'wc-outfit-single-listing') . '" class="wc-outfit-gallery-item-thumb" />
 
 							<div class="wc-outfit-gallery-item-footer clearfix">
 								<div class="pull-left">

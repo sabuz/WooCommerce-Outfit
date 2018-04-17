@@ -218,8 +218,8 @@
 	right: 10px;
 }
 
-#wc-outfit-modal .outfit-prev .fa,
-#wc-outfit-modal .outfit-next .fa {
+#wc-outfit-modal .outfit-prev .wc-outfit-icon,
+#wc-outfit-modal .outfit-next .wc-outfit-icon {
 	font-size: 48px;
 	line-height: 1;
 	color: #fff;

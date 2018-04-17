@@ -43,7 +43,7 @@ class Xim_Woo_Outfit_Activation {
 		$this->install_pages();
 
 		// set flush rewrite flag enabled
-		set_transient('wc_outfit_flush_rewrite_rules_flag', true, 604800);
+		set_transient('wc_outfit_flush_rewrite_rules_flag', true, 86400);
 	}
 }
 
@@ -73,6 +73,7 @@ class Xim_Woo_Outfit_Init {
 
 	public $all_outfit_endpoint = 'outfits';
 	public $new_outfit_endpoint = 'outfits/new-outfit';
+	public $style_gallery_url;
 
 	function __construct() {
 		// Add translation support
@@ -85,19 +86,13 @@ class Xim_Woo_Outfit_Init {
 		add_action('before_delete_post', array($this, 'before_delete_post'));
 		add_filter('wp_footer', array($this, 'wp_footer'));
 		add_filter('wp_head', array($this, 'wp_head'));
-		// add_filter('post_type_link', array($this, 'filter_post_type_link'), 10, 2);
-		// add_filter('term_link', array($this, 'filter_term_link'), 10, 3);
+		add_filter('post_type_link', array($this, 'filter_post_type_link'), 10, 2);
+		add_filter('term_link', array($this, 'filter_term_link'), 10, 3);
 
 		add_action('woocommerce_account_' . $this->new_outfit_endpoint . '_endpoint', array($this, 'new_outfit_endpoint_content'));
 		add_action('woocommerce_account_' . $this->all_outfit_endpoint . '_endpoint', array($this, 'outfits_endpoint_content'));
 		add_filter('woocommerce_account_menu_items', array($this, 'myaccount_menu_items'));
 		add_filter('the_title', array($this, 'filter_endpoints_title'), 10, 2);
-
-		// Metabox
-		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
-		add_action('add_meta_boxes', array($this, 'register_meta_boxes'));
-		add_action('save_post', array($this, 'update_meta_on_submit'), 1, 2);
-		add_action('do_meta_boxes', array($this, 're_init_thumb_box'));
 
 		// Ajax
 		add_action('wp_ajax_wc_outfit_get_products_by_cat', array($this, 'ajax_get_products_by_cat'));
@@ -122,9 +117,15 @@ class Xim_Woo_Outfit_Init {
 		add_shortcode('style-gallery', array($this, 'template_style_gallery'));
 		add_action(get_option('wc-outfit-single-position', 'woocommerce_after_single_product_summary'), array($this, 'template_single_product_listing'));
 
-		// Admin Page
 		if (is_admin()) {
+			// Admin Page
 			add_action('admin_menu', array($this, 'admin_menu'));
+
+			// Metabox
+			add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+			add_action('add_meta_boxes', array($this, 'register_meta_boxes'));
+			add_action('save_post', array($this, 'update_meta_on_submit'), 1, 2);
+			add_action('do_meta_boxes', array($this, 're_init_thumb_box'));
 		}
 	}
 }
