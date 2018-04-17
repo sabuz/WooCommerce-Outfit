@@ -58,16 +58,6 @@ trait Admin {
 								<input type="text" name="wc-outfit-page-slogan" id="wc-outfit-page-slogan" value="<?php echo get_option('wc-outfit-page-slogan'); ?>" placeholder="<?php _e('Inspire and Admire', 'xim'); ?>">
 							</td>
 				        </tr>
-
-				        <tr valign="top">
-				        	<th scope="row"><?php _e('Thumbnail Size', 'xim'); ?></th>
-				        	<td>
-								<input type="number" name="wc-outfit-gallery-thumb-w" id="wc-outfit-gallery-thumb-w" class="small-text" value="<?php echo get_option('wc-outfit-gallery-thumb-w', 480); ?>">
-								<label for="mailserver_port"><?php _e('x', 'xim'); ?></label>
-								<input type="number" name="wc-outfit-gallery-thumb-h" id="wc-outfit-gallery-thumb-h" class="small-text" value="<?php echo get_option('wc-outfit-gallery-thumb-h', 720); ?>">
-								<p class="description"><?php _e('Updating the settings will take effect for newly uploaded images.', 'xim')?></p>
-							</td>
-				        </tr>
 				    </table>
 					
 					<?php submit_button();?>
@@ -208,8 +198,6 @@ trait Admin {
 		register_setting('wc-outfit', 'wc-outfit-page-id');
 		register_setting('wc-outfit', 'wc-outfit-page-title');
 		register_setting('wc-outfit', 'wc-outfit-page-slogan');
-		register_setting('wc-outfit', 'wc-outfit-gallery-thumb-w');
-		register_setting('wc-outfit', 'wc-outfit-gallery-thumb-h');
 		register_setting('wc-outfit', 'wc-outfit-fb-app-id');
 	}
 
