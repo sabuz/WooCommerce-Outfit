@@ -37,14 +37,16 @@ trait Ajax {
 
 		if ($data->posts) {
 			foreach ($data->posts as $key => $id) {
-				if (current_user_can('manage_options') || wc_customer_bought_product($user->user_email, $user->ID, $id)) {
-					$product = wc_get_product($id);
-
-					$json['products'][$key]['id'] = $id;
-					$json['products'][$key]['title'] = $product->get_title();
-					$json['products'][$key]['thumb'] = $this->get_outfit_thumbnail($id, 'product-thumb');
-					$json['products'][$key]['price_html'] = $product->get_price_html();
+				if ((get_option('wc-outfit-bought-only', 'on') && !wc_customer_bought_product($user->user_email, $user->ID, $id))) {
+					continue;
 				}
+
+				$product = wc_get_product($id);
+
+				$json['products'][$key]['id'] = $id;
+				$json['products'][$key]['title'] = $product->get_title();
+				$json['products'][$key]['thumb'] = $this->get_outfit_thumbnail($id, 'product-thumb');
+				$json['products'][$key]['price_html'] = $product->get_price_html();
 			}
 		}
 
@@ -287,7 +289,7 @@ trait Ajax {
 			$args = array(
 				'post_title' => '',
 				'post_type' => 'outfit',
-				'post_status' => 'pending',
+				'post_status' => (get_option('wc-outfit-verify-submission', 'on') ? 'pending' : 'publish')
 			);
 
 			$post_id = wp_insert_post($args);

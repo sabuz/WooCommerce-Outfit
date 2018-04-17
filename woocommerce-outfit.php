@@ -85,8 +85,8 @@ class Xim_Woo_Outfit_Init {
 		add_action('before_delete_post', array($this, 'before_delete_post'));
 		add_filter('wp_footer', array($this, 'wp_footer'));
 		add_filter('wp_head', array($this, 'wp_head'));
-		add_filter('post_type_link', array($this, 'filter_post_type_link'), 10, 2);
-		add_filter('term_link', array($this, 'filter_term_link'), 10, 3);
+		// add_filter('post_type_link', array($this, 'filter_post_type_link'), 10, 2);
+		// add_filter('term_link', array($this, 'filter_term_link'), 10, 3);
 
 		add_action('woocommerce_account_' . $this->new_outfit_endpoint . '_endpoint', array($this, 'new_outfit_endpoint_content'));
 		add_action('woocommerce_account_' . $this->all_outfit_endpoint . '_endpoint', array($this, 'outfits_endpoint_content'));

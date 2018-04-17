@@ -136,19 +136,21 @@ trait Template {
 					<a href="#" class="prev" data-page="0">&lt; Prev</a>
 					<a href="#" class="next" data-page="0">Next &gt;</a>
 				</div>
-			</div>
+			</div>';
 
-			<div class="form-group">
-				<label>' . __('Tags', 'xim') . '</label>
+			if (get_option('wc-outfit-customer-tagging')) {
+				$html .= '<div class="form-group">
+					<label>' . __('Tags', 'xim') . '</label>
 
-				<select name="tags[]" class="select-tag" multiple="multiple">';
-					foreach ($terms as $term) {
-						$html .= '<option value="' . $term->slug . '">' . $term->name . '</option>';
-					}
-				$html .= '</select>
-			</div>
+					<select name="tags[]" class="select-tag" multiple="multiple">';
+						foreach ($terms as $term) {
+							$html .= '<option value="' . $term->slug . '">' . $term->name . '</option>';
+						}
+					$html .= '</select>
+				</div>';
+			}
 
-			<input type="submit" value="' . __('Add Outfit', 'xim') . '">
+			$html .= '<input type="submit" value="' . __('Add Outfit', 'xim') . '">
 		</form>';
 
 		return $html;

@@ -137,7 +137,7 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function before_delete_post($post_id) {
-		if (get_post_type($post_id) == 'outfit') {
+		if (get_post_type($post_id) == 'outfit' && get_option('wc-outfit-cleanup-gallery', 'on')) {
 			// delete post attachment
 			wp_delete_attachment(get_post_thumbnail_id($post_id), true);
 		}

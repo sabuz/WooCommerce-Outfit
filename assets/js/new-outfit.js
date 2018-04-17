@@ -74,7 +74,7 @@ jQuery(document).ready(function() {
 						var time = new Date()
 						time.setHours(time.getHours() + 1)
 						document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
-						window.location.replace(wc_outfit_tr_obj.myaccount_url + 'outfits')
+						window.location.replace(wc_outfit_tr_obj.myaccount_url + '/outfits')
 					}
 				}
 			});
