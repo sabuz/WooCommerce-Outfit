@@ -23,16 +23,16 @@ trait Admin {
 			} ?>
 
 			<h2 class="nav-tab-wrapper">
-	    		<a href="?page=wc_outfit&section=general" class="nav-tab <?php echo $section == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e('General', 'xim'); ?></a>
-	    		<a href="?page=wc_outfit&section=style-gallery" class="nav-tab <?php echo $section == 'style-gallery' ? 'nav-tab-active' : ''; ?>"><?php _e('Style Gallery', 'xim'); ?></a>
-	    		<a href="?page=wc_outfit&section=api" class="nav-tab <?php echo $section == 'api' ? 'nav-tab-active' : ''; ?>"><?php _e('API Keys', 'xim'); ?></a>
+	    		<a href="?page=wc-outfit&section=general" class="nav-tab <?php echo $section == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e('General', 'xim'); ?></a>
+	    		<a href="?page=wc-outfit&section=style-gallery" class="nav-tab <?php echo $section == 'style-gallery' ? 'nav-tab-active' : ''; ?>"><?php _e('Style Gallery', 'xim'); ?></a>
+	    		<a href="?page=wc-outfit&section=api" class="nav-tab <?php echo $section == 'api' ? 'nav-tab-active' : ''; ?>"><?php _e('API Keys', 'xim'); ?></a>
 			</h2>
 
 			
 			<?php if ($section == 'style-gallery') { ?>
 				<form method="post" action="options.php">
-					<?php settings_fields('wc-outfit'); ?>
-					<?php do_settings_sections('wc_outfit'); ?>
+					<?php settings_fields('wc-outfit-option-group-style-gallery'); ?>
+					<?php do_settings_sections('wc-outfit-option-group-style-gallery'); ?>
 
 					<h2><?php _e('Style Gallery', 'xim'); ?></h2>
 					
@@ -58,14 +58,22 @@ trait Admin {
 								<input type="text" name="wc-outfit-page-slogan" id="wc-outfit-page-slogan" value="<?php echo get_option('wc-outfit-page-slogan'); ?>" placeholder="<?php _e('Inspire and Admire', 'xim'); ?>">
 							</td>
 				        </tr>
+
+				        <tr valign="top">
+				        	<th scope="row"><?php _e('Posts Per Query', 'xim'); ?></th>
+				        	<td>
+								<input type="number" name="wc-outfit-ppq" id="wc-outfit-ppq" value="<?php echo get_option('wc-outfit-ppq', 9); ?>" placeholder="9">
+								<p class="description"><?php _e('Number of outfit to load in each request.', 'xim')?></p>
+							</td>
+				        </tr>
 				    </table>
 					
 					<?php submit_button();?>
 				</form>
 			<?php } else if ($section == 'api') { ?>
 				<form method="post" action="options.php">
-					<?php settings_fields('wc-outfit');?>
-					<?php do_settings_sections('wc_outfit');?>
+					<?php settings_fields('wc-outfit-option-group-api');?>
+					<?php do_settings_sections('wc-outfit-option-group-api');?>
 
 					<h2><?php _e('API Keys', 'xim'); ?></h2>
 					<p><?php _e('This will be used for sharing outfit on social media.', 'xim'); ?></p>
@@ -84,8 +92,8 @@ trait Admin {
 				</form>
 			<?php } else { ?>				
 				<form method="post" action="options.php">
-					<?php settings_fields('wc-outfit'); ?>
-					<?php do_settings_sections('wc_outfit'); ?>
+					<?php settings_fields('wc-outfit-option-group-general'); ?>
+					<?php do_settings_sections('wc-outfit-option-group-general'); ?>
 
 				    <h2><?php _e('Outfit Submission', 'xim'); ?></h2>
 
@@ -174,6 +182,14 @@ trait Admin {
 								<p class="description"><?php _e('Outfit listing position on single product page.', 'xim')?></p>
 							</td>
 				        </tr>
+
+				        <tr valign="top">
+				        	<th scope="row"><?php _e('Item To Show', 'xim'); ?></th>
+				        	<td>
+								<input type="number" name="wc-outfit-single-num-item" id="wc-outfit-single-num-item" value="<?php echo get_option('wc-outfit-single-num-item', 4); ?>" placeholder="4">
+								<p class="description"><?php _e('Number of item to show in a screen.', 'xim')?></p>
+							</td>
+				        </tr>
 				    </table>
 
 					<?php submit_button();?>
@@ -188,17 +204,19 @@ trait Admin {
 	 * @since    1.0.0
 	 */
 	function register_settings() {
-		register_setting('wc-outfit', 'wc-outfit-verify-submission');
-		register_setting('wc-outfit', 'wc-outfit-bought-only');
-		register_setting('wc-outfit', 'wc-outfit-submission-guideline');
-		register_setting('wc-outfit', 'wc-outfit-tagging');
-		register_setting('wc-outfit', 'wc-outfit-customer-tagging');
-		register_setting('wc-outfit', 'wc-outfit-cleanup-gallery');
-		register_setting('wc-outfit', 'wc-outfit-single-position');
-		register_setting('wc-outfit', 'wc-outfit-page-id');
-		register_setting('wc-outfit', 'wc-outfit-page-title');
-		register_setting('wc-outfit', 'wc-outfit-page-slogan');
-		register_setting('wc-outfit', 'wc-outfit-fb-app-id');
+		register_setting('wc-outfit-option-group-general', 'wc-outfit-verify-submission');
+		register_setting('wc-outfit-option-group-general', 'wc-outfit-bought-only');
+		register_setting('wc-outfit-option-group-general', 'wc-outfit-submission-guideline');
+		register_setting('wc-outfit-option-group-general', 'wc-outfit-tagging');
+		register_setting('wc-outfit-option-group-general', 'wc-outfit-customer-tagging');
+		register_setting('wc-outfit-option-group-general', 'wc-outfit-cleanup-gallery');
+		register_setting('wc-outfit-option-group-general', 'wc-outfit-single-position');
+		register_setting('wc-outfit-option-group-general', 'wc-outfit-single-num-item');
+		register_setting('wc-outfit-option-group-style-gallery', 'wc-outfit-page-id');
+		register_setting('wc-outfit-option-group-style-gallery', 'wc-outfit-page-title');
+		register_setting('wc-outfit-option-group-style-gallery', 'wc-outfit-page-slogan');
+		register_setting('wc-outfit-option-group-style-gallery', 'wc-outfit-ppq');
+		register_setting('wc-outfit-option-group-api', 'wc-outfit-fb-app-id');
 	}
 
 	/**
@@ -207,7 +225,7 @@ trait Admin {
 	 * @since    1.0.0
 	 */
 	function admin_menu() {
-		add_options_page('Woocommerce Outfit', 'Woocommerce Outfit', 'manage_options', 'wc_outfit', array($this, 'menu_page'));
+		add_options_page('Woocommerce Outfit', 'Woocommerce Outfit', 'manage_options', 'wc-outfit', array($this, 'menu_page'));
 		add_action('admin_init', array($this, 'register_settings'));
 	}
 }

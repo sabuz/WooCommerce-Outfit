@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Outfit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-18 03:06+0000\n"
-"PO-Revision-Date: 2018-04-18 03:13+0000\n"
+"POT-Creation-Date: 2018-04-18 18:47+0000\n"
+"PO-Revision-Date: 2018-04-18 18:50+0000\n"
 "Last-Translator: admin <naz.sabuz@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -27,7 +27,7 @@ msgid ""
 "plugin to be installed and activated."
 msgstr ""
 
-#: admin/Admin.php:117
+#: admin/Admin.php:125
 msgid "Add guideline for uploading outfit photos."
 msgstr ""
 
@@ -35,7 +35,7 @@ msgstr ""
 msgid "Add new"
 msgstr ""
 
-#: traits/Core.php:32 traits/Core.php:192
+#: traits/Core.php:32 traits/Core.php:193
 msgid "Add New Outfit"
 msgstr ""
 
@@ -55,19 +55,19 @@ msgstr ""
 msgid "All Outfits"
 msgstr ""
 
-#: admin/Admin.php:138
+#: admin/Admin.php:146
 msgid "Allow customer to add tag"
 msgstr ""
 
-#: admin/Admin.php:107
+#: admin/Admin.php:115
 msgid "Allow customer to attach bought product only"
 msgstr ""
 
-#: admin/Admin.php:28 admin/Admin.php:70
+#: admin/Admin.php:28 admin/Admin.php:78
 msgid "API Keys"
 msgstr ""
 
-#: admin/Admin.php:104
+#: admin/Admin.php:112
 msgid "Bought Product Only"
 msgstr ""
 
@@ -79,7 +79,7 @@ msgstr ""
 msgid "Choose a valid JPG/JPEG/PNG file"
 msgstr ""
 
-#: admin/Admin.php:148
+#: admin/Admin.php:156
 msgid "Cleanup Gallery"
 msgstr ""
 
@@ -87,7 +87,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: admin/Admin.php:157
+#: admin/Admin.php:165
 msgid "Display"
 msgstr ""
 
@@ -95,23 +95,19 @@ msgstr ""
 msgid "Edit Outfit"
 msgstr ""
 
-#: admin/Admin.php:130
+#: admin/Admin.php:138
 msgid "Enable product tagging option."
 msgstr ""
 
-#: admin/Admin.php:129
+#: admin/Admin.php:137
 msgid "Enable Tag features"
 msgstr ""
 
-#: admin/Admin.php:126
+#: admin/Admin.php:134
 msgid "Enable Tagging"
 msgstr ""
 
-#: traits/Template.php:483
-msgid "Explore Shop & Outfit Photos"
-msgstr ""
-
-#: admin/Admin.php:75
+#: admin/Admin.php:83
 msgid "Facebook App ID"
 msgstr ""
 
@@ -135,7 +131,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: admin/Admin.php:78
+#: admin/Admin.php:86
 msgid ""
 "Get your Facebook app id from <a href=\"https://developers.facebook.com/\" "
 "target=\"_blank\">here</a>"
@@ -149,33 +145,37 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: admin/Admin.php:99
+#: admin/Admin.php:107
 msgid ""
 "If enabled, Admin will have to verify outfits manually and publish them."
 msgstr ""
 
-#: admin/Admin.php:152
+#: admin/Admin.php:160
 msgid ""
 "If enabled, attached image will be removed from gallery if a submission is "
 "rejected."
 msgstr ""
 
-#: admin/Admin.php:139
+#: admin/Admin.php:147
 msgid ""
 "If enabled, customer will be able to add tag during submission of outfit. "
 "Requires Tag features enabled."
 msgstr ""
 
-#: admin/Admin.php:108
+#: admin/Admin.php:116
 msgid "If enabled, customer will be able to attach the products they bought."
 msgstr ""
 
-#: admin/Admin.php:144
+#: admin/Admin.php:152
 msgid "Image Gallery"
 msgstr ""
 
 #: traits/Template.php:201 admin/Admin.php:58
 msgid "Inspire and Admire"
+msgstr ""
+
+#: admin/Admin.php:187
+msgid "Item To Show"
 msgstr ""
 
 #: traits/Template.php:350
@@ -210,6 +210,14 @@ msgstr ""
 msgid "No Outfits found."
 msgstr ""
 
+#: admin/Admin.php:190
+msgid "Number of item to show in a screen."
+msgstr ""
+
+#: admin/Admin.php:66
+msgid "Number of outfit to load in each request."
+msgstr ""
+
 #: traits/Core.php:31
 msgid "Outfit"
 msgstr ""
@@ -218,7 +226,7 @@ msgstr ""
 msgid "Outfit Image"
 msgstr ""
 
-#: admin/Admin.php:174
+#: admin/Admin.php:182
 msgid "Outfit listing position on single product page."
 msgstr ""
 
@@ -230,7 +238,11 @@ msgstr ""
 msgid "Outfit photo is required."
 msgstr ""
 
-#: admin/Admin.php:90
+#: traits/Template.php:483
+msgid "Outfit Photos"
+msgstr ""
+
+#: admin/Admin.php:98
 msgid "Outfit Submission"
 msgstr ""
 
@@ -238,7 +250,7 @@ msgstr ""
 msgid "Outfit submitted successfully."
 msgstr ""
 
-#: traits/Core.php:30 traits/Core.php:159 traits/Core.php:190
+#: traits/Core.php:30 traits/Core.php:160 traits/Core.php:191
 msgid "Outfits"
 msgstr ""
 
@@ -250,7 +262,7 @@ msgstr ""
 msgid "Page Title"
 msgstr ""
 
-#: admin/Admin.php:135
+#: admin/Admin.php:143
 msgid "Permission"
 msgstr ""
 
@@ -258,8 +270,12 @@ msgstr ""
 msgid "Photos"
 msgstr ""
 
-#: admin/Admin.php:161
+#: admin/Admin.php:169
 msgid "Position"
+msgstr ""
+
+#: admin/Admin.php:63
+msgid "Posts Per Query"
 msgstr ""
 
 #: traits/Core.php:121
@@ -270,7 +286,7 @@ msgstr ""
 msgid "Products are required."
 msgstr ""
 
-#: admin/Admin.php:151
+#: admin/Admin.php:159
 msgid "Remove Image from gallery if submission rejected"
 msgstr ""
 
@@ -299,11 +315,11 @@ msgstr ""
 msgid "Style Gallery Page"
 msgstr ""
 
-#: admin/Admin.php:113
+#: admin/Admin.php:121
 msgid "Submission Guideline"
 msgstr ""
 
-#: admin/Admin.php:122
+#: admin/Admin.php:130
 msgid "Tagging"
 msgstr ""
 
@@ -315,7 +331,7 @@ msgstr ""
 msgid "The base page that will be used in outfit permalinks."
 msgstr ""
 
-#: admin/Admin.php:71
+#: admin/Admin.php:79
 msgid "This will be used for sharing outfit on social media."
 msgstr ""
 
@@ -336,11 +352,11 @@ msgstr ""
 msgid "Used Products"
 msgstr ""
 
-#: admin/Admin.php:98
+#: admin/Admin.php:106
 msgid "Verify new submitted outfit"
 msgstr ""
 
-#: admin/Admin.php:94
+#: admin/Admin.php:102
 msgid "Verify Submission"
 msgstr ""
 

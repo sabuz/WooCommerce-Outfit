@@ -127,6 +127,7 @@ trait Core {
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')),
 			'nonce' => wp_create_nonce('wc_outfit_nonce'),
+			'num_items' => get_option('wc-outfit-single-num-item', 4),
 		));
 
 		wp_localize_script('style-gallery', 'wc_outfit_tr_obj', array(
@@ -238,7 +239,6 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function install_pages() {
-		$post_id = null;
 		$post = get_post(get_option('wc-outfit-page-id'));
 
 		if (empty($post)) {
@@ -249,16 +249,10 @@ trait Core {
 				'post_author' => get_current_user_id(),
 				'post_content' => '[style-gallery]',
 			));
+
+			update_option('wc-outfit-page-id', $post_id);
 		} else if ($post->post_status == 'trash') {
 			wp_untrash_post($post->ID);
-
-			$post_id = $post->ID;
-		} else {
-			$post_id = $post->ID;
-		}
-
-		if (!empty($post_id)) {
-			update_option('wc-outfit-page-id', $post_id);
 		}
 	}
 

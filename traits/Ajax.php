@@ -164,7 +164,7 @@ trait Ajax {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => get_option('posts_per_page'),
+						'posts_per_page' => get_option('wc-outfit-ppq', 9),
 						'order' => 'desc',
 						'post__in' => $ids,
 						'paged' => $_REQUEST['paged'],
@@ -174,7 +174,7 @@ trait Ajax {
 				$args = array(
 					'post_type' => 'outfit',
 					'post_status' => 'publish',
-					'posts_per_page' => get_option('posts_per_page'),
+					'posts_per_page' => get_option('wc-outfit-ppq', 9),
 					'order' => 'desc',
 					'author' => $_REQUEST['user'],
 					'paged' => $_REQUEST['paged'],
@@ -184,7 +184,7 @@ trait Ajax {
 			$args = array(
 				'post_type' => 'outfit',
 				'post_status' => 'publish',
-				'posts_per_page' => get_option('posts_per_page'),
+				'posts_per_page' => get_option('wc-outfit-ppq', 9),
 				'order' => 'desc',
 				'tax_query' => array(
 					array(
@@ -201,7 +201,7 @@ trait Ajax {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => get_option('posts_per_page'),
+						'posts_per_page' => get_option('wc-outfit-ppq', 9),
 						'order' => 'desc',
 						'meta_query' => array(
 							array(
@@ -219,7 +219,7 @@ trait Ajax {
 							$args = array(
 								'post_type' => 'outfit',
 								'post_status' => 'publish',
-								'posts_per_page' => get_option('posts_per_page'),
+								'posts_per_page' => get_option('wc-outfit-ppq', 9),
 								'order' => 'desc',
 								'author__in' => $data,
 								'paged' => $_REQUEST['paged'],
@@ -233,7 +233,7 @@ trait Ajax {
 				$args = array(
 					'post_type' => 'outfit',
 					'post_status' => 'publish',
-					'posts_per_page' => get_option('posts_per_page'),
+					'posts_per_page' => get_option('wc-outfit-ppq', 9),
 					'order' => 'desc',
 					'paged' => $_REQUEST['paged'],
 				);

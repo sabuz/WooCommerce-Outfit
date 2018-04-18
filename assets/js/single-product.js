@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
 	jQuery('.wc-outfit-single-carousel .owl-carousel').owlCarousel({
 		loop: false,
 		margin: 10,
-		items: 4,
+		items: wc_outfit_tr_obj.num_items,
 		nav: true,
 		navText: ['<span class="wc-outfit-icon wc-outfit-icon-angle-left">', '<span class="wc-outfit-icon wc-outfit-icon-angle-right">']
 	})

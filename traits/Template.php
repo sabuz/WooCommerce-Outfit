@@ -229,7 +229,7 @@ trait Template {
 						$args = array(
 							'post_type' => 'outfit',
 							'post_status' => 'publish',
-							'posts_per_page' => get_option('posts_per_page'),
+							'posts_per_page' => get_option('wc-outfit-ppq', 9),
 							'order' => 'desc',
 							'post__in' => $ids,
 							'paged' => $paged,
@@ -239,7 +239,7 @@ trait Template {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => get_option('posts_per_page'),
+						'posts_per_page' => get_option('wc-outfit-ppq', 9),
 						'order' => 'desc',
 						'author' => $_GET['user'],
 						'paged' => $paged,
@@ -249,7 +249,7 @@ trait Template {
 				$args = array(
 					'post_type' => 'outfit',
 					'post_status' => 'publish',
-					'posts_per_page' => get_option('posts_per_page'),
+					'posts_per_page' => get_option('wc-outfit-ppq', 9),
 					'order' => 'desc',
 					'tax_query' => array(
 						array(
@@ -266,7 +266,7 @@ trait Template {
 						$args = array(
 							'post_type' => 'outfit',
 							'post_status' => 'publish',
-							'posts_per_page' => get_option('posts_per_page'),
+							'posts_per_page' => get_option('wc-outfit-ppq', 9),
 							'order' => 'desc',
 							'meta_query' => array(
 								array(
@@ -286,7 +286,7 @@ trait Template {
 								$args = array(
 									'post_type' => 'outfit',
 									'post_status' => 'publish',
-									'posts_per_page' => get_option('posts_per_page'),
+									'posts_per_page' => get_option('wc-outfit-ppq', 9),
 									'order' => 'desc',
 									'author__in' => $data,
 									'paged' => $paged,
@@ -300,7 +300,7 @@ trait Template {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
-						'posts_per_page' => get_option('posts_per_page'),
+						'posts_per_page' => get_option('wc-outfit-ppq', 9),
 						'order' => 'desc',
 						'paged' => $paged,
 					);
@@ -480,7 +480,7 @@ trait Template {
 
 		if ($query->have_posts()) {
 			echo '<div class="wc-outfit-single-carousel">
-				<h3>' . __('Explore Shop & Outfit Photos', 'xim') . '</h3>
+				<h3>' . __('Outfit Photos', 'xim') . '</h3>
 
 				<div class="owl-carousel">';
 				while ($query->have_posts()) {
