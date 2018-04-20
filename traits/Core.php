@@ -91,7 +91,7 @@ trait Core {
 		wp_register_style('wc-outfit-icon', plugin_dir_url(__FILE__) . '../assets/css/wc-outfit-icon.css');
 		wp_register_style('bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.min.css');
 		wp_register_style('bootstrap-validator', plugin_dir_url(__FILE__) . '../assets/css/bootstrapValidator.min.css');
-		wp_register_style('owlCarousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.css');
+		wp_register_style('owlCarousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.min.css');
 		wp_register_style('select2', plugin_dir_url(__FILE__) . '../assets/css/select2.min.css');
 		
 		wp_register_style('new-outfit', plugin_dir_url(__FILE__) . '../assets/css/new-outfit.css');
@@ -102,7 +102,7 @@ trait Core {
 		// script
 		wp_register_script('bootstrap', plugin_dir_url(__FILE__) . '../assets/js/bootstrap.min.js', array(), false, true);
 		wp_register_script('bootstrap-validator', plugin_dir_url(__FILE__) . '../assets/js/bootstrapValidator.min.js', array(), false, true);
-		wp_register_script('owlCarousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.js', array(), false, true);
+		wp_register_script('owlCarousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.min.js', array(), false, true);
 		wp_register_script('select2', plugin_dir_url(__FILE__) . '../assets/js/select2.min.js', array(), false, true);
 		wp_register_script('imgLoaded', plugin_dir_url(__FILE__) . '../assets/js/imagesloaded.pkgd.min.js', array(), false, true);
 		wp_register_script('isotope', plugin_dir_url(__FILE__) . '../assets/js/isotope.pkgd.min.js', array(), false, true);
