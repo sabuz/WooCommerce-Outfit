@@ -156,7 +156,7 @@ add_action('plugins_loaded', function () {
 		// Throw an error in the wordpress admin
 		add_action('admin_notices', function () {
 			$class = 'notice notice-error is-dismissible';
-			$message = __('<strong>WooCommerce Outfit</strong> requires <strong>WooCommerce</strong> plugin to be installed and activated.', 'xim');
+			$message = '<strong>' . __('WooCommerce Outfit', 'xim') . '</strong> ' . __('requires', 'xim') . ' <strong>' . __('WooCommerce', 'xim') . '</strong> ' . __('plugin to be installed and activated.', 'xim');
 			printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
 		});
 	}
