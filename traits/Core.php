@@ -90,8 +90,7 @@ trait Core {
 		// style
 		wp_register_style('wc-outfit-icon', plugin_dir_url(__FILE__) . '../assets/css/wc-outfit-icon.css');
 		wp_register_style('bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.min.css');
-		wp_register_style('bootstrap-validator', plugin_dir_url(__FILE__) . '../assets/css/bootstrapValidator.min.css');
-		wp_register_style('owlCarousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.min.css');
+		wp_register_style('owl-carousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.min.css');
 		wp_register_style('select2', plugin_dir_url(__FILE__) . '../assets/css/select2.min.css');
 		
 		wp_register_style('new-outfit', plugin_dir_url(__FILE__) . '../assets/css/new-outfit.css');
@@ -101,10 +100,10 @@ trait Core {
 		
 		// script
 		wp_register_script('bootstrap', plugin_dir_url(__FILE__) . '../assets/js/bootstrap.min.js', array(), false, true);
-		wp_register_script('bootstrap-validator', plugin_dir_url(__FILE__) . '../assets/js/bootstrapValidator.min.js', array(), false, true);
-		wp_register_script('owlCarousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.min.js', array(), false, true);
+		wp_register_script('jquery-validate', plugin_dir_url(__FILE__) . '../assets/js/jquery.validate.min.js', array(), false, true);
+		wp_register_script('owl-carousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.min.js', array(), false, true);
 		wp_register_script('select2', plugin_dir_url(__FILE__) . '../assets/js/select2.min.js', array(), false, true);
-		wp_register_script('imgLoaded', plugin_dir_url(__FILE__) . '../assets/js/imagesloaded.pkgd.min.js', array(), false, true);
+		wp_register_script('images-loaded', plugin_dir_url(__FILE__) . '../assets/js/imagesloaded.pkgd.min.js', array(), false, true);
 		wp_register_script('isotope', plugin_dir_url(__FILE__) . '../assets/js/isotope.pkgd.min.js', array(), false, true);
 		
 		wp_register_script('new-outfit', plugin_dir_url(__FILE__) . '../assets/js/new-outfit.js', array(), false, true);
@@ -118,6 +117,7 @@ trait Core {
 			'nonce' => wp_create_nonce('wc_outfit_nonce'),
 			'thumb_req' => __('Outfit photo is required', 'xim'),
 			'invalid_thumb' => __('Choose a valid JPG/JPEG/PNG file', 'xim'),
+			'size_exceed' => sprintf(__("File size must be less than %d MB", 'xim'), ini_get('upload_max_filesize')),
 			'ids_req' => __('Products are required', 'xim'),
 			'select_placeholder' => __('Select a category', 'xim'),
 			'upload_limit' => ini_get('upload_max_filesize'),

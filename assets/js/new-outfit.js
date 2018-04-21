@@ -4,31 +4,33 @@ jQuery(document).ready(function() {
 	 *
 	 * @since: 1.0.0
 	 */
-	jQuery('#new-outfit-form').bootstrapValidator({
-		fields: {
-			thumb: {
-				excluded: false,
-				validators: {
-					notEmpty: {
-						message: wc_outfit_tr_obj.thumb_req
-					},
-					file: {
-						extension: 'jpg,jpeg,png',
-						type: 'image/jpeg,image/png',
-						maxSize: (parseInt(wc_outfit_tr_obj.upload_limit) * 1024) * 1024,
-						message: wc_outfit_tr_obj.invalid_thumb
-					}
-				}
-			},
+	jQuery.validator.setDefaults({
+		ignore: [],
+	})
 
-			ids: {
-				excluded: false,
-				validators: {
-					notEmpty: {
-						message: wc_outfit_tr_obj.ids_req
-					}
-				}
+	jQuery.validator.addMethod('fileSize', function(value, element, param) {
+		return this.optional(element) || (element.files[0].size <= param)
+	}, wc_outfit_tr_obj.size_exceed)
+
+	jQuery('#new-outfit-form').validate({
+		rules: {
+			thumb: {
+				required: true,
+				extension: 'jpg,jpeg,png',
+				fileSize: (parseInt(wc_outfit_tr_obj.upload_limit) * 1024) * 1024,
 			},
+			ids: {
+				required: true
+			},
+		},
+		messages: {
+			thumb: {
+				required: wc_outfit_tr_obj.thumb_req,
+				extension: wc_outfit_tr_obj.invalid_thumb
+			},
+			ids: {
+				required: wc_outfit_tr_obj.ids_req
+			}
 		}
 	})
 
@@ -57,31 +59,27 @@ jQuery(document).ready(function() {
 	 * @since: 1.0.0
 	 */
 	jQuery('#new-outfit-form').on('submit', function(e) {
-		if (e.isDefaultPrevented()) {
-			return
-		} else {
-			var form_data = new FormData(this)
-			form_data.append('security', wc_outfit_tr_obj.nonce)
+		var form_data = new FormData(this)
+		form_data.append('security', wc_outfit_tr_obj.nonce)
 
-			jQuery.ajax({
-				type: 'POST',
-				url: wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_post_outfit',
-				data: form_data,
-				cache: false,
-				contentType: false,
-				processData: false,
-				success: function(response) {
-					if (response.status == 'success') {
-						var time = new Date()
-						time.setHours(time.getHours() + 1)
-						document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
-						window.location.replace(wc_outfit_tr_obj.outfits_url)
-					}
+		jQuery.ajax({
+			type: 'POST',
+			url: wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_post_outfit',
+			data: form_data,
+			cache: false,
+			contentType: false,
+			processData: false,
+			success: function(response) {
+				if (response.status == 'success') {
+					var time = new Date()
+					time.setHours(time.getHours() + 1)
+					document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
+					window.location.replace(wc_outfit_tr_obj.outfits_url)
 				}
-			});
+			}
+		})
 
-			return false;
-		}
+		return false
 	})
 
 	/**
@@ -210,7 +208,7 @@ jQuery(document).ready(function() {
 				id: parseInt(id),
 				labels: 1
 			})
-			jQuery('.selected-products .ids').val(JSON.stringify(ids))
+			jQuery('#new-outfit-form #ids').val(JSON.stringify(ids))
 
 			// add selected product
 			var src = jQuery(this).parent('.item').find('img').attr('src')
@@ -220,7 +218,7 @@ jQuery(document).ready(function() {
 				jQuery('.selected-products').removeClass('empty')
 			}
 
-			jQuery('#new-outfit-form').bootstrapValidator('revalidateField', 'ids')
+			jQuery('#new-outfit-form #ids').valid()
 		}
 	})
 
@@ -244,11 +242,14 @@ jQuery(document).ready(function() {
 		ids.splice(index, 1)
 
 		if (ids.length == 0) {
-			jQuery('.selected-products').addClass('empty').children('.ids').val('')
+			jQuery('.selected-products').addClass('empty')
+			jQuery('#new-outfit-form #ids').val('').valid()
 		} else {
-			jQuery('.selected-products .ids').val(JSON.stringify(ids))
+			jQuery('#new-outfit-form #ids').val(JSON.stringify(ids))
 		}
+	})
 
-		jQuery('#new-outfit-form').bootstrapValidator('revalidateField', 'ids')
+	jQuery('#new-outfit-form #thumb').on('change', function(e) {
+		jQuery(this).valid()
 	})
 })

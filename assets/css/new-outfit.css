@@ -1,9 +1,3 @@
-.bv-form .help-block {
-	display: block;
-	clear: both;
-	color: #dd102d;
-}
-
 /*Form*/
 #new-outfit-form .form-group {
 	margin-bottom: 25px;
@@ -27,6 +21,13 @@
 	border-radius: 0;
 	width: auto;
 	height: 40px;
+}
+
+/*error*/
+#new-outfit-form label.error {
+	display: block;
+	clear: both;
+	color: #dd102d;
 }
 
 /*Select*/

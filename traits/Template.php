@@ -78,13 +78,12 @@ trait Template {
 		// enqueue styles
 		wp_enqueue_style('wc-outfit-icon');
 		wp_enqueue_style('bootstrap');
-		wp_enqueue_style('bootstrap-validator');
 		wp_enqueue_style('select2');
 		wp_enqueue_style('new-outfit');
 
 		// enqueue scripts
 		wp_enqueue_script('bootstrap');
-		wp_enqueue_script('bootstrap-validator');
+		wp_enqueue_script('jquery-validate');
 		wp_enqueue_script('select2');
 		wp_enqueue_script('new-outfit');
 
@@ -114,8 +113,9 @@ trait Template {
 					<div class="row">
 
 					</div>
-					<input type="hidden" name="ids" class="ids" value="">
 				</div>
+				
+				<input type="hidden" name="ids" id="ids" value="">
 			</div>
 
 			<div class="form-group">
@@ -166,13 +166,13 @@ trait Template {
 
 		wp_enqueue_style('wc-outfit-icon');
 		wp_enqueue_style('bootstrap');
-		wp_enqueue_style('owlCarousel');
+		wp_enqueue_style('owl-carousel');
 		wp_enqueue_style('outfit-modal');
 		wp_enqueue_style('style-gallery');
 
 		wp_enqueue_script('bootstrap');
-		wp_enqueue_script('owlCarousel');
-		wp_enqueue_script('imgLoaded');
+		wp_enqueue_script('owl-carousel');
+		wp_enqueue_script('images-loaded');
 		wp_enqueue_script('isotope');
 		wp_enqueue_script('style-gallery');
 
@@ -457,12 +457,12 @@ trait Template {
 
 		wp_enqueue_style('wc-outfit-icon');
 		wp_enqueue_style('bootstrap');
-		wp_enqueue_style('owlCarousel');
+		wp_enqueue_style('owl-carousel');
 		wp_enqueue_style('outfit-modal');
 		wp_enqueue_style('single-product');
 		
 		wp_enqueue_script('bootstrap');
-		wp_enqueue_script('owlCarousel');
+		wp_enqueue_script('owl-carousel');
 		wp_enqueue_script('single-product');
 
 		$query = new WP_Query(array(
