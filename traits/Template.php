@@ -149,7 +149,7 @@ trait Template {
 				</div>';
 			}
 
-			$html .= '<input type="submit" value="' . __('Add Outfit', 'xim') . '">
+			$html .= '<input type="submit" id="submit" value="' . __('Add Outfit', 'xim') . '">
 		</form>';
 
 		return $html;

@@ -52,27 +52,33 @@ jQuery(document).ready(function() {
 
 	// Submit Outfit
 	jQuery('#new-outfit-form').on('submit', function(e) {
-		var form_data = new FormData(this)
-		form_data.append('security', wc_outfit_tr_obj.nonce)
+		if (jQuery(this).valid()) {
+			var form_data = new FormData(this)
+			form_data.append('security', wc_outfit_tr_obj.nonce)
+			jQuery('#submit', this).val('Submitting...')
 
-		jQuery.ajax({
-			type: 'POST',
-			url: wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_post_outfit',
-			data: form_data,
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function(response) {
-				if (response.status == 'success') {
-					var time = new Date()
-					time.setHours(time.getHours() + 1)
-					document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
-					window.location.replace(wc_outfit_tr_obj.outfits_url)
+			jQuery.ajax({
+				type: 'POST',
+				url: wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_post_outfit',
+				data: form_data,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function(response) {
+					if (response.status == 'success') {
+						var time = new Date()
+						time.setHours(time.getHours() + 1)
+						document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
+						window.location.replace(wc_outfit_tr_obj.outfits_url)
+					}
+				},
+				error: function(response) {
+					jQuery('#new-outfit-form #submit').val('Add Outfit')
 				}
-			}
-		})
+			})
 
-		return false
+			return false
+		}
 	})
 
 	// Load Products from category
