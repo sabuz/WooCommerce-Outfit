@@ -31,7 +31,7 @@ trait Template {
 		if ($query->have_posts()) {
 			$html .= '<p>' . sprintf(__('To add more outfit photos, go to <a href="%1$s">new outfit</a>', 'xim'), esc_url(wc_get_endpoint_url('outfits/new-outfit'))) . '</p>
 
-			<table>
+			<table class="table">
 				<thead>
 					<tr>
 						<th>' . __('ID', 'xim') . '</th>
@@ -162,13 +162,14 @@ trait Template {
 	 */
 	function template_style_gallery() {
 		global $post;
-
+		// enqueue styles
 		wp_enqueue_style('wc-outfit-icon');
 		wp_enqueue_style('bootstrap');
 		wp_enqueue_style('owl-carousel');
 		wp_enqueue_style('outfit-modal');
 		wp_enqueue_style('style-gallery');
 
+		// enqueue scripts
 		wp_enqueue_script('bootstrap');
 		wp_enqueue_script('owl-carousel');
 		wp_enqueue_script('images-loaded');
@@ -458,13 +459,14 @@ trait Template {
 	 */
 	function template_single_product_listing() {
 		global $post;
-
+		// enqueue styles
 		wp_enqueue_style('wc-outfit-icon');
 		wp_enqueue_style('bootstrap');
 		wp_enqueue_style('owl-carousel');
 		wp_enqueue_style('outfit-modal');
 		wp_enqueue_style('single-product');
-		
+
+		// enqueue scripts
 		wp_enqueue_script('bootstrap');
 		wp_enqueue_script('owl-carousel');
 		wp_enqueue_script('single-product');

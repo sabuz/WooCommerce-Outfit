@@ -43,6 +43,8 @@
  *******************************************************/
 .wc-outfit-gallery a {
 	text-decoration: none;
+	border: none;
+	box-shadow: none;
 }
 
 .wc-outfit-gallery a:hover,
