@@ -1,4 +1,9 @@
 /*Form*/
+#new-outfit-form a {
+	text-decoration: none;
+	box-shadow: none;
+}
+
 #new-outfit-form .form-group {
 	margin-bottom: 25px;
 }
