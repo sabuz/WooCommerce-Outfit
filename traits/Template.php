@@ -5,7 +5,6 @@ namespace Xim_Woo_Outfit\Traits;
 use WP_Query;
 
 trait Template {
-
 	/**
 	 * Outfits shortcode.
 	 *
@@ -307,7 +306,6 @@ trait Template {
 				}
 			}
 
-
 			$query = new WP_Query($args);
 
 			if ($query->have_posts()) {
@@ -450,8 +448,14 @@ trait Template {
 				</div>
 			</div>';
 		}
+
 	}
 
+	/**
+	 * Single product carousel.
+	 *
+	 * @since    1.0.0
+	 */
 	function template_single_product_listing() {
 		global $post;
 
@@ -509,6 +513,5 @@ trait Template {
 				echo '</div>
 			</div>';
 		}
-
 	}
 }

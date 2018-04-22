@@ -5,7 +5,6 @@ namespace Xim_Woo_Outfit\Traits;
 use WP_Query;
 
 trait Ajax {
-
 	/**
 	 * Get products list by category.
 	 *
@@ -303,7 +302,7 @@ trait Ajax {
 				// Uploading file to server
 				$movefile = wp_handle_upload($_FILES['thumb'], ['test_form' => false]);
 
-				// If uploading success & No error
+				// If uploading success & no error
 				if ($movefile && !isset($movefile['error'])) {
 					$filename = $movefile['file'];
 					$filetype = wp_check_filetype(basename($filename), null);

@@ -14,13 +14,9 @@ trait Helper {
 
 	// Post time interval
 	function outfit_posted_ago($post_id = null) {
-		if ($post_id) {
-			$post_time = get_the_time('U', $post_id);
-		} else {
-			$post_time = get_the_time('U');
-		}
+		$post_time = get_the_time('U', $post_id);
 
-		return human_time_diff($post_time, current_time('timestamp')) . ' ago';
+		return sprintf(__("%s ago", 'xim'), human_time_diff($post_time, current_time('timestamp')));
 	}
 
 	// Get outfit author by post id
@@ -128,20 +124,20 @@ trait Helper {
 		return $content;
 	}
 
+	// Modal tags.
 	function modal_tags($post_id) {
-		$content = '';
 		$tags = wp_get_post_terms($_GET['view'], 'outfit_tags');
+		$content = '';
 
 		if (!empty($tags)) {
 			$content .= '<div class="wc-outfit-modal-tags">';
-			
+
 			foreach ($tags as $tag) {
 				$content .= '<a href="' . esc_url(add_query_arg('tags', $tag->slug, get_the_permalink(get_option('wc-outfit-page-id')))) . '" target="_blank">' . $tag->name . '</a>';
 			}
-			
+
 			$content .= '</div>';
 		}
-
 
 		return $content;
 	}

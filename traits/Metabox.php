@@ -3,7 +3,6 @@
 namespace Xim_Woo_Outfit\Traits;
 
 trait Metabox {
-
 	/**
 	 * Load the required assets in wp-admin for this plugin.
 	 *
@@ -15,12 +14,12 @@ trait Metabox {
 		if ($post_type == 'outfit') {
 			// css
 			wp_enqueue_style('select2', plugin_dir_url(__FILE__) . '../assets/css/select2.min.css');
-			wp_enqueue_style('metabox', plugin_dir_url(__FILE__) . '../assets/css/metabox.css');
+			wp_enqueue_style('wc-outfit-metabox', plugin_dir_url(__FILE__) . '../assets/css/metabox.css');
 
 			// js
 			wp_enqueue_script('select2', plugin_dir_url(__FILE__) . '../assets/js/select2.min.js', array(), false, true);
-			wp_enqueue_script('metabox', plugin_dir_url(__FILE__) . '../assets/js/metabox.js', array(), false, true);
-			wp_localize_script('metabox', 'object', ['ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('wc_outfit_nonce')]);
+			wp_enqueue_script('wc-outfit-metabox', plugin_dir_url(__FILE__) . '../assets/js/metabox.js', array(), false, true);
+			wp_localize_script('wc-outfit-metabox', 'wc_outfit_tr_obj', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
 		}
 	}
 

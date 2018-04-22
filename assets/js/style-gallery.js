@@ -1,4 +1,4 @@
-// History
+// Update url
 function updateUrl(page, url) {
 	if (typeof(history.pushState) != "undefined") {
 		var obj = {
@@ -16,20 +16,12 @@ jQuery(document).ready(function() {
 	var current = parseInt(jQuery('.wc-outfit-gallery-pagination .button').attr('data-current'))
 	var max = parseInt(jQuery('.wc-outfit-gallery-pagination .button').attr('data-max'))
 
-	/**
-	 * Pagination handler
-	 *
-	 * @since: 1.0.0
-	 */
+	// Pagination handler
 	if (max == 0 || current == max) {
 		jQuery('.wc-outfit-gallery-pagination .button').remove()
 	}
 
-	/**
-	 * Initialize isotope
-	 *
-	 * @since: 1.0.0
-	 */
+	// Initialize isotope
 	jQuery('.wc-outfit-gallery-content').isotope({
 		itemSelector: '.wc-outfit-gallery-item',
 		columnWidth: '.col-sm-4',
@@ -37,11 +29,7 @@ jQuery(document).ready(function() {
 		sortBy: 'original-order'
 	})
 
-	/**
-	 * Outfit modal
-	 *
-	 * @since: 1.0.0
-	 */
+	// Outfit modal
 	jQuery('.wc-outfit-gallery').on('click', '.wc-outfit-gallery-item-thumb', function(e) {
 		view = jQuery(this).closest('.wc-outfit-gallery-item').attr('data-id')
 
@@ -73,11 +61,7 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	/**
-	 * Update url on close modal
-	 *
-	 * @since: 1.0.0
-	 */
+	// Update url on close modal
 	jQuery('#wc-outfit-modal').on('click', '.close', function() {
 		if (has_history == true) {
 			updateUrl('Style Gallery', history.back())
@@ -86,11 +70,7 @@ jQuery(document).ready(function() {
 		}
 	})
 
-	/**
-	 * Follow models
-	 *
-	 * @since: 1.0.0
-	 */
+	// Follow models
 	jQuery(document).on('click', '.wc-outfit-follow-btn', function(e) {
 		e.preventDefault()
 
@@ -110,11 +90,7 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	/**
-	 * Post like
-	 *
-	 * @since: 1.0.0
-	 */
+	// Post like
 	jQuery(document).on('click', '.wc-outfit-rating-heart', function(e) {
 		e.preventDefault()
 
@@ -132,11 +108,7 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	/**
-	 * Ajax pagination
-	 *
-	 * @since: 1.0.0
-	 */
+	// Ajax pagination
 	jQuery('.wc-outfit-gallery-pagination').on('click', '.button', function() {
 		var target = jQuery(this)
 		var current = jQuery(this).attr('data-current')

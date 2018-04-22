@@ -1,5 +1,43 @@
 /********************************************************
  *
+ * Animation
+ *
+ *******************************************************/
+@-moz-keyframes spin {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+
+	to {
+		-moz-transform: rotate(360deg);
+	}
+
+}
+
+@-webkit-keyframes spin {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+
+}
+
+/********************************************************
+ *
  * Style Gallery
  *
  *******************************************************/
@@ -154,8 +192,23 @@
 	margin: 40px 0 20px;
 }
 
-.wc-outfit-gallery .wc-outfit-gallery-pagination .loading {
-	
+.wc-outfit-gallery .wc-outfit-gallery-pagination .loading:after {
+	display: inline-block;
+	font: normal normal normal 14px/1 'wc-outfit-icon';
+	font-size: inherit;
+	text-rendering: auto;
+	content: "\f021";
+	-webkit-animation: spin .75s linear infinite;
+	animation: spin .75s linear infinite;
+	height: 20px;
+	width: 20px;
+	line-height: 20px;
+	font-size: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -10px;
+	margin-top: -10px;
 }
 
 /*No Content Found*/

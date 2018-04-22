@@ -1,19 +1,10 @@
 jQuery(document).ready(function() {
-
-	/**
-	 * Init Select2
-	 *
-	 * @since: 1.0.0
-	 */
+	// Init Select2
 	jQuery('.select-cat').select2({
 		placeholder: 'Select a category'
 	})
 
-	/**
-	 * Load Products from category
-	 *
-	 * @since: 1.0.0
-	 */
+	// Load products from category
 	jQuery('.select-cat').on('change', function(e) {
 		e.preventDefault()
 
@@ -21,10 +12,10 @@ jQuery(document).ready(function() {
 		var html = ''
 		var count = 0
 
-		jQuery.get(object.ajaxurl + '?action=wc_outfit_get_products_by_cat', {
+		jQuery.get(wc_outfit_tr_obj.ajaxurl + '?action=wc_outfit_get_products_by_cat', {
 			cat: cat_id,
 			page: 1,
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).success(function(data) {
 			if (data.products) {
 				for (var i in data.products) {
@@ -62,11 +53,7 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	/**
-	 * Load Products from category - Pagination
-	 *
-	 * @since: 1.0.0
-	 */
+	// Load products from category - Pagination
 	jQuery('.pagination').on('click', 'a', function(e) {
 		e.preventDefault()
 
@@ -75,10 +62,10 @@ jQuery(document).ready(function() {
 		var count = 0
 		var html = ''
 
-		jQuery.get(object.ajaxurl + '?action=wc_outfit_get_products_by_cat', {
+		jQuery.get(wc_outfit_tr_obj.ajaxurl + '?action=wc_outfit_get_products_by_cat', {
 			cat: cat_id,
 			page: page,
-			security: object.nonce
+			security: wc_outfit_tr_obj.nonce
 		}).done(function(data) {
 			for (var i in data.products) {
 				if (count == 0 || count % 4 == 0) {
@@ -111,11 +98,7 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	/**
-	 * Push Product
-	 *
-	 * @since: 1.0.0
-	 */
+	// Push product
 	var ids = jQuery('.selected-products .ids').val()
 	if (ids.length > 0) {
 		ids = JSON.parse(ids)
@@ -152,11 +135,7 @@ jQuery(document).ready(function() {
 		}
 	})
 
-	/**
-	 * Pop Product
-	 *
-	 * @since: 1.0.0
-	 */
+	// Pop Product
 	jQuery('.selected-products').on('click', '.close', function(e) {
 		e.preventDefault()
 
@@ -177,11 +156,7 @@ jQuery(document).ready(function() {
 		}
 	})
 
-	/**
-	 * Switch Product Mode
-	 *
-	 * @since: 1.0.0
-	 */
+	// Switch Product Mode
 	jQuery('.selected-products').on('click', '.switch', function(e) {
 		e.preventDefault()
 

@@ -48,11 +48,7 @@ class Xim_Woo_Outfit_Activation {
 }
 
 register_activation_hook(__FILE__, function () {
-	/**
-	 * If WooCommerce is activated, initiate the activation class
-	 *
-	 * @since    1.0.0
-	 */
+	// If WooCommerce is activated, initiate the activation class
 	if (class_exists('WooCommerce')) {
 		new Xim_Woo_Outfit_Activation;
 	}
@@ -131,20 +127,10 @@ class Xim_Woo_Outfit_Init {
 }
 
 add_action('plugins_loaded', function () {
+	// If WooCommerce is activated, initiate the plugin, else throw error and deactive the plugin
 	if (class_exists('WooCommerce')) {
-		/**
-		 * If WooCommerce is activated, initiate the plugin
-		 *
-		 * @since    1.0.0
-		 */
 		new Xim_Woo_Outfit_Init;
-
 	} else {
-		/**
-		 * If WooCommerce is not activated, throw error and deactive the plugin
-		 *
-		 * @since    1.0.0
-		 */
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 		// Deactivate the plugin

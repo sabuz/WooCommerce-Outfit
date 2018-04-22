@@ -1,9 +1,5 @@
 jQuery(document).ready(function() {
-	/**
-	 * Init outfit carousel
-	 *
-	 * @since: 1.0.0
-	 */
+	// Init outfit carousel
 	jQuery('.wc-outfit-single-carousel .owl-carousel').owlCarousel({
 		loop: false,
 		margin: 10,
@@ -12,11 +8,7 @@ jQuery(document).ready(function() {
 		navText: ['<span class="wc-outfit-icon wc-outfit-icon-angle-left">', '<span class="wc-outfit-icon wc-outfit-icon-angle-right">']
 	})
 
-	/**
-	 * Outfit modal
-	 *
-	 * @since: 1.0.0
-	 */
+	// Outfit modal
 	jQuery('.wc-outfit-single-carousel').on('click', '.wc-outfit-gallery-item-thumb', function() {
 		var view = jQuery(this).parents('.wc-outfit-gallery-item').attr('data-id')
 		var next = jQuery(this).parents('.owl-item').next().find('.wc-outfit-gallery-item').attr('data-id')
@@ -50,11 +42,7 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	/**
-	 * Modal pagination
-	 *
-	 * @since: 1.0.0
-	 */
+	// Modal pagination
 	jQuery('#wc-outfit-modal').on('click', '.outfit-prev, .outfit-next', function(e) {
 		e.preventDefault()
 
@@ -91,11 +79,7 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	/**
-	 * Post like
-	 *
-	 * @since: 1.0.0
-	 */
+	// Post like
 	jQuery(document).on('click', '.wc-outfit-rating-heart', function(e) {
 		e.preventDefault()
 
@@ -113,11 +97,7 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	/**
-	 * Follow models
-	 *
-	 * @since: 1.0.0
-	 */
+	// Follow models
 	jQuery(document).on('click', '.wc-outfit-follow-btn', function(e) {
 		e.preventDefault()
 

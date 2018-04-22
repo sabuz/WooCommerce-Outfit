@@ -1,9 +1,5 @@
 jQuery(document).ready(function() {
-	/**
-	 * Validator rules
-	 *
-	 * @since: 1.0.0
-	 */
+	// Form validator
 	jQuery.validator.setDefaults({
 		ignore: [],
 	})
@@ -34,11 +30,11 @@ jQuery(document).ready(function() {
 		}
 	})
 
-	/**
-	 * Init Select2
-	 *
-	 * @since: 1.0.0
-	 */
+	jQuery('#new-outfit-form #thumb').on('change', function(e) {
+		jQuery(this).valid()
+	})
+
+	// Init Select2
 	jQuery('.select-cat').select2({
 		placeholder: wc_outfit_tr_obj.select_placeholder
 	})
@@ -47,17 +43,14 @@ jQuery(document).ready(function() {
 		width: '100%'
 	})
 
+	// Init popover
 	jQuery('[data-toggle="popover"]').popover({
 		animation: false,
 		html: true,
 		trigger: 'hover'
 	})
 
-	/**
-	 * Submit Outfit
-	 *
-	 * @since: 1.0.0
-	 */
+	// Submit Outfit
 	jQuery('#new-outfit-form').on('submit', function(e) {
 		var form_data = new FormData(this)
 		form_data.append('security', wc_outfit_tr_obj.nonce)
@@ -82,11 +75,7 @@ jQuery(document).ready(function() {
 		return false
 	})
 
-	/**
-	 * Load Products from category
-	 *
-	 * @since: 1.0.0
-	 */
+	// Load Products from category
 	jQuery('.select-cat').on('change', function(e) {
 		e.preventDefault()
 
@@ -135,11 +124,7 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	/**
-	 * Load Products from category - Pagination
-	 *
-	 * @since: 1.0.0
-	 */
+	// Load Products from category - Pagination
 	jQuery('.product-nav').on('click', 'a', function(e) {
 		e.preventDefault()
 
@@ -184,11 +169,7 @@ jQuery(document).ready(function() {
 		})
 	})
 
-	/**
-	 * Push Product
-	 *
-	 * @since: 1.0.0
-	 */
+	// Push Product
 	var ids = []
 
 	jQuery('.product-list').on('click', '.button', function(e) {
@@ -222,11 +203,7 @@ jQuery(document).ready(function() {
 		}
 	})
 
-	/**
-	 * Pop Product
-	 *
-	 * @since: 1.0.0
-	 */
+	// Pop Product
 	jQuery('.selected-products').on('click', '.close', function(e) {
 		e.preventDefault()
 
@@ -247,9 +224,5 @@ jQuery(document).ready(function() {
 		} else {
 			jQuery('#new-outfit-form #ids').val(JSON.stringify(ids))
 		}
-	})
-
-	jQuery('#new-outfit-form #thumb').on('change', function(e) {
-		jQuery(this).valid()
 	})
 })

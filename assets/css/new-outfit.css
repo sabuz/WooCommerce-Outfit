@@ -27,6 +27,7 @@
 #new-outfit-form label.error {
 	display: block;
 	clear: both;
+	font-size: 80%;
 	color: #dd102d;
 }
 
