@@ -231,6 +231,8 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function wp_footer() {
+		global $post;
+
 		if (is_product()) {
 			echo '<div class="modal" id="wc-outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 				<div class="modal-dialog modal-lg" role="document">
@@ -239,6 +241,78 @@ trait Core {
 					</div>
 				</div>
 			</div>';
+		}
+
+		if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'style-gallery')) {
+			// Outfit Modal
+			if (isset($_GET['view'])) {
+				$author = $this->get_outfit_author_id($_GET['view']);
+
+				echo '<div class="modal" id="wc-outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-body clearfix">
+								<div class="wc-outfit-modal-thumb">
+									<img src="' . $this->get_outfit_thumbnail($_GET['view']) . '" />
+								</div>
+
+								<div class="wc-outfit-modal-details">
+									<div class="wc-outfit-modal-author-data clearfix">
+										<a class="outfit-author-name" href="' . $this->get_user_gallery_link($author) . '">
+											' . ucwords(get_the_author_meta('display_name', $author)) . '
+										</a>';
+
+										if ($author != get_current_user_id()) {
+											echo '<a href="#" class="wc-outfit-follow-btn" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'xim') : __('Follow', 'xim')) . '</a>';
+										}
+
+										echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+
+									<div class="wc-outfit-modal-hooked-products owl-carousel">
+										' . $this->modal_hooked_products($_GET['view']) . '
+									</div>
+
+									' . $this->modal_tags($_GET['view']) . '
+
+									<div class="wc-outfit-modal-footer-info">
+										<span class="wc-outfit-meta-time">' . __('Added ', 'xim') . $this->outfit_posted_ago($_GET['view']) . '</span>
+
+										' . $this->like_button_html($_GET['view']) . '
+										' . $this->share_buttons_html($_GET['view']) . '
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery(\'#wc-outfit-modal\').modal({
+							backdrop: \'static\',
+							show: true
+						});
+
+						jQuery("#wc-outfit-modal .wc-outfit-modal-hooked-products").owlCarousel({
+							items: 2,
+							margin: 10,
+							nav:true,
+							navText: [\'<span class="wc-outfit-icon wc-outfit-icon-angle-left">\', \'<span class="wc-outfit-icon wc-outfit-icon-angle-right">\']
+						});
+					})
+				</script>';
+			} else {
+				echo '<div class="modal" id="wc-outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+
+						</div>
+					</div>
+				</div>';
+			}
 		}
 	}
 

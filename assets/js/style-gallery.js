@@ -142,7 +142,7 @@ jQuery(document).ready(function() {
 			jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_style_gallery', obj).done(function(data) {
 				var data = jQuery(data).filter('div')
 
-				jQuery('.wc-outfit-gallery-content').append(data)
+				jQuery('.wc-outfit-gallery-content .row').append(data)
 
 				jQuery('.wc-outfit-gallery-content').imagesLoaded(function() {
 					jQuery('.wc-outfit-gallery-content').isotope('appended', data).isotope('layout')
