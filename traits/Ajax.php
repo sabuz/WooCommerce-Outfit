@@ -74,21 +74,6 @@ trait Ajax {
 	}
 
 	/**
-	 * Follow people.
-	 *
-	 * @since    1.0.0
-	 */
-	function ajax_follow_people() {
-		check_ajax_referer('wc_outfit_nonce', 'security');
-
-		wp_send_json($this->toggle_follow_profile($_REQUEST['user_id']), 200);
-	}
-
-	function nopriv_ajax_follow_people() {
-		wp_send_json(get_permalink(get_option('woocommerce_myaccount_page_id')), 401);
-	}
-
-	/**
 	 * Single outfit modal data.
 	 *
 	 * @since    1.0.0
@@ -110,13 +95,9 @@ trait Ajax {
 
 				<div class="wc-outfit-modal-details">
 					<div class="wc-outfit-modal-author-data clearfix">
-						<a class="outfit-author-name" href="' . $this->get_user_gallery_link($author) . '">
+						<a class="outfit-author-name" href="#">
 							' . ucwords(get_the_author_meta('display_name', $author)) . '
 						</a>';
-
-						if ($author != get_current_user_id()) {
-							$content .= '<a href="#" class="wc-outfit-follow-btn" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'xim') : __('Follow', 'xim')) . '</a>';
-						}
 
 						$content .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -127,141 +108,15 @@ trait Ajax {
 						' . $this->modal_hooked_products($_REQUEST['view']) . '
 					</div>
 
-					' . $this->modal_tags($_GET['view']) . '
-
 					<div class="wc-outfit-modal-footer-info">
 						<span class="wc-outfit-meta-time">' . __('Added ', 'xim') . $this->outfit_posted_ago($_REQUEST['view']) . '</span>
 
 						' . $this->like_button_html($_REQUEST['view']) . '
-						' . $this->share_buttons_html($_REQUEST['view']) . '
 					</div>
 				</div>
 			</div>';
 		}
 
-		echo $content;
-		die();
-	}
-
-	/**
-	 * Load outfit post data on request.
-	 *
-	 * @since    1.0.0
-	 */
-	function ajax_style_gallery() {
-		check_ajax_referer('wc_outfit_nonce', 'security');
-
-		$content = '';
-
-		if ($_REQUEST['user']) {
-			if (@$_REQUEST['page'] == 'likes') {
-				$ids = $this->get_liked_outfits($_REQUEST['user']);
-
-				if (empty($ids)) {
-					$args = array();
-				} else {
-					$args = array(
-						'post_type' => 'outfit',
-						'post_status' => 'publish',
-						'posts_per_page' => get_option('wc-outfit-ppq', 9),
-						'order' => 'desc',
-						'post__in' => $ids,
-						'paged' => $_REQUEST['paged'],
-					);
-				}
-			} else {
-				$args = array(
-					'post_type' => 'outfit',
-					'post_status' => 'publish',
-					'posts_per_page' => get_option('wc-outfit-ppq', 9),
-					'order' => 'desc',
-					'author' => $_REQUEST['user'],
-					'paged' => $_REQUEST['paged'],
-				);
-			}
-		} elseif ($_REQUEST['tag']) {
-			$args = array(
-				'post_type' => 'outfit',
-				'post_status' => 'publish',
-				'posts_per_page' => get_option('wc-outfit-ppq', 9),
-				'order' => 'desc',
-				'tax_query' => array(
-					array(
-						'taxonomy' => 'outfit_tags',
-						'field' => 'slug',
-						'terms' => $_REQUEST['tag'],
-					),
-				),
-				'paged' => $_REQUEST['paged'],
-			);
-		} else {
-			if ($_REQUEST['page']) {
-				if ($_REQUEST['page'] == 'feat') {
-					$args = array(
-						'post_type' => 'outfit',
-						'post_status' => 'publish',
-						'posts_per_page' => get_option('wc-outfit-ppq', 9),
-						'order' => 'desc',
-						'meta_query' => array(
-							array(
-								'key' => 'featured',
-								'value' => 'yes',
-							),
-						),
-						'paged' => $_REQUEST['paged'],
-					);
-				} elseif ($_REQUEST['page'] == 'following') {
-					if (is_user_logged_in()) {
-						$data = $this->get_followings(get_current_user_id());
-
-						if (!empty($data)) {
-							$args = array(
-								'post_type' => 'outfit',
-								'post_status' => 'publish',
-								'posts_per_page' => get_option('wc-outfit-ppq', 9),
-								'order' => 'desc',
-								'author__in' => $data,
-								'paged' => $_REQUEST['paged'],
-							);
-						}
-					} else {
-						$args = array();
-					}
-				}
-			} else {
-				$args = array(
-					'post_type' => 'outfit',
-					'post_status' => 'publish',
-					'posts_per_page' => get_option('wc-outfit-ppq', 9),
-					'order' => 'desc',
-					'paged' => $_REQUEST['paged'],
-				);
-			}
-		}
-
-		$query = new WP_Query($args);
-
-		while ($query->have_posts()) {
-			$query->the_post();
-			
-			$content .= '<div class="wc-outfit-gallery-item col-sm-4" data-id="' . $query->post->ID . '">
-				<div class="wc-outfit-gallery-item-inner-wrap">
-					<img src="' . $this->get_outfit_thumbnail($query->post->ID) . '" class="wc-outfit-gallery-item-thumb" />
-
-					<div class="wc-outfit-gallery-item-footer clearfix">
-						<div class="pull-left">
-							<a class="wc-outfit-meta-author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
-								' . ucwords(get_the_author_meta('display_name')) . '</a>
-							<p class="wc-outfit-meta-time">' . $this->outfit_posted_ago() . '</p>
-						</div>
-						<div class="pull-right">
-							' . $this->like_button_html($query->post->ID) . '
-						</div>
-					</div>
-				</div>
-			</div>';
-		}
-		
 		echo $content;
 		die();
 	}
@@ -328,7 +183,6 @@ trait Ajax {
 						wp_update_attachment_metadata($attach_id, $attach_data);
 
 						set_post_thumbnail($post_id, $attach_id);
-						wp_set_object_terms($post_id, $_REQUEST['tags'], 'outfit_tags');
 						update_post_meta($post_id, 'products', $_REQUEST['ids']);
 						wp_update_post(['ID' => $post_id, 'post_title' => 'Outfit ' . $post_id]);
 					}

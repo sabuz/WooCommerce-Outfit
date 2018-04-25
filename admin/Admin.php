@@ -26,6 +26,26 @@ trait Admin {
 	    		<a href="?page=wc-outfit&section=api" class="nav-tab <?php echo $section == 'api' ? 'nav-tab-active' : ''; ?>"><?php _e('API Keys', 'xim'); ?></a>
 			</h2>
 
+			<style type="text/css">
+				.pro-only {
+					position: relative;
+					opacity: 0.4;
+					pointer-events: none;
+				}
+
+				.pro-only:after {
+					content: 'Available in Pro';
+					position: absolute;
+					top: 50%;
+					font-size: 60px;
+					line-height: 60px;
+					text-align: center;
+					color: #dd102d;
+					display: block;
+					width: 100%;
+					margin-top: -40px;
+				}
+			</style>
 			
 			<?php if ($section == 'style-gallery') { ?>
 				<form method="post" action="options.php">
@@ -34,7 +54,7 @@ trait Admin {
 
 					<h2><?php _e('Style Gallery', 'xim'); ?></h2>
 					
-					<table class="form-table">
+					<table class="form-table pro-only">
 				        <tr valign="top">
 				        	<th scope="row"><?php _e('Style Gallery Page', 'xim'); ?></th>
 				        	<td>
@@ -76,7 +96,7 @@ trait Admin {
 					<h2><?php _e('API Keys', 'xim'); ?></h2>
 					<p><?php _e('This will be used for sharing outfit on social media.', 'xim'); ?></p>
 
-					<table class="form-table">
+					<table class="form-table pro-only">
 				        <tr valign="top">
 				        	<th scope="row"><?php _e('Facebook App ID', 'xim'); ?></th>
 				        	<td>
@@ -127,7 +147,7 @@ trait Admin {
 
 					<h2><?php _e('Tagging', 'xim'); ?></h2>
 
-					<table class="form-table">
+					<table class="form-table pro-only">
 						<tr valign="top">
 							<th scope="row"><?php _e('Enable Tagging', 'xim'); ?></th>
 							<td>
