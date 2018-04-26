@@ -47,36 +47,39 @@ jQuery(document).ready(function() {
 		e.preventDefault()
 
 		var post_id = jQuery(this).attr('data-id')
-		var target = jQuery('.wc-outfit-single-carousel').find('[data-id=' + post_id + ']')
-		var next = jQuery(target).parent().next().find('.wc-outfit-gallery-item').attr('data-id')
-		var prev = jQuery(target).parent().prev().find('.wc-outfit-gallery-item').attr('data-id')
 
-		jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_single_outfit_modal', {
-			view: post_id,
-			pagination: true,
-			security: wc_outfit_tr_obj.nonce
-		}).done(function(data) {
-			jQuery('#wc-outfit-modal .modal-content').empty().html(jQuery(data))
+		if (post_id.length > 0) {
+			var target = jQuery('.wc-outfit-single-carousel').find('[data-id=' + post_id + ']')
+			var next = jQuery(target).parent().next().find('.wc-outfit-gallery-item').attr('data-id')
+			var prev = jQuery(target).parent().prev().find('.wc-outfit-gallery-item').attr('data-id')
 
-			jQuery('#wc-outfit-modal').modal({
-				backdrop: 'static'
-			})
+			jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_single_outfit_modal', {
+				view: post_id,
+				pagination: true,
+				security: wc_outfit_tr_obj.nonce
+			}).done(function(data) {
+				jQuery('#wc-outfit-modal .modal-content').empty().html(jQuery(data))
 
-			jQuery("#wc-outfit-modal .wc-outfit-modal-hooked-products").trigger('destroy.owl.carousel')
-
-			setTimeout(function() {
-				jQuery("#wc-outfit-modal .wc-outfit-modal-hooked-products").owlCarousel({
-					items: 2,
-					margin: 10,
-					nav: true,
-					navText: ['<span class="wc-outfit-icon wc-outfit-icon-angle-left">', '<span class="wc-outfit-icon wc-outfit-icon-angle-right">'],
-					lazyLoad: true
+				jQuery('#wc-outfit-modal').modal({
+					backdrop: 'static'
 				})
-			}, 100)
 
-			jQuery('.outfit-prev').attr('data-id', prev)
-			jQuery('.outfit-next').attr('data-id', next)
-		})
+				jQuery("#wc-outfit-modal .wc-outfit-modal-hooked-products").trigger('destroy.owl.carousel')
+
+				setTimeout(function() {
+					jQuery("#wc-outfit-modal .wc-outfit-modal-hooked-products").owlCarousel({
+						items: 2,
+						margin: 10,
+						nav: true,
+						navText: ['<span class="wc-outfit-icon wc-outfit-icon-angle-left">', '<span class="wc-outfit-icon wc-outfit-icon-angle-right">'],
+						lazyLoad: true
+					})
+				}, 100)
+
+				jQuery('.outfit-prev').attr('data-id', prev)
+				jQuery('.outfit-next').attr('data-id', next)
+			})
+		}
 	})
 
 	// Post like

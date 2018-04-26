@@ -85,8 +85,6 @@ trait Admin {
 							</td>
 				        </tr>
 				    </table>
-					
-					<?php submit_button();?>
 				</form>
 			<?php } else if ($section == 'api') { ?>
 				<form method="post" action="options.php">
@@ -105,8 +103,6 @@ trait Admin {
 							</td>
 				        </tr>
 				    </table>					
-
-					<?php submit_button();?>
 				</form>
 			<?php } else { ?>				
 				<form method="post" action="options.php">
@@ -225,16 +221,9 @@ trait Admin {
 		register_setting('wc-outfit-option-group-general', 'wc-outfit-verify-submission');
 		register_setting('wc-outfit-option-group-general', 'wc-outfit-bought-only');
 		register_setting('wc-outfit-option-group-general', 'wc-outfit-submission-guideline');
-		register_setting('wc-outfit-option-group-general', 'wc-outfit-tagging');
-		register_setting('wc-outfit-option-group-general', 'wc-outfit-customer-tagging');
 		register_setting('wc-outfit-option-group-general', 'wc-outfit-cleanup-gallery');
 		register_setting('wc-outfit-option-group-general', 'wc-outfit-single-position');
 		register_setting('wc-outfit-option-group-general', 'wc-outfit-single-num-item');
-		register_setting('wc-outfit-option-group-style-gallery', 'wc-outfit-page-id');
-		register_setting('wc-outfit-option-group-style-gallery', 'wc-outfit-page-title');
-		register_setting('wc-outfit-option-group-style-gallery', 'wc-outfit-page-slogan');
-		register_setting('wc-outfit-option-group-style-gallery', 'wc-outfit-ppq');
-		register_setting('wc-outfit-option-group-api', 'wc-outfit-fb-app-id');
 	}
 
 	/**
