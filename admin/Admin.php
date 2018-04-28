@@ -58,7 +58,7 @@ trait Admin {
 				        <tr valign="top">
 				        	<th scope="row"><?php _e('Style Gallery Page', 'xim'); ?></th>
 				        	<td>
-								<?php wp_dropdown_pages(array('name' => 'wc-outfit-page-id', 'selected' => get_option('wc-outfit-page-id')))?>
+								<?php wp_dropdown_pages()?>
 								<p class="description"><?php _e('The base page that will be used in outfit permalinks.', 'xim')?></p>
 							</td>
 				        </tr>
@@ -66,21 +66,21 @@ trait Admin {
 				        <tr valign="top">
 				        	<th scope="row"><?php _e('Page Title', 'xim'); ?></th>
 				        	<td>
-								<input type="text" name="wc-outfit-page-title" id="wc-outfit-page-title" value="<?php echo get_option('wc-outfit-page-title'); ?>" placeholder="<?php _e('Style Gallery', 'xim'); ?>">
+								<input type="text" name="wc-outfit-page-title" id="wc-outfit-page-title" placeholder="<?php _e('Style Gallery', 'xim'); ?>">
 							</td>
 				        </tr>
 
 				        <tr valign="top">
 				        	<th scope="row"><?php _e('Page Subtitle/Slogan', 'xim'); ?></th>
 				        	<td>
-								<input type="text" name="wc-outfit-page-slogan" id="wc-outfit-page-slogan" value="<?php echo get_option('wc-outfit-page-slogan'); ?>" placeholder="<?php _e('Inspire and Admire', 'xim'); ?>">
+								<input type="text" name="wc-outfit-page-slogan" id="wc-outfit-page-slogan" placeholder="<?php _e('Inspire and Admire', 'xim'); ?>">
 							</td>
 				        </tr>
 
 				        <tr valign="top">
 				        	<th scope="row"><?php _e('Posts Per Query', 'xim'); ?></th>
 				        	<td>
-								<input type="number" name="wc-outfit-ppq" id="wc-outfit-ppq" value="<?php echo get_option('wc-outfit-ppq', 9); ?>" placeholder="9">
+								<input type="number" name="wc-outfit-ppq" id="wc-outfit-ppq" placeholder="9">
 								<p class="description"><?php _e('Number of outfit to load in each request.', 'xim')?></p>
 							</td>
 				        </tr>
@@ -98,7 +98,7 @@ trait Admin {
 				        <tr valign="top">
 				        	<th scope="row"><?php _e('Facebook App ID', 'xim'); ?></th>
 				        	<td>
-								<input type="text" name="wc-outfit-fb-app-id" id="wc-outfit-fb-app-id" value="<?php echo get_option('wc-outfit-fb-app-id'); ?>">
+								<input type="text" name="wc-outfit-fb-app-id" id="wc-outfit-fb-app-id">
 								<p class="description"><?php _e('Get your Facebook app id from <a href="https://developers.facebook.com/" target="_blank">here</a>', 'xim')?></p>
 							</td>
 				        </tr>
@@ -147,7 +147,7 @@ trait Admin {
 						<tr valign="top">
 							<th scope="row"><?php _e('Enable Tagging', 'xim'); ?></th>
 							<td>
-								<input type="checkbox" name="wc-outfit-tagging" id="wc-outfit-tagging" <?php echo (get_option('wc-outfit-tagging', 'on') ? 'checked' : ''); ?>>
+								<input type="checkbox" name="wc-outfit-tagging" id="wc-outfit-tagging" checked>
 								<label for="wc-outfit-tagging"><strong><?php _e('Enable Tag features', 'xim'); ?></strong></label>
 								<p class="description"><?php _e('Enable product tagging option.', 'xim'); ?></p>
 							</td>
@@ -156,7 +156,7 @@ trait Admin {
 						<tr valign="top">
 							<th scope="row"><?php _e('Permission', 'xim'); ?></th>
 							<td>
-								<input type="checkbox" name="wc-outfit-customer-tagging" id="wc-outfit-customer-tagging" <?php echo (get_option('wc-outfit-customer-tagging', 'on') ? 'checked' : ''); ?>>
+								<input type="checkbox" name="wc-outfit-customer-tagging" id="wc-outfit-customer-tagging" checked>
 								<label for="wc-outfit-customer-tagging"><strong><?php _e('Allow customer to add tag', 'xim'); ?></strong></label>
 								<p class="description"><?php _e('If enabled, customer will be able to add tag during submission of outfit. Requires Tag features enabled.', 'xim'); ?></p>
 							</td>
