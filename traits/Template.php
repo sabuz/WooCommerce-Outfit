@@ -38,7 +38,6 @@ trait Template {
 						<th>' . __('Title', 'xim') . '</th>
 						<th>' . __('Date', 'xim') . '</th>
 						<th>' . __('Status', 'xim') . '</th>
-						<th></th>
 					</tr>
 				</thead>
 
@@ -50,7 +49,6 @@ trait Template {
 							<td>' . the_title('', '', false) . '</td>
 							<td>' . get_the_date() . '</td>
 							<td>' . ucfirst(get_post_status()) . '</td>
-							<td><a href="' . get_the_permalink() . '" target="_blank">' . __('View', 'xim') . '</a></td>
 						</tr>';
 					}
 					

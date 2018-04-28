@@ -6,7 +6,7 @@
  * @link              https://ximdevs.com/
  *
  * Plugin Name:       WooCommerce Outfit
- * Description:       WooCommerce Outfit enables your customers to submit outfit photos.
+ * Description:       WooCommerce Outfit is one of a kind plugin which will enable your customers to submit their photos to the related bought products.
  * Version:           1.0.0
  * Author:            XimDevs
  * Author URI:        https://ximdevs.com/
@@ -42,7 +42,6 @@ class Xim_Woo_Outfit_Activation {
 		set_transient('wc_outfit_flush_rewrite_rules_flag', true, 86400);
 	}
 }
-
 register_activation_hook(__FILE__, function () {
 	// If WooCommerce is activated, initiate the activation class
 	if (class_exists('WooCommerce')) {
@@ -51,7 +50,7 @@ register_activation_hook(__FILE__, function () {
 });
 
 /**
- * Initial class - fired when plugins are loaded.
+ * Init class - fired when plugins are loaded.
  *
  * @since    1.0.0
  */
@@ -108,7 +107,6 @@ class Xim_Woo_Outfit_Init {
 		}
 	}
 }
-
 add_action('plugins_loaded', function () {
 	// If WooCommerce is activated, initiate the plugin, else throw error and deactive the plugin
 	if (class_exists('WooCommerce')) {

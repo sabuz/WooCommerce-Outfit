@@ -75,16 +75,6 @@
 	font-weight: 700;
 }
 
-#wc-outfit-modal .wc-outfit-modal-author-data .wc-outfit-follow-btn {
-	font-size: 12px;
-	font-weight: 400;
-	background-color: #000;
-	color: #fff;
-	display: inline-block;
-	padding: 0 15px;
-	margin-left: 15px;
-}
-
 /*hooked products*/
 #wc-outfit-modal .wc-outfit-modal-hooked-products {
 	margin: 0 0 35px 12px;
@@ -169,21 +159,6 @@
 	text-decoration: none;
 }
 
-/*tags*/
-#wc-outfit-modal .wc-outfit-modal-tags {
-	margin: 0 0 35px 12px;
-}
-
-#wc-outfit-modal .wc-outfit-modal-tags a {
-	display: inline-block;
-	font-size: 13px;
-	line-height: 1;
-	color: #fff;
-	background-color: #000;
-	margin: 0 2px 0 0;
-	padding: 8px 12px;
-}
-
 /*footer*/
 #wc-outfit-modal .wc-outfit-modal-footer-info {
 	position: absolute;
@@ -255,35 +230,6 @@
 #wc-outfit-modal .owl-carousel .owl-nav .owl-next:before {
 	color: #fff;
 	font-size: 25px;
-}
-
-/*Share Button*/
-.wc-outfit-social-share {
-	display: inline-block;
-}
-
-.wc-outfit-social-share a {
-	display: inline-block;
-	height: 24px;
-	width: 24px;
-	font-size: 12px;
-	line-height: 24px;
-	text-align: center;
-	color: #fff;
-	border-radius: 50px;
-	margin: 0 3px;
-}
-
-.wc-outfit-social-share .wc-outfit-icon-facebook {
-	background-color: #3b5998;
-}
-
-.wc-outfit-social-share .wc-outfit-icon-tumblr {
-	background-color: #35465c;
-}
-
-.wc-outfit-social-share .wc-outfit-icon-pinterest-p {
-	background-color: #bd081c;
 }
 
 /*Post Rating*/

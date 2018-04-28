@@ -39,7 +39,6 @@ trait Core {
 				'exclude_from_search' => true,
 				'rewrite' => false,
 				'supports' => array('title', 'author', 'thumbnail'),
-				'taxonomies' => array('outfit_tags'),
 				'menu_icon' => 'dashicons-camera',
 			)
 		);
