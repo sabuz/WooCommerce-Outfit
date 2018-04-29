@@ -1,33 +1,32 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Outfit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-28 09:41+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2018-04-28 10:38+0000\n"
+"PO-Revision-Date: 2018-04-28 10:39+0000\n"
+"Last-Translator: admin <naz.sabuz@gmail.com>\n"
 "Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
 #. Name of the plugin
-#: woocommerce-outfit.php:128
+#: woocommerce-outfit.php:126
 msgid "WooCommerce Outfit"
 msgstr ""
 
-#: woocommerce-outfit.php:128
+#: woocommerce-outfit.php:126
 msgid "requires"
 msgstr ""
 
-#: woocommerce-outfit.php:128
+#: woocommerce-outfit.php:126
 msgid "WooCommerce"
 msgstr ""
 
-#: woocommerce-outfit.php:128
+#: woocommerce-outfit.php:126
 msgid "plugin to be installed and activated."
 msgstr ""
 
@@ -80,7 +79,7 @@ msgstr ""
 msgid "Outfit Photos"
 msgstr ""
 
-#: traits/Core.php:26 traits/Core.php:115 traits/Core.php:146
+#: traits/Core.php:26 traits/Core.php:114 traits/Core.php:145
 msgid "Outfits"
 msgstr ""
 
@@ -88,7 +87,7 @@ msgstr ""
 msgid "Outfit"
 msgstr ""
 
-#: traits/Core.php:28 traits/Core.php:148
+#: traits/Core.php:28 traits/Core.php:147
 msgid "Add New Outfit"
 msgstr ""
 
@@ -120,24 +119,24 @@ msgstr ""
 msgid "No Outfits found in Trash."
 msgstr ""
 
-#: traits/Core.php:81
+#: traits/Core.php:80
 msgid "Outfit photo is required"
 msgstr ""
 
-#: traits/Core.php:82
+#: traits/Core.php:81
 msgid "Choose a valid JPG/JPEG/PNG file"
 msgstr ""
 
-#: traits/Core.php:83
+#: traits/Core.php:82
 #, php-format
 msgid "File size must be less than %d MB"
 msgstr ""
 
-#: traits/Core.php:84
+#: traits/Core.php:83
 msgid "Products are required"
 msgstr ""
 
-#: traits/Core.php:85
+#: traits/Core.php:84
 msgid "Select a category"
 msgstr ""
 
@@ -341,12 +340,4 @@ msgstr ""
 msgid ""
 "WooCommerce Outfit is one of a kind plugin which will enable your customers "
 "to submit their photos to the related bought products."
-msgstr ""
-
-#. Author of the plugin
-msgid "XimDevs"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "https://ximdevs.com/"
 msgstr ""

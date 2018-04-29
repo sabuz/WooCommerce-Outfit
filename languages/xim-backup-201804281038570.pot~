@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Outfit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-28 10:38+0000\n"
+"POT-Creation-Date: 2018-04-28 09:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,19 +15,19 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/"
 
 #. Name of the plugin
-#: woocommerce-outfit.php:126
+#: woocommerce-outfit.php:128
 msgid "WooCommerce Outfit"
 msgstr ""
 
-#: woocommerce-outfit.php:126
+#: woocommerce-outfit.php:128
 msgid "requires"
 msgstr ""
 
-#: woocommerce-outfit.php:126
+#: woocommerce-outfit.php:128
 msgid "WooCommerce"
 msgstr ""
 
-#: woocommerce-outfit.php:126
+#: woocommerce-outfit.php:128
 msgid "plugin to be installed and activated."
 msgstr ""
 
@@ -80,7 +80,7 @@ msgstr ""
 msgid "Outfit Photos"
 msgstr ""
 
-#: traits/Core.php:26 traits/Core.php:114 traits/Core.php:145
+#: traits/Core.php:26 traits/Core.php:115 traits/Core.php:146
 msgid "Outfits"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 msgid "Outfit"
 msgstr ""
 
-#: traits/Core.php:28 traits/Core.php:147
+#: traits/Core.php:28 traits/Core.php:148
 msgid "Add New Outfit"
 msgstr ""
 
@@ -120,24 +120,24 @@ msgstr ""
 msgid "No Outfits found in Trash."
 msgstr ""
 
-#: traits/Core.php:80
+#: traits/Core.php:81
 msgid "Outfit photo is required"
 msgstr ""
 
-#: traits/Core.php:81
+#: traits/Core.php:82
 msgid "Choose a valid JPG/JPEG/PNG file"
 msgstr ""
 
-#: traits/Core.php:82
+#: traits/Core.php:83
 #, php-format
 msgid "File size must be less than %d MB"
 msgstr ""
 
-#: traits/Core.php:83
+#: traits/Core.php:84
 msgid "Products are required"
 msgstr ""
 
-#: traits/Core.php:84
+#: traits/Core.php:85
 msgid "Select a category"
 msgstr ""
 

@@ -1,5 +1,5 @@
 === WooCommerce Outfit ===
-Contributors: wpday
+Contributors: ximdevs
 Tags: woocommerce, outfit
 Requires at least: 4.0
 Tested up to: 4.9.5
