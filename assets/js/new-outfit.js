@@ -214,7 +214,7 @@ jQuery(document).ready(function() {
 		e.preventDefault()
 
 		id = jQuery(this).attr('data-id')
-		jQuery(this).parents('.col-sm-4').remove()
+		jQuery(this).parents('.col-xs-4').remove()
 
 		var index = jQuery.map(ids, function(i, j) {
 			if (i.id == id) {
