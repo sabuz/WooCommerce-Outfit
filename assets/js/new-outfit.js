@@ -100,7 +100,7 @@ jQuery(document).ready(function() {
 						html += '<div class="row">'
 					}
 
-					html += '<div class="col-sm-4 col-xs-6"><div class="item"><img src="' + data.products[i].thumb + '"/><h4 class="product-title">' + data.products[i].title + '</h4><p class="price">' + data.products[i].price_html + '</p><a class="button" data-id="' + data.products[i].id + '">Select</a></div></div>'
+					html += '<div class="col-xs-4"><div class="item"><img src="' + data.products[i].thumb + '"/><h4 class="product-title">' + data.products[i].title + '</h4><p class="price">' + data.products[i].price_html + '</p><a class="button" data-id="' + data.products[i].id + '">Select</a></div></div>'
 
 					if ((count != 0 && count % 2 == 0) || (count == data.length - 1)) {
 						html += '</div>'
@@ -149,7 +149,7 @@ jQuery(document).ready(function() {
 					html += '<div class="row has-col">'
 				}
 
-				html += '<div class="col-sm-4 col-xs-6"><div class="item"><img src="' + data.products[i].thumb + '"/><h4 class="product-title">' + data.products[i].title + '</h4><p class="price">' + data.products[i].price_html + '</p><a class="button" data-id="' + data.products[i].id + '">Select</a></div></div>'
+				html += '<div class="col-xs-4"><div class="item"><img src="' + data.products[i].thumb + '"/><h4 class="product-title">' + data.products[i].title + '</h4><p class="price">' + data.products[i].price_html + '</p><a class="button" data-id="' + data.products[i].id + '">Select</a></div></div>'
 
 				if ((count != 0 && count % 2 == 0) || (count == data.length - 1)) {
 					html += '</div>'
@@ -199,7 +199,7 @@ jQuery(document).ready(function() {
 
 			// add selected product
 			var src = jQuery(this).parent('.item').find('img').attr('src')
-			jQuery('.selected-products>.row').append('<div class="col-sm-4 col-xs-6"><div class="item"><img src="' + src + '"/><a href="#" class="close" data-id="' + id + '"></a><a href="#" class="switch inactive" data-id="' + id + '"></a></div></div>')
+			jQuery('.selected-products>.row').append('<div class="col-xs-4"><div class="item"><img src="' + src + '"/><a href="#" class="close" data-id="' + id + '"></a><a href="#" class="switch inactive" data-id="' + id + '"></a></div></div>')
 
 			if (ids.length > 0) {
 				jQuery('.selected-products').removeClass('empty')
