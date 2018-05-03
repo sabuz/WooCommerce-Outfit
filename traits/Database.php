@@ -4,7 +4,7 @@ namespace Xim_Woo_Outfit\Traits;
 
 trait Database {
 
-	protected $table_post_likes = 'wc_outfit_post_likes';
+	protected $table_post_likes = 'woo_outfit_post_likes';
 
 	/**
 	 * Install db table 'post_likes' and 'community'.

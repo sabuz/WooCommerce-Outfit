@@ -1,37 +1,37 @@
 /*single listing carousel*/
-.wc-outfit-single-carousel {
+.woo-outfit-single-carousel {
 	margin: 30px 0 35px;
 }
 
-.wc-outfit-single-carousel a {
+.woo-outfit-single-carousel a {
 	text-decoration: none;
 	border: none;
 	box-shadow: none;
 }
 
-.wc-outfit-single-carousel .wc-outfit-gallery-item {
+.woo-outfit-single-carousel .woo-outfit-gallery-item {
 	margin-bottom: 30px;
 	overflow: hidden;
 }
 
-.wc-outfit-single-carousel .wc-outfit-gallery-item .wc-outfit-gallery-item-inner-wrap {
+.woo-outfit-single-carousel .woo-outfit-gallery-item .woo-outfit-gallery-item-inner-wrap {
 	padding: 12px;
 	border: 1px solid #eee;
 	background-color: #fff;
 }
 
-.wc-outfit-single-carousel .wc-outfit-gallery-item .wc-outfit-gallery-item-thumb {
+.woo-outfit-single-carousel .woo-outfit-gallery-item .woo-outfit-gallery-item-thumb {
 	max-width: 100%;
 	height: auto;
 	cursor: zoom-in;
 }
 
-.wc-outfit-single-carousel .wc-outfit-gallery-item .wc-outfit-gallery-item-footer {
+.woo-outfit-single-carousel .woo-outfit-gallery-item .woo-outfit-gallery-item-footer {
 	position: relative;
 	padding: 15px 0 0;
 }
 
-.wc-outfit-single-carousel .wc-outfit-gallery-item .wc-outfit-gallery-item-footer .wc-outfit-meta-author {
+.woo-outfit-single-carousel .woo-outfit-gallery-item .woo-outfit-gallery-item-footer .woo-outfit-meta-author {
 	font-size: 14px;
 	font-weight: 700;
 	line-height: 1;
@@ -41,11 +41,11 @@
 	margin: 0 0 10px;
 }
 
-.wc-outfit-single-carousel .wc-outfit-gallery-item .wc-outfit-gallery-item-footer .wc-outfit-meta-author:hover {
+.woo-outfit-single-carousel .woo-outfit-gallery-item .woo-outfit-gallery-item-footer .woo-outfit-meta-author:hover {
 	color: #555;
 }
 
-.wc-outfit-single-carousel .wc-outfit-gallery-item .wc-outfit-gallery-item-footer .wc-outfit-meta-time {
+.woo-outfit-single-carousel .woo-outfit-gallery-item .woo-outfit-gallery-item-footer .woo-outfit-meta-time {
 	font-size: 12px;
 	line-height: 1;
 	color: #aaa;
@@ -53,19 +53,19 @@
 }
 
 /*owl carousel*/
-.wc-outfit-single-carousel .owl-nav {
+.woo-outfit-single-carousel .owl-nav {
 	margin-top: 15px;
 	text-align: center;
 }
 
-.wc-outfit-single-carousel .owl-carousel .owl-nav .owl-prev:before,
-.wc-outfit-single-carousel .owl-carousel .owl-nav .owl-next:before {
+.woo-outfit-single-carousel .owl-carousel .owl-nav .owl-prev:before,
+.woo-outfit-single-carousel .owl-carousel .owl-nav .owl-next:before {
 	color: #fff;
 	font-size: 25px;
 }
 
-.wc-outfit-single-carousel .owl-carousel .owl-nav .owl-prev,
-.wc-outfit-single-carousel .owl-carousel .owl-nav .owl-next {
+.woo-outfit-single-carousel .owl-carousel .owl-nav .owl-prev,
+.woo-outfit-single-carousel .owl-carousel .owl-nav .owl-next {
 	display: inline-block;
 	width: 30px;
 	height: 30px;

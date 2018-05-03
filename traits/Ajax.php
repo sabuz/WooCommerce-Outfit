@@ -11,7 +11,7 @@ trait Ajax {
 	 * @since    1.0.0
 	 */
 	function ajax_get_products_by_cat() {
-		check_ajax_referer('wc_outfit_nonce', 'security');
+		check_ajax_referer('woo_outfit_nonce', 'security');
 
 		$json = array();
 		$user = wp_get_current_user();
@@ -36,7 +36,7 @@ trait Ajax {
 
 		if ($data->posts) {
 			foreach ($data->posts as $key => $id) {
-				if ((get_option('wc-outfit-bought-only', 'on') && !wc_customer_bought_product($user->user_email, $user->ID, $id))) {
+				if ((get_option('woo-outfit-bought-only', 'on') && !wc_customer_bought_product($user->user_email, $user->ID, $id))) {
 					continue;
 				}
 
@@ -62,7 +62,7 @@ trait Ajax {
 	 * @since    1.0.0
 	 */
 	function ajax_post_like() {
-		check_ajax_referer('wc_outfit_nonce', 'security');
+		check_ajax_referer('woo_outfit_nonce', 'security');
 
 		$count = $this->toggle_post_like($_REQUEST['post_id']);
 		update_post_meta($_REQUEST['post_id'], 'likes', $count);
@@ -79,7 +79,7 @@ trait Ajax {
 	 * @since    1.0.0
 	 */
 	function ajax_outfit_modal() {
-		check_ajax_referer('wc_outfit_nonce', 'security');
+		check_ajax_referer('woo_outfit_nonce', 'security');
 
 		$content = '';
 
@@ -87,14 +87,14 @@ trait Ajax {
 			$author = $this->get_outfit_author_id($_REQUEST['view']);
 
 			$content .= '<div class="modal-body clearfix">
-				<div class="wc-outfit-modal-thumb">
+				<div class="woo-outfit-modal-thumb">
 					<img src="' . $this->get_outfit_thumbnail($_REQUEST['view']) . '" />
 
-					' . ($_REQUEST['pagination'] ? '<a href="#" class="outfit-prev" data-id=""><span class="wc-outfit-icon wc-outfit-icon-angle-left"></span></a><a href="#" class="outfit-next" data-id=""><span class="wc-outfit-icon wc-outfit-icon-angle-right"></span></a>' : '') . '
+					' . ($_REQUEST['pagination'] ? '<a href="#" class="outfit-prev" data-id=""><span class="woo-outfit-icon woo-outfit-icon-angle-left"></span></a><a href="#" class="outfit-next" data-id=""><span class="woo-outfit-icon woo-outfit-icon-angle-right"></span></a>' : '') . '
 				</div>
 
-				<div class="wc-outfit-modal-details">
-					<div class="wc-outfit-modal-author-data clearfix">
+				<div class="woo-outfit-modal-details">
+					<div class="woo-outfit-modal-author-data clearfix">
 						<a class="outfit-author-name" href="#">
 							' . ucwords(get_the_author_meta('display_name', $author)) . '
 						</a>';
@@ -104,12 +104,12 @@ trait Ajax {
 						</button>
 					</div>
 
-					<div class="wc-outfit-modal-hooked-products owl-carousel">
+					<div class="woo-outfit-modal-hooked-products owl-carousel">
 						' . $this->modal_hooked_products($_REQUEST['view']) . '
 					</div>
 
-					<div class="wc-outfit-modal-footer-info">
-						<span class="wc-outfit-meta-time">' . __('Added ', 'xim') . $this->outfit_posted_ago($_REQUEST['view']) . '</span>
+					<div class="woo-outfit-modal-footer-info">
+						<span class="woo-outfit-meta-time">' . __('Added ', 'xim') . $this->outfit_posted_ago($_REQUEST['view']) . '</span>
 
 						' . $this->like_button_html($_REQUEST['view']) . '
 					</div>
@@ -127,7 +127,7 @@ trait Ajax {
 	 * @since    1.0.0
 	 */
 	function ajax_post_outfit() {
-		check_ajax_referer('wc_outfit_nonce', 'security');
+		check_ajax_referer('woo_outfit_nonce', 'security');
 		
 		$response = array();
 
@@ -143,7 +143,7 @@ trait Ajax {
 			$args = array(
 				'post_title' => '',
 				'post_type' => 'outfit',
-				'post_status' => (get_option('wc-outfit-verify-submission', 'on') ? 'pending' : 'publish')
+				'post_status' => (get_option('woo-outfit-verify-submission', 'on') ? 'pending' : 'publish')
 			);
 
 			$post_id = wp_insert_post($args);

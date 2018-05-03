@@ -12,10 +12,10 @@ jQuery(document).ready(function() {
 		var html = ''
 		var count = 0
 
-		jQuery.get(wc_outfit_tr_obj.ajaxurl + '?action=wc_outfit_get_products_by_cat', {
+		jQuery.get(woo_outfit_tr_obj.ajaxurl + '?action=woo_outfit_get_products_by_cat', {
 			cat: cat_id,
 			page: 1,
-			security: wc_outfit_tr_obj.nonce
+			security: woo_outfit_tr_obj.nonce
 		}).success(function(data) {
 			if (data.products) {
 				for (var i in data.products) {
@@ -31,7 +31,6 @@ jQuery(document).ready(function() {
 
 					count += 1
 				}
-
 
 				jQuery('.product-list').empty().html(html)
 
@@ -62,10 +61,10 @@ jQuery(document).ready(function() {
 		var count = 0
 		var html = ''
 
-		jQuery.get(wc_outfit_tr_obj.ajaxurl + '?action=wc_outfit_get_products_by_cat', {
+		jQuery.get(woo_outfit_tr_obj.ajaxurl + '?action=woo_outfit_get_products_by_cat', {
 			cat: cat_id,
 			page: page,
-			security: wc_outfit_tr_obj.nonce
+			security: woo_outfit_tr_obj.nonce
 		}).done(function(data) {
 			for (var i in data.products) {
 				if (count == 0 || count % 4 == 0) {

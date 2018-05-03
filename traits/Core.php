@@ -14,9 +14,9 @@ trait Core {
 		add_rewrite_endpoint($this->all_outfit_endpoint, EP_ROOT | EP_PAGES);
 
 		// flush rewrite rules
-		if (get_transient('wc_outfit_flush_rewrite_rules_flag') == true) {
+		if (get_transient('woo_outfit_flush_rewrite_rules_flag') == true) {
 			flush_rewrite_rules();
-			set_transient('wc_outfit_flush_rewrite_rules_flag', false, 86400);
+			set_transient('woo_outfit_flush_rewrite_rules_flag', false, 86400);
 		}
 
 		// Register post type: outfit
@@ -44,7 +44,7 @@ trait Core {
 		);
 
 		// Add image size
-		add_image_size('wc-outfit-single-listing', 300, 320, true);
+		add_image_size('woo-outfit-single-listing', 300, 320, true);
 	}
 
 	/**
@@ -54,7 +54,7 @@ trait Core {
 	 */
 	function enqueue_scripts() {
 		// style
-		wp_register_style('wc-outfit-icon', plugin_dir_url(__FILE__) . '../assets/css/wc-outfit-icon.css');
+		wp_register_style('woo-outfit-icon', plugin_dir_url(__FILE__) . '../assets/css/woo-outfit-icon.css');
 		wp_register_style('bootstrap', plugin_dir_url(__FILE__) . '../assets/css/bootstrap.min.css');
 		wp_register_style('owl-carousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.min.css');
 		wp_register_style('select2', plugin_dir_url(__FILE__) . '../assets/css/select2.min.css');
@@ -73,10 +73,10 @@ trait Core {
 		wp_register_script('single-product', plugin_dir_url(__FILE__) . '../assets/js/single-product.js', array(), false, true);
 
 		// localize
-		wp_localize_script('new-outfit', 'wc_outfit_tr_obj', array(
+		wp_localize_script('new-outfit', 'woo_outfit_tr_obj', array(
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'outfits_url' => wc_get_endpoint_url('outfits'),
-			'nonce' => wp_create_nonce('wc_outfit_nonce'),
+			'nonce' => wp_create_nonce('woo_outfit_nonce'),
 			'thumb_req' => __('Outfit photo is required', 'xim'),
 			'invalid_thumb' => __('Choose a valid JPG/JPEG/PNG file', 'xim'),
 			'size_exceed' => sprintf(__("File size must be less than %d MB", 'xim'), ini_get('upload_max_filesize')),
@@ -85,11 +85,11 @@ trait Core {
 			'upload_limit' => ini_get('upload_max_filesize'),
 		));
 
-		wp_localize_script('single-product', 'wc_outfit_tr_obj', array(
+		wp_localize_script('single-product', 'woo_outfit_tr_obj', array(
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'myaccount_url' => get_permalink(get_option('woocommerce_myaccount_page_id')),
-			'nonce' => wp_create_nonce('wc_outfit_nonce'),
-			'num_items' => get_option('wc-outfit-single-num-item', 4),
+			'nonce' => wp_create_nonce('woo_outfit_nonce'),
+			'num_items' => get_option('woo-outfit-single-num-item', 4),
 		));
 	}
 
@@ -99,7 +99,7 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function before_delete_post($post_id) {
-		if (get_option('wc-outfit-cleanup-gallery', 'on') && get_post_type($post_id) == 'outfit') {
+		if (get_option('woo-outfit-cleanup-gallery', 'on') && get_post_type($post_id) == 'outfit') {
 			// delete post attachment
 			wp_delete_attachment(get_post_thumbnail_id($post_id), true);
 		}
@@ -159,7 +159,7 @@ trait Core {
 		global $post;
 
 		if (is_product()) {
-			echo '<div class="modal" id="wc-outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+			echo '<div class="modal" id="woo-outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 

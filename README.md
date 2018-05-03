@@ -1,1 +1,1 @@
-wc-outfit
+woo-outfit

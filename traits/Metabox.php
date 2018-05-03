@@ -14,12 +14,12 @@ trait Metabox {
 		if ($post_type == 'outfit') {
 			// css
 			wp_enqueue_style('select2', plugin_dir_url(__FILE__) . '../assets/css/select2.min.css');
-			wp_enqueue_style('wc-outfit-metabox', plugin_dir_url(__FILE__) . '../assets/css/metabox.css');
+			wp_enqueue_style('woo-outfit-metabox', plugin_dir_url(__FILE__) . '../assets/css/metabox.css');
 
 			// js
 			wp_enqueue_script('select2', plugin_dir_url(__FILE__) . '../assets/js/select2.min.js', array(), false, true);
-			wp_enqueue_script('wc-outfit-metabox', plugin_dir_url(__FILE__) . '../assets/js/metabox.js', array(), false, true);
-			wp_localize_script('wc-outfit-metabox', 'wc_outfit_tr_obj', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('wc_outfit_nonce')));
+			wp_enqueue_script('woo-outfit-metabox', plugin_dir_url(__FILE__) . '../assets/js/metabox.js', array(), false, true);
+			wp_localize_script('woo-outfit-metabox', 'woo_outfit_tr_obj', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('woo_outfit_nonce')));
 		}
 	}
 
@@ -29,8 +29,8 @@ trait Metabox {
 	 * @since    1.0.0
 	 */
 	function register_meta_boxes() {
-		add_meta_box('wc-outfit-hooked-products', __('Used Products', 'xim'), array($this, 'mb_hooked_products_callback'), 'outfit');
-		add_meta_box('wc-outfit-featured', __('Featured Post', 'xim'), array($this, 'mb_featured_products_callback'), 'outfit', 'side');
+		add_meta_box('woo-outfit-hooked-products', __('Used Products', 'xim'), array($this, 'mb_hooked_products_callback'), 'outfit');
+		add_meta_box('woo-outfit-featured', __('Featured Post', 'xim'), array($this, 'mb_featured_products_callback'), 'outfit', 'side');
 	}
 
 	/**
@@ -42,8 +42,8 @@ trait Metabox {
 		$products = get_post_meta($post->ID, 'products', true);
 
 		$content = '';
-		$content .= wp_nonce_field('wc_outfit_meta_box_nonce', 'wc_outfit_meta_box_nonce');
-		$content .= '<div class="wc-outfit-mb">
+		$content .= wp_nonce_field('woo_outfit_meta_box_nonce', 'woo_outfit_meta_box_nonce');
+		$content .= '<div class="woo-outfit-mb">
 			<div class="selected-products">
 				<div class="row has-col">';
 				if (!empty($products)) {
@@ -89,11 +89,11 @@ trait Metabox {
 	 * @since    1.0.0
 	 */
 	function mb_featured_products_callback($post) {
-		wp_nonce_field('wc_outfit_meta_box_nonce', 'wc_outfit_meta_box_nonce');
+		wp_nonce_field('woo_outfit_meta_box_nonce', 'woo_outfit_meta_box_nonce');
 
 		$value = get_post_meta($post->ID, 'featured', true);
 
-		echo '<div class="wc-outfit-mb">
+		echo '<div class="woo-outfit-mb">
 			<label for="featured">
 				<input type="checkbox" name="featured" id="featured" ' . (!empty($value) ? "checked" : "") . '/>
 				' . __('Make this post featured?', 'xim') . '
@@ -109,7 +109,7 @@ trait Metabox {
 	function update_meta_on_submit($post_id, $post) {
 		global $post_type;
 
-		if (!isset($_POST['wc_outfit_meta_box_nonce']) || !wp_verify_nonce($_POST['wc_outfit_meta_box_nonce'], 'wc_outfit_meta_box_nonce')) {
+		if (!isset($_POST['woo_outfit_meta_box_nonce']) || !wp_verify_nonce($_POST['woo_outfit_meta_box_nonce'], 'woo_outfit_meta_box_nonce')) {
 			return;
 		}
 

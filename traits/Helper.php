@@ -51,9 +51,9 @@ trait Helper {
 
 	// Like button html.
 	function like_button_html($post_id) {
-		$content = '<div class="wc-outfit-rating">
-			<a href="#" class="wc-outfit-rating-heart ' . (!$this->is_liked_outfit($post_id) ?: 'enabled') . '" data-id="' . $post_id . '"><i class="wc-outfit-icon wc-outfit-icon-heart"></i></a>
-			<span class="wc-outfit-rating-count">' . $this->get_num_post_like($post_id) . '</span>
+		$content = '<div class="woo-outfit-rating">
+			<a href="#" class="woo-outfit-rating-heart ' . (!$this->is_liked_outfit($post_id) ?: 'enabled') . '" data-id="' . $post_id . '"><i class="woo-outfit-icon woo-outfit-icon-heart"></i></a>
+			<span class="woo-outfit-rating-count">' . $this->get_num_post_like($post_id) . '</span>
 		</div>';
 
 		return $content;

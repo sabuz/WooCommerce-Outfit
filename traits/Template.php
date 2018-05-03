@@ -20,11 +20,11 @@ trait Template {
 
 		$html = '';
 
-		if (isset($_COOKIE['wc_outfit_success']) && $_COOKIE['wc_outfit_success'] == 'true') {
+		if (isset($_COOKIE['woo_outfit_success']) && $_COOKIE['woo_outfit_success'] == 'true') {
 			$html .= '<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">' . __('Outfit submitted successfully.', 'xim') . '</div>
 
 			<script>
-				document.cookie="wc_outfit_success=;expires=expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/"
+				document.cookie="woo_outfit_success=;expires=expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/"
 			</script>';
 		}
 
@@ -73,7 +73,7 @@ trait Template {
 	 */
 	function template_new_outfit($atts, $content = null) {
 		// enqueue styles
-		wp_enqueue_style('wc-outfit-icon');
+		wp_enqueue_style('woo-outfit-icon');
 		wp_enqueue_style('bootstrap');
 		wp_enqueue_style('select2');
 		wp_enqueue_style('new-outfit');
@@ -91,7 +91,7 @@ trait Template {
 				<div class="row">
 					<div class="col-sm-12">
  						<input type="file" name="thumb" id="thumb">
- 						<span class="wc-outfit-icon wc-outfit-icon-question-circle" data-toggle="popover" data-placement="left" data-content="' . get_option('wc-outfit-submission-guideline') . '"></span>
+ 						<span class="woo-outfit-icon woo-outfit-icon-question-circle" data-toggle="popover" data-placement="left" data-content="' . get_option('woo-outfit-submission-guideline') . '"></span>
 					</div>
 				</div>
 			</div>
@@ -142,7 +142,7 @@ trait Template {
 	function template_single_product_listing() {
 		global $post;
 		// enqueue styles
-		wp_enqueue_style('wc-outfit-icon');
+		wp_enqueue_style('woo-outfit-icon');
 		wp_enqueue_style('bootstrap');
 		wp_enqueue_style('owl-carousel');
 		wp_enqueue_style('outfit-modal');
@@ -167,22 +167,22 @@ trait Template {
 		));
 
 		if ($query->have_posts()) {
-			echo '<div class="wc-outfit-single-carousel">
+			echo '<div class="woo-outfit-single-carousel">
 				<h3>' . __('Outfit Photos', 'xim') . '</h3>
 
 				<div class="owl-carousel">';
 				while ($query->have_posts()) {
 					$query->the_post();
 					
-					echo '<div class="wc-outfit-gallery-item" data-id="' . $query->post->ID . '">
-						<div class="wc-outfit-gallery-item-inner-wrap">
-							<img src="' . $this->get_outfit_thumbnail($query->post->ID, 'wc-outfit-single-listing') . '" class="wc-outfit-gallery-item-thumb" />
+					echo '<div class="woo-outfit-gallery-item" data-id="' . $query->post->ID . '">
+						<div class="woo-outfit-gallery-item-inner-wrap">
+							<img src="' . $this->get_outfit_thumbnail($query->post->ID, 'woo-outfit-single-listing') . '" class="woo-outfit-gallery-item-thumb" />
 
-							<div class="wc-outfit-gallery-item-footer clearfix">
+							<div class="woo-outfit-gallery-item-footer clearfix">
 								<div class="pull-left">
-									<a class="wc-outfit-meta-author" href="#">
+									<a class="woo-outfit-meta-author" href="#">
 										' . ucwords(get_the_author_meta('display_name')) . '</a>
-									<p class="wc-outfit-meta-time">' . $this->outfit_posted_ago() . '</p>
+									<p class="woo-outfit-meta-time">' . $this->outfit_posted_ago() . '</p>
 								</div>
 								<div class="pull-right">
 									' . $this->like_button_html($query->post->ID) . '

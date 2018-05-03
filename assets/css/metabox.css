@@ -1,25 +1,25 @@
 /*General*/
-.wc-outfit-mb {
+.woo-outfit-mb {
 	padding: 10px 0;
 }
 
-.wc-outfit-mb .hidden {
+.woo-outfit-mb .hidden {
 	display: none;
 }
 
-.wc-outfit-mb .row:before,
-.wc-outfit-mb .row:after {
+.woo-outfit-mb .row:before,
+.woo-outfit-mb .row:after {
 	display: table;
 	content: " ";
 	clear: both;
 }
 
-.wc-outfit-mb .has-col {
+.woo-outfit-mb .has-col {
 	margin-left: -10px;
 	margin-right: -10px;
 }
 
-.wc-outfit-mb .col {
+.woo-outfit-mb .col {
 	position: relative;
 	float: left;
 	display: inline-block;
@@ -29,22 +29,22 @@
 	margin-bottom: 20px;
 }
 
-.wc-outfit-mb img {
+.woo-outfit-mb img {
 	max-width: 100%;
 	height: auto;
 }
 
-.wc-outfit-mb a {
+.woo-outfit-mb a {
 	text-decoration: none;
 }
 
-.wc-outfit-mb a:focus {
+.woo-outfit-mb a:focus {
 	outline: none;
 	box-shadow: none;
 }
 
 /*Select*/
-.wc-outfit-mb .select-cat-wrap {
+.woo-outfit-mb .select-cat-wrap {
 	margin: 30px 0 20px;
 }
 
@@ -71,13 +71,13 @@
 }
 
 /*Selected Products*/
-.wc-outfit-mb .selected-products {
+.woo-outfit-mb .selected-products {
 	background-color: #fafafa;
 	border: 1px dashed #eee;
 	padding: 15px 15px 0;
 }
 
-.wc-outfit-mb .selected-products.empty:after {
+.woo-outfit-mb .selected-products.empty:after {
 	content: 'No Product Selected';
 	display: block;
 	font-size: 18px;
@@ -86,14 +86,14 @@
 	color: #aaa;
 }
 
-.wc-outfit-mb .selected-products .item {
+.woo-outfit-mb .selected-products .item {
 	position: relative;
 	background-color: #fff;
 	border: 1px solid #eee;
 	padding: 12px;
 }
 
-.wc-outfit-mb .selected-products .close {
+.woo-outfit-mb .selected-products .close {
 	display: inline-block;
 	position: absolute;
 	top: 12px;
@@ -106,13 +106,13 @@
 	background-color: #111;
 }
 
-.wc-outfit-mb .selected-products .close:after {
+.woo-outfit-mb .selected-products .close:after {
 	content: '\2718';
 	color: #fff;
 }
 
 /*Switch*/
-.wc-outfit-mb .selected-products .switch {
+.woo-outfit-mb .selected-products .switch {
 	width: 100%;
 	height: 35px;
 	position: relative;
@@ -121,26 +121,26 @@
 	margin-top: 5px;
 }
 
-.wc-outfit-mb .selected-products .switch.active {
+.woo-outfit-mb .selected-products .switch.active {
 	background-color: #111;
 	color: #fff;
 }
 
-.wc-outfit-mb .selected-products .switch.inactive {
+.woo-outfit-mb .selected-products .switch.inactive {
 	background-color: #111;
 	color: #fff;
 }
 
-.wc-outfit-mb .selected-products .switch.active:before {
+.woo-outfit-mb .selected-products .switch.active:before {
 	content: 'Captured';
 }
 
-.wc-outfit-mb .selected-products .switch.inactive:before {
+.woo-outfit-mb .selected-products .switch.inactive:before {
 	content: 'Similar';
 }
 
-.wc-outfit-mb .selected-products .switch.active:before,
-.wc-outfit-mb .selected-products .switch.inactive:before {
+.woo-outfit-mb .selected-products .switch.active:before,
+.woo-outfit-mb .selected-products .switch.inactive:before {
 	display: block;
 	font-size: 14px;
 	line-height: 35px;
@@ -148,13 +148,13 @@
 }
 
 /*Product List*/
-.wc-outfit-mb .product-list .item {
+.woo-outfit-mb .product-list .item {
 	border: 1px solid #eee;
 	padding: 12px;
 	text-align: center;
 }
 
-.wc-outfit-mb .product-list .item .product-title {
+.woo-outfit-mb .product-list .item .product-title {
 	font-size: 14px;
 	font-weight: 400;
 	color: #555;
@@ -162,24 +162,24 @@
 	padding: 0;
 }
 
-.wc-outfit-mb .product-list .item .price {
+.woo-outfit-mb .product-list .item .price {
 	font-size: 14px;
 	font-weight: 700;
 	color: #111;
 	margin: 0 0 10px;
 }
 
-.wc-outfit-mb .product-list .item .price del {
+.woo-outfit-mb .product-list .item .price del {
 	font-weight: 400;
 	color: #aaa;
 	margin-right: 3px;
 }
 
-.wc-outfit-mb .product-list .item .price ins {
+.woo-outfit-mb .product-list .item .price ins {
 	text-decoration: none;
 }
 
-.wc-outfit-mb .product-list .item .button {
+.woo-outfit-mb .product-list .item .button {
 	display: block;
 	font-size: 14px;
 	line-height: 35px;
@@ -191,11 +191,11 @@
 }
 
 /*product-nav*/
-.wc-outfit-mb .product-nav {
+.woo-outfit-mb .product-nav {
 	text-align: center;
 }
 
-.wc-outfit-mb .product-nav a {
+.woo-outfit-mb .product-nav a {
 	font-size: 14px;
 	color: #555;
 	text-decoration: none;
@@ -205,11 +205,11 @@
 	border: 1px solid #eee;
 }
 
-.wc-outfit-mb .product-nav a:hover {
+.woo-outfit-mb .product-nav a:hover {
 	color: #111;
 }
 
-.wc-outfit-mb .product-nav a.disabled {
+.woo-outfit-mb .product-nav a.disabled {
 	color: #aaa;
 	cursor: not-allowed;
 	pointer-events: none;

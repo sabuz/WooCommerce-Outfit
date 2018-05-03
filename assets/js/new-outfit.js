@@ -6,14 +6,14 @@ jQuery(document).ready(function() {
 
 	jQuery.validator.addMethod('fileSize', function(value, element, param) {
 		return this.optional(element) || (element.files[0].size <= param)
-	}, wc_outfit_tr_obj.size_exceed)
+	}, woo_outfit_tr_obj.size_exceed)
 
 	jQuery('#new-outfit-form').validate({
 		rules: {
 			thumb: {
 				required: true,
 				extension: 'jpg,jpeg,png',
-				fileSize: (parseInt(wc_outfit_tr_obj.upload_limit) * 1024) * 1024,
+				fileSize: (parseInt(woo_outfit_tr_obj.upload_limit) * 1024) * 1024,
 			},
 			ids: {
 				required: true
@@ -21,11 +21,11 @@ jQuery(document).ready(function() {
 		},
 		messages: {
 			thumb: {
-				required: wc_outfit_tr_obj.thumb_req,
-				extension: wc_outfit_tr_obj.invalid_thumb
+				required: woo_outfit_tr_obj.thumb_req,
+				extension: woo_outfit_tr_obj.invalid_thumb
 			},
 			ids: {
-				required: wc_outfit_tr_obj.ids_req
+				required: woo_outfit_tr_obj.ids_req
 			}
 		}
 	})
@@ -36,7 +36,7 @@ jQuery(document).ready(function() {
 
 	// Init Select2
 	jQuery('.select-cat').select2({
-		placeholder: wc_outfit_tr_obj.select_placeholder
+		placeholder: woo_outfit_tr_obj.select_placeholder
 	})
 
 	jQuery('.select-tag').select2({
@@ -54,12 +54,12 @@ jQuery(document).ready(function() {
 	jQuery('#new-outfit-form').on('submit', function(e) {
 		if (jQuery(this).valid()) {
 			var form_data = new FormData(this)
-			form_data.append('security', wc_outfit_tr_obj.nonce)
+			form_data.append('security', woo_outfit_tr_obj.nonce)
 			jQuery('#submit', this).val('Submitting...')
 
 			jQuery.ajax({
 				type: 'POST',
-				url: wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_post_outfit',
+				url: woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_post_outfit',
 				data: form_data,
 				cache: false,
 				contentType: false,
@@ -68,8 +68,8 @@ jQuery(document).ready(function() {
 					if (response.status == 'success') {
 						var time = new Date()
 						time.setHours(time.getHours() + 1)
-						document.cookie = 'wc_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
-						window.location.replace(wc_outfit_tr_obj.outfits_url)
+						document.cookie = 'woo_outfit_success=true; expires=' + time.setHours(time.getHours() + 1) + '; path=/'
+						window.location.replace(woo_outfit_tr_obj.outfits_url)
 					}
 				},
 				error: function(response) {
@@ -89,10 +89,10 @@ jQuery(document).ready(function() {
 		var html = ''
 		var count = 0
 
-		jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_get_products_by_cat', {
+		jQuery.get(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_get_products_by_cat', {
 			cat: cat_id,
 			page: 1,
-			security: wc_outfit_tr_obj.nonce
+			security: woo_outfit_tr_obj.nonce
 		}).success(function(data) {
 			if (data.products) {
 				for (var i in data.products) {
@@ -139,10 +139,10 @@ jQuery(document).ready(function() {
 		var count = 0
 		var html = ''
 
-		jQuery.get(wc_outfit_tr_obj.ajax_url + '?action=wc_outfit_get_products_by_cat', {
+		jQuery.get(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_get_products_by_cat', {
 			cat: cat_id,
 			page: page,
-			security: wc_outfit_tr_obj.nonce
+			security: woo_outfit_tr_obj.nonce
 		}).done(function(data) {
 			for (var i in data.products) {
 				if (count == 0 || count % 3 == 0) {
@@ -230,5 +230,10 @@ jQuery(document).ready(function() {
 		} else {
 			jQuery('#new-outfit-form #ids').val(JSON.stringify(ids))
 		}
+	})
+
+	// Switch Product Mode
+	jQuery('.selected-products').on('click', '.switch', function(e) {
+		e.preventDefault()
 	})
 })

@@ -1,44 +1,44 @@
 /*************************************
  * Outfit Modal 
  ************************************/
-#wc-outfit-modal a {
+#woo-outfit-modal a {
 	text-decoration: none;
 	border: none;
 	box-shadow: none;
 }
 
-#wc-outfit-modal a:hover,
-#wc-outfit-modal a:focus,
-#wc-outfit-modal button:hover,
-#wc-outfit-modal button:focus {
+#woo-outfit-modal a:hover,
+#woo-outfit-modal a:focus,
+#woo-outfit-modal button:hover,
+#woo-outfit-modal button:focus {
 	outline: none;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
 }
 
-#wc-outfit-modal .modal-content {
+#woo-outfit-modal .modal-content {
 	border-radius: 0;
 }
 
-#wc-outfit-modal .modal-body {
+#woo-outfit-modal .modal-body {
 	padding: 12px;
 }
 
-#wc-outfit-modal .wc-outfit-modal-thumb {
+#woo-outfit-modal .woo-outfit-modal-thumb {
 	width: 60%;
 	position: relative;
 	float: left;
 	display: inline-block;
 }
 
-#wc-outfit-modal .wc-outfit-modal-thumb img {
+#woo-outfit-modal .woo-outfit-modal-thumb img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 0;
 }
 
-#wc-outfit-modal .wc-outfit-modal-details {
+#woo-outfit-modal .woo-outfit-modal-details {
 	width: 40%;
 	float: left;
 	display: inline-block;
@@ -46,12 +46,12 @@
 }
 
 /*author*/
-#wc-outfit-modal .wc-outfit-modal-author-data {
+#woo-outfit-modal .woo-outfit-modal-author-data {
 	margin: 5px 0 25px 15px;
 	line-height: 24px;
 }
 
-#wc-outfit-modal .wc-outfit-modal-author-data .close {
+#woo-outfit-modal .woo-outfit-modal-author-data .close {
 	float: right;
 	width: 24px;
 	height: 24px;
@@ -66,21 +66,21 @@
 	cursor: pointer;
 }
 
-#wc-outfit-modal .wc-outfit-modal-author-data .close:hover {
+#woo-outfit-modal .woo-outfit-modal-author-data .close:hover {
 	color: #555;
 }
 
-#wc-outfit-modal .wc-outfit-modal-author-data .outfit-author-name {
+#woo-outfit-modal .woo-outfit-modal-author-data .outfit-author-name {
 	font-size: 18px;
 	font-weight: 700;
 }
 
 /*hooked products*/
-#wc-outfit-modal .wc-outfit-modal-hooked-products {
+#woo-outfit-modal .woo-outfit-modal-hooked-products {
 	margin: 0 0 35px 12px;
 }
 
-#wc-outfit-modal .wc-outfit-modal-hooked-products .item {
+#woo-outfit-modal .woo-outfit-modal-hooked-products .item {
 	display: none;
 	padding: 10px;
 	border: 1px solid #eee;
@@ -88,17 +88,17 @@
 	text-align: center;
 }
 
-#wc-outfit-modal .wc-outfit-modal-hooked-products.owl-loaded .item {
+#woo-outfit-modal .woo-outfit-modal-hooked-products.owl-loaded .item {
 	display: block;
 }
 
-#wc-outfit-modal .wc-outfit-modal-hooked-products img {
+#woo-outfit-modal .woo-outfit-modal-hooked-products img {
 	max-width: 100%;
 	height: auto;
 	border-radius: 0;
 }
 
-#wc-outfit-modal .wc-outfit-modal-hooked-products .title {
+#woo-outfit-modal .woo-outfit-modal-hooked-products .title {
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 18px;
@@ -107,7 +107,7 @@
 	padding: 0;
 }
 
-#wc-outfit-modal .wc-outfit-modal-hooked-products .ribbon {
+#woo-outfit-modal .woo-outfit-modal-hooked-products .ribbon {
 	font-family: 'Georgia';
 	font-size: 12px;
 	font-weight: normal;
@@ -123,7 +123,7 @@
 	top: -10px;
 }
 
-#wc-outfit-modal .wc-outfit-modal-hooked-products .ribbon:before {
+#woo-outfit-modal .woo-outfit-modal-hooked-products .ribbon:before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -141,26 +141,26 @@
 	z-index: -1;
 }
 
-#wc-outfit-modal .wc-outfit-modal-hooked-products .price {
+#woo-outfit-modal .woo-outfit-modal-hooked-products .price {
 	font-size: 14px;
 	font-weight: 700;
 	color: #111;
 	margin: 0;
 }
 
-#wc-outfit-modal .wc-outfit-modal-hooked-products .price del {
+#woo-outfit-modal .woo-outfit-modal-hooked-products .price del {
 	font-weight: 400;
 	color: #aaa;
 	margin-right: 3px;
 }
 
-#wc-outfit-modal .wc-outfit-modal-hooked-products .price ins {
+#woo-outfit-modal .woo-outfit-modal-hooked-products .price ins {
 	font-weight: 700;
 	text-decoration: none;
 }
 
 /*footer*/
-#wc-outfit-modal .wc-outfit-modal-footer-info {
+#woo-outfit-modal .woo-outfit-modal-footer-info {
 	position: absolute;
 	bottom: 12px;
 	right: 12px;
@@ -170,35 +170,35 @@
 	border-top: 1px solid #eee;
 }
 
-#wc-outfit-modal .wc-outfit-modal-footer-info .wc-outfit-meta-time {
+#woo-outfit-modal .woo-outfit-modal-footer-info .woo-outfit-meta-time {
 	font-size: 14px;
 	color: #999;
 	margin-right: 15px;
 }
 
-#wc-outfit-modal .wc-outfit-modal-footer-info .wc-outfit-rating {
+#woo-outfit-modal .woo-outfit-modal-footer-info .woo-outfit-rating {
 	vertical-align: middle;
 	margin-right: 15px;
 }
 
 /*navigation*/
-#wc-outfit-modal .outfit-prev,
-#wc-outfit-modal .outfit-next {
+#woo-outfit-modal .outfit-prev,
+#woo-outfit-modal .outfit-next {
 	position: absolute;
 	top: 50%;
 	margin-top: -10px;
 }
 
-#wc-outfit-modal .outfit-prev {
+#woo-outfit-modal .outfit-prev {
 	left: 10px;
 }
 
-#wc-outfit-modal .outfit-next {
+#woo-outfit-modal .outfit-next {
 	right: 10px;
 }
 
-#wc-outfit-modal .outfit-prev .wc-outfit-icon,
-#wc-outfit-modal .outfit-next .wc-outfit-icon {
+#woo-outfit-modal .outfit-prev .woo-outfit-icon,
+#woo-outfit-modal .outfit-next .woo-outfit-icon {
 	font-size: 48px;
 	line-height: 1;
 	color: #fff;
@@ -206,17 +206,17 @@
 }
 
 /*owl carousel*/
-#wc-outfit-modal .owl-carousel {
+#woo-outfit-modal .owl-carousel {
 	width: auto;
 }
 
-#wc-outfit-modal .owl-nav {
+#woo-outfit-modal .owl-nav {
 	margin-top: 15px;
 	text-align: center;
 }
 
-#wc-outfit-modal .owl-carousel .owl-nav .owl-prev,
-#wc-outfit-modal .owl-carousel .owl-nav .owl-next {
+#woo-outfit-modal .owl-carousel .owl-nav .owl-prev,
+#woo-outfit-modal .owl-carousel .owl-nav .owl-next {
 	display: inline-block;
 	width: 30px;
 	height: 30px;
@@ -226,18 +226,18 @@
 	margin: 0 2px;
 }
 
-#wc-outfit-modal .owl-carousel .owl-nav .owl-prev:before,
-#wc-outfit-modal .owl-carousel .owl-nav .owl-next:before {
+#woo-outfit-modal .owl-carousel .owl-nav .owl-prev:before,
+#woo-outfit-modal .owl-carousel .owl-nav .owl-next:before {
 	color: #fff;
 	font-size: 25px;
 }
 
 /*Post Rating*/
-.wc-outfit-rating {
+.woo-outfit-rating {
 	display: inline-block;
 }
 
-.wc-outfit-rating .wc-outfit-rating-heart {
+.woo-outfit-rating .woo-outfit-rating-heart {
 	line-height: 30px;
 	text-align: center;
 	color: #82c6c7;
@@ -247,15 +247,15 @@
 	height: 30px;
 }
 
-.wc-outfit-rating .wc-outfit-rating-heart.enabled {
+.woo-outfit-rating .woo-outfit-rating-heart.enabled {
 	color: #cd2122;
 }
 
-.wc-outfit-rating .wc-outfit-rating-heart .fa {
+.woo-outfit-rating .woo-outfit-rating-heart .fa {
 	font-size: 18px;
 }
 
-.wc-outfit-rating .wc-outfit-rating-count {
+.woo-outfit-rating .woo-outfit-rating-count {
 	font-size: 14px;
 	line-height: 30px;
 	text-align: center;

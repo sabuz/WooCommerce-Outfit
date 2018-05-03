@@ -39,7 +39,7 @@ class Xim_Woo_Outfit_Activation {
 		$this->install_db();
 
 		// set flush rewrite flag enabled
-		set_transient('wc_outfit_flush_rewrite_rules_flag', true, 86400);
+		set_transient('woo_outfit_flush_rewrite_rules_flag', true, 86400);
 	}
 }
 register_activation_hook(__FILE__, function () {
@@ -82,18 +82,18 @@ class Xim_Woo_Outfit_Init {
 		add_filter('the_title', array($this, 'filter_endpoints_title'), 10, 2);
 
 		// Ajax
-		add_action('wp_ajax_wc_outfit_get_products_by_cat', array($this, 'ajax_get_products_by_cat'));
-		add_action('wp_ajax_nopriv_wc_outfit_get_products_by_cat', array($this, 'nopriv_ajax_get_products_by_cat'));
-		add_action('wp_ajax_wc_outfit_post_like', array($this, 'ajax_post_like'));
-		add_action('wp_ajax_nopriv_wc_outfit_post_like', array($this, 'nopriv_ajax_post_like'));
-		add_action('wp_ajax_wc_outfit_single_outfit_modal', array($this, 'ajax_outfit_modal'));
-		add_action('wp_ajax_nopriv_wc_outfit_single_outfit_modal', array($this, 'ajax_outfit_modal'));
-		add_action('wp_ajax_wc_outfit_post_outfit', array($this, 'ajax_post_outfit'));
+		add_action('wp_ajax_woo_outfit_get_products_by_cat', array($this, 'ajax_get_products_by_cat'));
+		add_action('wp_ajax_nopriv_woo_outfit_get_products_by_cat', array($this, 'nopriv_ajax_get_products_by_cat'));
+		add_action('wp_ajax_woo_outfit_post_like', array($this, 'ajax_post_like'));
+		add_action('wp_ajax_nopriv_woo_outfit_post_like', array($this, 'nopriv_ajax_post_like'));
+		add_action('wp_ajax_woo_outfit_single_outfit_modal', array($this, 'ajax_outfit_modal'));
+		add_action('wp_ajax_nopriv_woo_outfit_single_outfit_modal', array($this, 'ajax_outfit_modal'));
+		add_action('wp_ajax_woo_outfit_post_outfit', array($this, 'ajax_post_outfit'));
 
 		// Templates
 		add_shortcode('outfits', array($this, 'template_outfits'));
 		add_shortcode('new-outfit', array($this, 'template_new_outfit'));
-		add_action(get_option('wc-outfit-single-position', 'woocommerce_after_single_product_summary'), array($this, 'template_single_product_listing'));
+		add_action(get_option('woo-outfit-single-position', 'woocommerce_after_single_product_summary'), array($this, 'template_single_product_listing'));
 
 		if (is_admin()) {
 			// Admin Page
