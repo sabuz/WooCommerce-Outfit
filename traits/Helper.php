@@ -7,9 +7,9 @@ trait Helper {
 
 	// Return outfit thumbnail url by post-id and thumb size
 	function get_outfit_thumbnail($post_id, $size = 'full') {
-		$url = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), $size);
+		$data = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), $size);
 
-		return @$url[0];
+		return @$data[0];
 	}
 
 	// Post time interval
