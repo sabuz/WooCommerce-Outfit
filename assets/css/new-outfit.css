@@ -1,6 +1,7 @@
 /*Form*/
 #new-outfit-form a {
 	text-decoration: none;
+	-webkit-box-shadow: none;
 	box-shadow: none;
 }
 
@@ -56,6 +57,7 @@
 }
 
 .select2-container--default .select2-search--dropdown .select2-search__field {
+	-webkit-box-shadow: none;
 	box-shadow: none;
 }
 
@@ -72,8 +74,8 @@
 /*help block*/
 #new-outfit-form .woo-outfit-icon {
 	position: absolute;
-    right: 15px;
-    top: 5px;
+	right: 15px;
+	top: 5px;
 	font-size: 20px;
 	color: #111;
 	cursor: help;
@@ -114,6 +116,7 @@
 	text-align: center;
 	line-height: 20px;
 	background-color: #111;
+	-webkit-box-shadow: none;
 	box-shadow: none;
 	cursor: pointer;
 }
@@ -131,6 +134,7 @@
 	display: block;
 	clear: both;
 	margin-top: 5px;
+	-webkit-box-shadow: none;
 	box-shadow: none;
 	cursor: pointer;
 }
@@ -203,6 +207,7 @@
 	background-color: #111;
 	border: none;
 	border-radius: 0;
+	-webkit-box-shadow: none;
 	box-shadow: none;
 	display: block;
 	height: 40px;

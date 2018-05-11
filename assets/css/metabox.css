@@ -25,6 +25,7 @@
 	display: inline-block;
 	width: 25%;
 	padding: 0 10px;
+	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	margin-bottom: 20px;
 }
@@ -40,6 +41,7 @@
 
 .woo-outfit-mb a:focus {
 	outline: none;
+	-webkit-box-shadow: none;
 	box-shadow: none;
 }
 
@@ -63,6 +65,7 @@
 }
 
 .select2-container--default .select2-search--dropdown .select2-search__field {
+	-webkit-box-shadow: none;
 	box-shadow: none;
 }
 
