@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Outfit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-28 10:38+0000\n"
-"PO-Revision-Date: 2018-04-28 10:39+0000\n"
+"POT-Creation-Date: 2018-05-12 05:31+0000\n"
+"PO-Revision-Date: 2018-05-12 05:32+0000\n"
 "Last-Translator: admin <naz.sabuz@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -138,14 +138,6 @@ msgstr ""
 
 #: traits/Core.php:84
 msgid "Select a category"
-msgstr ""
-
-#: traits/Metabox.php:33
-msgid "Featured Post"
-msgstr ""
-
-#: traits/Metabox.php:99
-msgid "Make this post featured?"
 msgstr ""
 
 #: traits/Ajax.php:112
