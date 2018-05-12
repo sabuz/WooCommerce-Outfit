@@ -99,22 +99,4 @@ jQuery(document).ready(function() {
 			}
 		})
 	})
-
-	// Follow models
-	jQuery(document).on('click', '.woo-outfit-follow-btn', function(e) {
-		e.preventDefault()
-
-		var user_id = jQuery(this).attr('data-id')
-
-		jQuery.get(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_follow_people', {
-			user_id: user_id,
-			security: woo_outfit_tr_obj.nonce
-		}).done(function(data) {
-			jQuery('.woo-outfit-follow-btn').text(jQuery('.woo-outfit-follow-btn').text() == 'Follow' ? 'Unfollow' : 'Follow')
-		}).fail(function(xhr) {
-			if (xhr.status == 401) {
-				window.location.href = woo_outfit_tr_obj.myaccount_url
-			}
-		})
-	})
 })

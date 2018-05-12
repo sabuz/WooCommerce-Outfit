@@ -30,7 +30,6 @@ trait Metabox {
 	 */
 	function register_meta_boxes() {
 		add_meta_box('woo-outfit-hooked-products', __('Used Products', 'xim'), array($this, 'mb_hooked_products_callback'), 'outfit');
-		add_meta_box('woo-outfit-featured', __('Featured Post', 'xim'), array($this, 'mb_featured_products_callback'), 'outfit', 'side');
 	}
 
 	/**
@@ -84,24 +83,6 @@ trait Metabox {
 	}
 
 	/**
-	 * Featured product metabox callback.
-	 *
-	 * @since    1.0.0
-	 */
-	function mb_featured_products_callback($post) {
-		wp_nonce_field('woo_outfit_meta_box_nonce', 'woo_outfit_meta_box_nonce');
-
-		$value = get_post_meta($post->ID, 'featured', true);
-
-		echo '<div class="woo-outfit-mb">
-			<label for="featured">
-				<input type="checkbox" name="featured" id="featured" ' . (!empty($value) ? "checked" : "") . '/>
-				' . __('Make this post featured?', 'xim') . '
-			</label>
-		</div>';
-	}
-
-	/**
 	 * Update post meta on save.
 	 *
 	 * @since    1.0.0
@@ -118,12 +99,6 @@ trait Metabox {
 		}
 
 		if ($post->post_type == 'outfit') {
-			if (isset($_POST['featured'])) {
-				update_post_meta($post->ID, 'featured', 'yes');
-			} else {
-				update_post_meta($post->ID, 'featured', '');
-			}
-
 			if (isset($_POST['ids'])) {
 				update_post_meta($post->ID, 'products', $_POST['ids']);
 			}
