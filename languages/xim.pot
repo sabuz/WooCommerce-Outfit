@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Outfit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-12 05:31+0000\n"
+"POT-Creation-Date: 2018-07-27 19:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -14,143 +14,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#. Name of the plugin
-#: woocommerce-outfit.php:126
-msgid "WooCommerce Outfit"
+#: traits/Template.php:194
+msgid " Followers"
 msgstr ""
 
-#: woocommerce-outfit.php:126
-msgid "requires"
-msgstr ""
-
-#: woocommerce-outfit.php:126
-msgid "WooCommerce"
-msgstr ""
-
-#: woocommerce-outfit.php:126
-msgid "plugin to be installed and activated."
-msgstr ""
-
-#: traits/Template.php:24
-msgid "Outfit submitted successfully."
-msgstr ""
-
-#: traits/Template.php:32
-#, php-format
-msgid "To add more outfit photos, go to <a href=\"%1$s\">new outfit</a>"
-msgstr ""
-
-#: traits/Template.php:37
-msgid "ID"
-msgstr ""
-
-#: traits/Template.php:38
-msgid "Title"
-msgstr ""
-
-#: traits/Template.php:39
-msgid "Date"
-msgstr ""
-
-#: traits/Template.php:40
-msgid "Status"
-msgstr ""
-
-#: traits/Template.php:61
-msgid "Add new"
-msgstr ""
-
-#: traits/Template.php:62
-msgid "No outfits available yet."
-msgstr ""
-
-#: traits/Template.php:89
-msgid "Outfit Image"
-msgstr ""
-
-#: traits/Template.php:100 traits/Metabox.php:32
-msgid "Used Products"
-msgstr ""
-
-#: traits/Template.php:131
-msgid "Add Outfit"
-msgstr ""
-
-#: traits/Template.php:171
-msgid "Outfit Photos"
-msgstr ""
-
-#: traits/Core.php:26 traits/Core.php:114 traits/Core.php:145
-msgid "Outfits"
-msgstr ""
-
-#: traits/Core.php:27
-msgid "Outfit"
-msgstr ""
-
-#: traits/Core.php:28 traits/Core.php:147
-msgid "Add New Outfit"
-msgstr ""
-
-#: traits/Core.php:29
-msgid "New Outfit"
-msgstr ""
-
-#: traits/Core.php:30
-msgid "Edit Outfit"
-msgstr ""
-
-#: traits/Core.php:31
-msgid "View Outfit"
-msgstr ""
-
-#: traits/Core.php:32
-msgid "All Outfits"
-msgstr ""
-
-#: traits/Core.php:33
-msgid "Search Outfits"
-msgstr ""
-
-#: traits/Core.php:34
-msgid "No Outfits found."
-msgstr ""
-
-#: traits/Core.php:35
-msgid "No Outfits found in Trash."
-msgstr ""
-
-#: traits/Core.php:80
-msgid "Outfit photo is required"
-msgstr ""
-
-#: traits/Core.php:81
-msgid "Choose a valid JPG/JPEG/PNG file"
-msgstr ""
-
-#: traits/Core.php:82
-#, php-format
-msgid "File size must be less than %d MB"
-msgstr ""
-
-#: traits/Core.php:83
-msgid "Products are required"
-msgstr ""
-
-#: traits/Core.php:84
-msgid "Select a category"
-msgstr ""
-
-#: traits/Ajax.php:112
-msgid "Added "
-msgstr ""
-
-#: traits/Ajax.php:135
-msgid "Products are required."
-msgstr ""
-
-#: traits/Ajax.php:139
-msgid "Outfit photo is required."
+#: traits/Template.php:195
+msgid " Following"
 msgstr ""
 
 #: traits/Helper.php:19
@@ -158,179 +27,375 @@ msgstr ""
 msgid "%s ago"
 msgstr ""
 
-#: traits/Helper.php:74
+#: admin/Admin.php:123
+msgid "Add guideline for uploading outfit photos."
+msgstr ""
+
+#: traits/Template.php:63
+msgid "Add new"
+msgstr ""
+
+#: traits/Core.php:31 traits/Core.php:202
+msgid "Add New Outfit"
+msgstr ""
+
+#: traits/Template.php:152
+msgid "Add Outfit"
+msgstr ""
+
+#: traits/Core.php:281 traits/Ajax.php:133
+msgid "Added "
+msgstr ""
+
+#: traits/Template.php:203
+msgid "All"
+msgstr ""
+
+#: traits/Core.php:35
+msgid "All Outfits"
+msgstr ""
+
+#: admin/Admin.php:144
+msgid "Allow customer to add tag"
+msgstr ""
+
+#: admin/Admin.php:113
+msgid "Allow customer to attach bought product only"
+msgstr ""
+
+#: admin/Admin.php:26 admin/Admin.php:76
+msgid "API Keys"
+msgstr ""
+
+#: admin/Admin.php:110
+msgid "Bought Product Only"
+msgstr ""
+
+#: traits/Helper.php:116
 msgid "Captured"
 msgstr ""
 
-#: traits/Helper.php:74
-msgid "Similar"
+#: traits/Core.php:102
+msgid "Choose a valid JPG/JPEG/PNG file"
 msgstr ""
 
-#: admin/Admin.php:13
-msgid "You do not have sufficient permissions to access this page."
+#: admin/Admin.php:154
+msgid "Cleanup Gallery"
+msgstr ""
+
+#: traits/Template.php:39
+msgid "Date"
+msgstr ""
+
+#: admin/Admin.php:163
+msgid "Display"
+msgstr ""
+
+#: traits/Core.php:33
+msgid "Edit Outfit"
+msgstr ""
+
+#: admin/Admin.php:136
+msgid "Enable product tagging option."
+msgstr ""
+
+#: admin/Admin.php:135
+msgid "Enable Tag features"
+msgstr ""
+
+#: admin/Admin.php:132
+msgid "Enable Tagging"
+msgstr ""
+
+#: admin/Admin.php:81
+msgid "Facebook App ID"
+msgstr ""
+
+#: traits/Template.php:205
+msgid "Featured"
+msgstr ""
+
+#: traits/Metabox.php:33
+msgid "Featured Post"
+msgstr ""
+
+#: traits/Core.php:103
+#, php-format
+msgid "File size must be less than %d MB"
+msgstr ""
+
+#: traits/Template.php:189 traits/Core.php:266 traits/Ajax.php:118
+msgid "Follow"
+msgstr ""
+
+#: traits/Template.php:204
+msgid "Following"
 msgstr ""
 
 #: admin/Admin.php:24
 msgid "General"
 msgstr ""
 
-#: admin/Admin.php:25 admin/Admin.php:55 admin/Admin.php:69
-msgid "Style Gallery"
-msgstr ""
-
-#: admin/Admin.php:26 admin/Admin.php:94
-msgid "API Keys"
-msgstr ""
-
-#: admin/Admin.php:59
-msgid "Style Gallery Page"
-msgstr ""
-
-#: admin/Admin.php:62
-msgid "The base page that will be used in outfit permalinks."
-msgstr ""
-
-#: admin/Admin.php:67
-msgid "Page Title"
-msgstr ""
-
-#: admin/Admin.php:74
-msgid "Page Subtitle/Slogan"
-msgstr ""
-
-#: admin/Admin.php:76
-msgid "Inspire and Admire"
-msgstr ""
-
-#: admin/Admin.php:81
-msgid "Posts Per Query"
-msgstr ""
-
 #: admin/Admin.php:84
-msgid "Number of outfit to load in each request."
-msgstr ""
-
-#: admin/Admin.php:95
-msgid "This will be used for sharing outfit on social media."
-msgstr ""
-
-#: admin/Admin.php:99
-msgid "Facebook App ID"
-msgstr ""
-
-#: admin/Admin.php:102
 msgid ""
 "Get your Facebook app id from <a href=\"https://developers.facebook.com/\" "
 "target=\"_blank\">here</a>"
 msgstr ""
 
-#: admin/Admin.php:112
-msgid "Outfit Submission"
+#: traits/Template.php:37
+msgid "ID"
 msgstr ""
 
-#: admin/Admin.php:116
-msgid "Verify Submission"
-msgstr ""
-
-#: admin/Admin.php:120
-msgid "Verify new submitted outfit"
-msgstr ""
-
-#: admin/Admin.php:121
+#: admin/Admin.php:105
 msgid ""
 "If enabled, Admin will have to verify outfits manually and publish them."
 msgstr ""
 
-#: admin/Admin.php:126
-msgid "Bought Product Only"
-msgstr ""
-
-#: admin/Admin.php:129
-msgid "Allow customer to attach bought product only"
-msgstr ""
-
-#: admin/Admin.php:130
-msgid "If enabled, customer will be able to attach the products they bought."
-msgstr ""
-
-#: admin/Admin.php:135
-msgid "Submission Guideline"
-msgstr ""
-
-#: admin/Admin.php:139
-msgid "Add guideline for uploading outfit photos."
-msgstr ""
-
-#: admin/Admin.php:144
-msgid "Tagging"
-msgstr ""
-
-#: admin/Admin.php:148
-msgid "Enable Tagging"
-msgstr ""
-
-#: admin/Admin.php:151
-msgid "Enable Tag features"
-msgstr ""
-
-#: admin/Admin.php:152
-msgid "Enable product tagging option."
-msgstr ""
-
-#: admin/Admin.php:157
-msgid "Permission"
-msgstr ""
-
-#: admin/Admin.php:160
-msgid "Allow customer to add tag"
-msgstr ""
-
-#: admin/Admin.php:161
-msgid ""
-"If enabled, customer will be able to add tag during submission of outfit. "
-"Requires Tag features enabled."
-msgstr ""
-
-#: admin/Admin.php:166
-msgid "Image Gallery"
-msgstr ""
-
-#: admin/Admin.php:170
-msgid "Cleanup Gallery"
-msgstr ""
-
-#: admin/Admin.php:173
-msgid "Remove Image from gallery if submission rejected"
-msgstr ""
-
-#: admin/Admin.php:174
+#: admin/Admin.php:158
 msgid ""
 "If enabled, attached image will be removed from gallery if a submission is "
 "rejected."
 msgstr ""
 
-#: admin/Admin.php:179
-msgid "Display"
+#: admin/Admin.php:145
+msgid ""
+"If enabled, customer will be able to add tag during submission of outfit. "
+"Requires Tag features enabled."
 msgstr ""
 
-#: admin/Admin.php:183
-msgid "Position"
+#: admin/Admin.php:114
+msgid "If enabled, customer will be able to attach the products they bought."
 msgstr ""
 
-#: admin/Admin.php:196
-msgid "Outfit listing position on single product page."
+#: admin/Admin.php:150
+msgid "Image Gallery"
 msgstr ""
 
-#: admin/Admin.php:201
+#: traits/Template.php:200 admin/Admin.php:56
+msgid "Inspire and Admire"
+msgstr ""
+
+#: admin/Admin.php:186
 msgid "Item To Show"
 msgstr ""
 
-#: admin/Admin.php:204
+#: traits/Template.php:348
+msgid "Let's fix that by start following some style gallery stars!"
+msgstr ""
+
+#: traits/Template.php:193
+msgid "Liked Looks"
+msgstr ""
+
+#: traits/Template.php:342
+msgid "Load More"
+msgstr ""
+
+#: traits/Metabox.php:99
+msgid "Make this post featured?"
+msgstr ""
+
+#: traits/Core.php:32
+msgid "New Outfit"
+msgstr ""
+
+#: traits/Template.php:64
+msgid "No outfits available yet."
+msgstr ""
+
+#: traits/Core.php:38
+msgid "No Outfits found in Trash."
+msgstr ""
+
+#: traits/Core.php:37
+msgid "No Outfits found."
+msgstr ""
+
+#: admin/Admin.php:189
 msgid "Number of item to show in a screen."
+msgstr ""
+
+#: admin/Admin.php:64
+msgid "Number of outfit to load in each request."
+msgstr ""
+
+#: traits/Core.php:30
+msgid "Outfit"
+msgstr ""
+
+#: traits/Template.php:98
+msgid "Outfit Image"
+msgstr ""
+
+#: admin/Admin.php:181
+msgid "Outfit listing position on single product page."
+msgstr ""
+
+#: traits/Core.php:101
+msgid "Outfit photo is required"
+msgstr ""
+
+#: traits/Ajax.php:287
+msgid "Outfit photo is required."
+msgstr ""
+
+#: traits/Template.php:416
+msgid "Outfit Photos"
+msgstr ""
+
+#: admin/Admin.php:96
+msgid "Outfit Submission"
+msgstr ""
+
+#: traits/Template.php:24
+msgid "Outfit submitted successfully."
+msgstr ""
+
+#: traits/Core.php:29 traits/Core.php:169 traits/Core.php:200
+msgid "Outfits"
+msgstr ""
+
+#: admin/Admin.php:54
+msgid "Page Subtitle/Slogan"
+msgstr ""
+
+#: admin/Admin.php:47
+msgid "Page Title"
+msgstr ""
+
+#: admin/Admin.php:141
+msgid "Permission"
+msgstr ""
+
+#: traits/Template.php:192
+msgid "Photos"
+msgstr ""
+
+#: woocommerce-outfit.php:137
+msgid "plugin to be installed and activated."
+msgstr ""
+
+#: admin/Admin.php:167
+msgid "Position"
+msgstr ""
+
+#: admin/Admin.php:61
+msgid "Posts Per Query"
+msgstr ""
+
+#: traits/Core.php:104
+msgid "Products are required"
+msgstr ""
+
+#: traits/Ajax.php:283
+msgid "Products are required."
+msgstr ""
+
+#: admin/Admin.php:157
+msgid "Remove Image from gallery if submission rejected"
+msgstr ""
+
+#: woocommerce-outfit.php:137
+msgid "requires"
+msgstr ""
+
+#: traits/Core.php:36
+msgid "Search Outfits"
+msgstr ""
+
+#: traits/Core.php:105
+msgid "Select a category"
+msgstr ""
+
+#: traits/Helper.php:116
+msgid "Similar"
+msgstr ""
+
+#: traits/Template.php:40
+msgid "Status"
+msgstr ""
+
+#: traits/Template.php:180 traits/Core.php:329 admin/Admin.php:25
+#: admin/Admin.php:35 admin/Admin.php:49
+msgid "Style Gallery"
+msgstr ""
+
+#: admin/Admin.php:39
+msgid "Style Gallery Page"
+msgstr ""
+
+#: admin/Admin.php:119
+msgid "Submission Guideline"
+msgstr ""
+
+#: admin/Admin.php:128
+msgid "Tagging"
+msgstr ""
+
+#: traits/Template.php:142
+msgid "Tags"
+msgstr ""
+
+#: admin/Admin.php:42
+msgid "The base page that will be used in outfit permalinks."
+msgstr ""
+
+#: admin/Admin.php:77
+msgid "This will be used for sharing outfit on social media."
+msgstr ""
+
+#: traits/Template.php:38
+msgid "Title"
+msgstr ""
+
+#: traits/Template.php:32
+#, php-format
+msgid "To add more outfit photos, go to <a href=\"%1$s\">new outfit</a>"
+msgstr ""
+
+#: traits/Template.php:189 traits/Core.php:266 traits/Ajax.php:118
+msgid "Unfollow"
+msgstr ""
+
+#: traits/Template.php:109 traits/Metabox.php:32
+msgid "Used Products"
+msgstr ""
+
+#: admin/Admin.php:104
+msgid "Verify new submitted outfit"
+msgstr ""
+
+#: admin/Admin.php:100
+msgid "Verify Submission"
+msgstr ""
+
+#: traits/Template.php:53
+msgid "View"
+msgstr ""
+
+#: traits/Core.php:34
+msgid "View Outfit"
+msgstr ""
+
+#: woocommerce-outfit.php:137
+msgid "WooCommerce"
+msgstr ""
+
+#. Name of the plugin
+#: woocommerce-outfit.php:137
+msgid "WooCommerce Outfit"
 msgstr ""
 
 #. Description of the plugin
 msgid ""
 "WooCommerce Outfit is one of a kind plugin which will enable your customers "
 "to submit their photos to the related bought products."
+msgstr ""
+
+#: traits/Template.php:347
+msgid "You are not following anyone!"
+msgstr ""
+
+#: admin/Admin.php:13
+msgid "You do not have sufficient permissions to access this page."
 msgstr ""

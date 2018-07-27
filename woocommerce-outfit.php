@@ -1,13 +1,9 @@
 <?php
 
 /**
- * @package           Xim_Woo_Outfit
- * @version           1.0.0
- * @link              https://ximdevs.com/
- *
  * Plugin Name:       WooCommerce Outfit
  * Description:       WooCommerce Outfit is one of a kind plugin which will enable your customers to submit their photos to the related bought products.
- * Version:           1.0.0
+ * Version:           2.0.0
  * Author:            XimDevs
  * Author URI:        https://ximdevs.com/
  * License:           GPL-2.0+
@@ -33,15 +29,20 @@ require_once 'vendor/autoload.php';
  */
 class Xim_Woo_Outfit_Activation {
 	use Xim_Woo_Outfit\Traits\Database;
+	use Xim_Woo_Outfit\Traits\Core;
 
 	function __construct() {
 		// install database
 		$this->install_db();
 
+		// install pages
+		$this->install_pages();
+
 		// set flush rewrite flag enabled
 		set_transient('woo_outfit_flush_rewrite_rules_flag', true, 86400);
 	}
 }
+
 register_activation_hook(__FILE__, function () {
 	// If WooCommerce is activated, initiate the activation class
 	if (class_exists('WooCommerce')) {
@@ -64,6 +65,7 @@ class Xim_Woo_Outfit_Init {
 
 	public $all_outfit_endpoint = 'outfits';
 	public $new_outfit_endpoint = 'outfits/new-outfit';
+	public $style_gallery_url;
 
 	function __construct() {
 		// Add translation support
@@ -75,6 +77,9 @@ class Xim_Woo_Outfit_Init {
 
 		add_action('before_delete_post', array($this, 'before_delete_post'));
 		add_filter('wp_footer', array($this, 'wp_footer'));
+		add_filter('wp_head', array($this, 'wp_head'));
+		add_filter('post_type_link', array($this, 'filter_post_type_link'), 10, 2);
+		add_filter('term_link', array($this, 'filter_term_link'), 10, 3);
 
 		add_action('woocommerce_account_' . $this->new_outfit_endpoint . '_endpoint', array($this, 'new_outfit_endpoint_content'));
 		add_action('woocommerce_account_' . $this->all_outfit_endpoint . '_endpoint', array($this, 'outfits_endpoint_content'));
@@ -86,13 +91,18 @@ class Xim_Woo_Outfit_Init {
 		add_action('wp_ajax_nopriv_woo_outfit_get_products_by_cat', array($this, 'nopriv_ajax_get_products_by_cat'));
 		add_action('wp_ajax_woo_outfit_post_like', array($this, 'ajax_post_like'));
 		add_action('wp_ajax_nopriv_woo_outfit_post_like', array($this, 'nopriv_ajax_post_like'));
+		add_action('wp_ajax_woo_outfit_follow_people', array($this, 'ajax_follow_people'));
+		add_action('wp_ajax_nopriv_woo_outfit_follow_people', array($this, 'nopriv_ajax_follow_people'));
 		add_action('wp_ajax_woo_outfit_single_outfit_modal', array($this, 'ajax_outfit_modal'));
 		add_action('wp_ajax_nopriv_woo_outfit_single_outfit_modal', array($this, 'ajax_outfit_modal'));
+		add_action('wp_ajax_woo_outfit_style_gallery', array($this, 'ajax_style_gallery'));
+		add_action('wp_ajax_nopriv_woo_outfit_style_gallery', array($this, 'ajax_style_gallery'));
 		add_action('wp_ajax_woo_outfit_post_outfit', array($this, 'ajax_post_outfit'));
 
 		// Templates
 		add_shortcode('outfits', array($this, 'template_outfits'));
 		add_shortcode('new-outfit', array($this, 'template_new_outfit'));
+		add_shortcode('style-gallery', array($this, 'template_style_gallery'));
 		add_action(get_option('woo-outfit-single-position', 'woocommerce_after_single_product_summary'), array($this, 'template_single_product_listing'));
 
 		if (is_admin()) {
@@ -107,6 +117,7 @@ class Xim_Woo_Outfit_Init {
 		}
 	}
 }
+
 add_action('plugins_loaded', function () {
 	// If WooCommerce is activated, initiate the plugin, else throw error and deactive the plugin
 	if (class_exists('WooCommerce')) {

@@ -1,9 +1,9 @@
 === WooCommerce Outfit ===
-Contributors: ximdevs
+Contributors: ximdevs, mdsabuz
 Tags: woocommerce, outfit
 Requires at least: 4.0
 Tested up to: 4.9.7
-Stable tag: 1.0.0
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,10 @@ Check out a working version of this plugin [here](http://demo.ximdevs.com/woo-ou
 * New outfit submission.
 * Listing on single product.
 * Single outfit view on popup.
+* Style gallery.
+* Tags option.
+* Outfit community.
+* Sharing outfit on social media.
 
 = Documentation =
 For usage guidelines, visit our [Documentation Page](https://ximdevs.com/docs/)
@@ -42,3 +46,9 @@ If you encounter any bugs, or have comments or suggestions, please submit a tick
 
 = 1.0.0 =
 * Initial release.
+
+= 2.0.0 =
+* Added: Style gallery.
+* Added: Tags option.
+* Added: Outfit community.
+* Added: Sharing outfit on social media.

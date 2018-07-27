@@ -32,6 +32,7 @@ jQuery(document).ready(function() {
 					count += 1
 				}
 
+
 				jQuery('.product-list').empty().html(html)
 
 				// pagination

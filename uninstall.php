@@ -12,9 +12,6 @@
  * - Verify the output of $_GET makes sense
  * - Repeat with other user roles. Best directly by using the links/query string parameters.
  *
- * @package           Xim_Woo_Outfit
- * @version           1.0.0
- * @link              https://ximdevs.com/
  */
 
 // If uninstall not called from WordPress, then exit.

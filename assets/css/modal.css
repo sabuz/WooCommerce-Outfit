@@ -76,6 +76,16 @@
 	font-weight: 700;
 }
 
+#woo-outfit-modal .woo-outfit-modal-author-data .woo-outfit-follow-btn {
+	font-size: 12px;
+	font-weight: 400;
+	background-color: #000;
+	color: #fff;
+	display: inline-block;
+	padding: 0 15px;
+	margin-left: 15px;
+}
+
 /*hooked products*/
 #woo-outfit-modal .woo-outfit-modal-hooked-products {
 	margin: 0 0 35px 12px;
@@ -161,6 +171,21 @@
 	text-decoration: none;
 }
 
+/*tags*/
+#woo-outfit-modal .woo-outfit-modal-tags {
+	margin: 0 0 35px 12px;
+}
+
+#woo-outfit-modal .woo-outfit-modal-tags a {
+	display: inline-block;
+	font-size: 13px;
+	line-height: 1;
+	color: #fff;
+	background-color: #000;
+	margin: 0 2px 0 0;
+	padding: 8px 12px;
+}
+
 /*footer*/
 #woo-outfit-modal .woo-outfit-modal-footer-info {
 	position: absolute;
@@ -232,6 +257,35 @@
 #woo-outfit-modal .owl-carousel .owl-nav .owl-next:before {
 	color: #fff;
 	font-size: 25px;
+}
+
+/*Share Button*/
+.woo-outfit-social-share {
+	display: inline-block;
+}
+
+.woo-outfit-social-share a {
+	display: inline-block;
+	height: 24px;
+	width: 24px;
+	font-size: 12px;
+	line-height: 24px;
+	text-align: center;
+	color: #fff;
+	border-radius: 50px;
+	margin: 0 3px;
+}
+
+.woo-outfit-social-share .woo-outfit-icon-facebook {
+	background-color: #3b5998;
+}
+
+.woo-outfit-social-share .woo-outfit-icon-tumblr {
+	background-color: #35465c;
+}
+
+.woo-outfit-social-share .woo-outfit-icon-pinterest-p {
+	background-color: #bd081c;
 }
 
 /*Post Rating*/

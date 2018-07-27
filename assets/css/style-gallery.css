@@ -1,0 +1,234 @@
+/********************************************************
+ *
+ * Animation
+ *
+ *******************************************************/
+@-moz-keyframes spin {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+
+	to {
+		-moz-transform: rotate(360deg);
+	}
+
+}
+
+@-webkit-keyframes spin {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+
+}
+
+/********************************************************
+ *
+ * Style Gallery
+ *
+ *******************************************************/
+.woo-outfit-gallery a {
+	text-decoration: none;
+	border: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.woo-outfit-gallery a:hover,
+.woo-outfit-gallery a:focus {
+	outline: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-header {
+	margin-bottom: 35px;
+}
+
+/*header - title*/
+.woo-outfit-gallery .woo-outfit-gallery-header .woo-outfit-gallery-header-title {
+	font-size: 32px;
+	font-weight: 400;
+	line-height: 1;
+	text-align: center;
+	color: #111;
+	margin-top: 15px;
+	margin-bottom: 20px;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-header .woo-outfit-gallery-header-subtitle {
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1;
+	text-align: center;
+	letter-spacing: 1px;
+	color: #555;
+	margin-top: 15px;
+	margin-bottom: 20px;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-header .woo-outfit-gallery-header-subtitle .woo-outfit-follow-btn {
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1;
+	color: #fff;
+	background-color: #000;
+	display: inline-block;
+	padding: 4px 10px;
+	margin-left: 10px;
+}
+
+/*header - button*/
+.woo-outfit-gallery .woo-outfit-gallery-header .woo-outfit-gallery-header-btn-group {
+	text-align: center;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-header .woo-outfit-gallery-header-btn-group a {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1;
+	color: #999;
+	display: inline-block;
+	padding: 8px 12px;
+	border: 1px solid #eee;
+	margin: 0 1px;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-header .woo-outfit-gallery-header-btn-group a:hover,
+.woo-outfit-gallery .woo-outfit-gallery-header .woo-outfit-gallery-header-btn-group a.active {
+	background-color: #eee;
+}
+
+/*Grid Item*/
+.woo-outfit-gallery .woo-outfit-gallery-item {
+	margin-bottom: 30px;
+	overflow: hidden;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-item .woo-outfit-gallery-item-inner-wrap {
+	padding: 12px;
+	border: 1px solid #eee;
+	background-color: #fff;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-item .woo-outfit-gallery-item-thumb-wrap {
+	background-color: #eee;
+	width: 100%;
+	min-height: fit-content;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-item .woo-outfit-gallery-item-thumb {
+	max-width: 100%;
+	height: auto;
+	cursor: -webkit-zoom-in;
+	cursor: zoom-in;
+	border-radius: 0;
+}
+
+/*footer*/
+.woo-outfit-gallery .woo-outfit-gallery-item .woo-outfit-gallery-item-footer {
+	position: relative;
+	padding: 15px 0 0;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-item .woo-outfit-gallery-item-footer .woo-outfit-meta-author {
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1;
+	color: #111;
+	display: block;
+	clear: both;
+	margin: 0 0 10px;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-item .woo-outfit-gallery-item-footer .woo-outfit-meta-author:hover {
+	color: #555;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-item .woo-outfit-gallery-item-footer .woo-outfit-meta-time {
+	font-size: 12px;
+	line-height: 1;
+	color: #aaa;
+	margin: 0;
+}
+
+/*User listing*/
+.woo-outfit-gallery .woo-outfit-gallery-user-item {
+	border: 1px solid #eee;
+	padding: 12px;
+	margin-bottom: 25px;
+	text-align: center;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-user-item .avatar {
+	display: inline-block;
+	border-radius: 50%;
+	background-color: #fff;
+	border: 1px solid #eee;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-user-item h4 {
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1;
+	margin: 0;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-user-item a {
+	color: #111;
+}
+
+/*Pagination*/
+.woo-outfit-gallery .woo-outfit-gallery-pagination {
+	display: block;
+	clear: both;
+	text-align: center;
+	margin: 40px 0 20px;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-pagination .loading {
+	position: relative;
+	color: transparent;
+}
+
+.woo-outfit-gallery .woo-outfit-gallery-pagination .loading:after {
+	display: inline-block;
+	content: "\f021";
+	text-rendering: auto;
+	-webkit-animation: spin .75s linear infinite;
+	animation: spin .75s linear infinite;
+	height: 20px;
+	width: 20px;
+	font: normal normal normal 14px/1 'woo-outfit-icon';
+	font-size: 20px;
+	line-height: 20px;
+	color: initial;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -10px;
+	margin-top: -10px;
+}
+
+/*No Content Found*/
+.woo-outfit-no-content-found p {
+	font-size: 16px;
+	text-align: center;
+	margin: 15px 0;
+}
