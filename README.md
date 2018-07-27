@@ -1,1 +1,3 @@
-woo-outfit
+== Changelog ==
+
+* Initial release.
