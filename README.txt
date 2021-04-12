@@ -1,5 +1,5 @@
 === WooCommerce Outfit ===
-Contributors: ximdevs, mdsabuz
+Contributors: nazsabuz
 Tags: woocommerce, outfit
 Requires at least: 4.0
 Tested up to: 4.9.7
@@ -16,12 +16,6 @@ Your sold products review is going to be on your website with a less effort from
 
 The WooCommerce Outfit plugin is here to make your effort counted.
 
-= Live Demo =
-Check out a working version of this plugin [here](http://demo.ximdevs.com/woo-outfit/)
-
-*user: demo*
-*password: demo*
-
 = Features =
 * New outfit submission.
 * Listing on single product.
@@ -30,9 +24,6 @@ Check out a working version of this plugin [here](http://demo.ximdevs.com/woo-ou
 * Tags option.
 * Outfit community.
 * Sharing outfit on social media.
-
-= Documentation =
-For usage guidelines, visit our [Documentation Page](https://ximdevs.com/docs/)
 
 == Installation ==
 After downloading and extracting the latest version of the plugin:

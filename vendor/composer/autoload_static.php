@@ -9,17 +9,17 @@ class ComposerStaticInitf67a5b5513df5f4a3fe37f83fcd37cfb
     public static $prefixLengthsPsr4 = array (
         'X' => 
         array (
-            'Xim_Woo_Outfit\\Traits\\' => 22,
-            'Xim_Woo_Outfit\\Admin\\' => 21,
+            'Woocommerce_Outfit\\Traits\\' => 22,
+            'Woocommerce_Outfit\\Admin\\' => 21,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Xim_Woo_Outfit\\Traits\\' => 
+        'Woocommerce_Outfit\\Traits\\' => 
         array (
             0 => __DIR__ . '/../..' . '/traits',
         ),
-        'Xim_Woo_Outfit\\Admin\\' => 
+        'Woocommerce_Outfit\\Admin\\' => 
         array (
             0 => __DIR__ . '/../..' . '/admin',
         ),

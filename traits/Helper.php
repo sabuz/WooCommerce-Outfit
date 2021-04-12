@@ -1,6 +1,6 @@
 <?php
 
-namespace Xim_Woo_Outfit\Traits;
+namespace Woocommerce_Outfit\Traits;
 
 trait Helper {
 	use Database;
@@ -16,7 +16,7 @@ trait Helper {
 	function outfit_posted_ago($post_id = null) {
 		$post_time = get_the_time('U', $post_id);
 
-		return sprintf(__("%s ago", 'xim'), human_time_diff($post_time, current_time('timestamp')));
+		return sprintf(__("%s ago", 'woocommerce-outfit'), human_time_diff($post_time, current_time('timestamp')));
 	}
 
 	// Get outfit author by post id
@@ -113,7 +113,7 @@ trait Helper {
 				$content .= '<div class="item">
 					<a href="' . get_permalink($product->id) . '">
 						<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">
-						<div class="ribbon ' . ($product->labels == 1 ? 'captured' : '') . '">' . ($product->labels == 1 ? __('Captured', 'xim') : __('Similar', 'xim')) . '</div>
+						<div class="ribbon ' . ($product->labels == 1 ? 'captured' : '') . '">' . ($product->labels == 1 ? __('Captured', 'woocommerce-outfit') : __('Similar', 'woocommerce-outfit')) . '</div>
 						<h4 class="title">' . get_the_title($product->id) . '</h4>
 					</a>
 					<div class="price">' . $p->get_price_html() . '</div>

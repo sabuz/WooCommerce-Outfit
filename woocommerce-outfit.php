@@ -4,8 +4,8 @@
  * Plugin Name:       WooCommerce Outfit
  * Description:       WooCommerce Outfit is one of a kind plugin which will enable your customers to submit their photos to the related bought products.
  * Version:           2.0.0
- * Author:            XimDevs
- * Author URI:        https://ximdevs.com/
+ * Author:            Nazmul Sabuz
+ * Author URI:        https://profiles.wordpress.org/nazsabuz/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
@@ -27,9 +27,9 @@ require_once 'vendor/autoload.php';
  *
  * @since    1.0.0
  */
-class Xim_Woo_Outfit_Activation {
-	use Xim_Woo_Outfit\Traits\Database;
-	use Xim_Woo_Outfit\Traits\Core;
+class Woocommerce_Outfit_Activation {
+	use Woocommerce_Outfit\Traits\Database;
+	use Woocommerce_Outfit\Traits\Core;
 
 	function __construct() {
 		// install database
@@ -46,7 +46,7 @@ class Xim_Woo_Outfit_Activation {
 register_activation_hook(__FILE__, function () {
 	// If WooCommerce is activated, initiate the activation class
 	if (class_exists('WooCommerce')) {
-		new Xim_Woo_Outfit_Activation;
+		new Woocommerce_Outfit_Activation;
 	}
 });
 
@@ -55,13 +55,13 @@ register_activation_hook(__FILE__, function () {
  *
  * @since    1.0.0
  */
-class Xim_Woo_Outfit_Init {
-	use Xim_Woo_Outfit\Traits\Core;
-	use Xim_Woo_Outfit\Traits\Helper;
-	use Xim_Woo_Outfit\Traits\Metabox;
-	use Xim_Woo_Outfit\Traits\Ajax;
-	use Xim_Woo_Outfit\Traits\Template;
-	use Xim_Woo_Outfit\Admin\Admin;
+class Woocommerce_Outfit_Init {
+	use Woocommerce_Outfit\Traits\Core;
+	use Woocommerce_Outfit\Traits\Helper;
+	use Woocommerce_Outfit\Traits\Metabox;
+	use Woocommerce_Outfit\Traits\Ajax;
+	use Woocommerce_Outfit\Traits\Template;
+	use Woocommerce_Outfit\Admin\Admin;
 
 	public $all_outfit_endpoint = 'outfits';
 	public $new_outfit_endpoint = 'outfits/new-outfit';
@@ -69,7 +69,7 @@ class Xim_Woo_Outfit_Init {
 
 	function __construct() {
 		// Add translation support
-		load_plugin_textdomain('xim', false, basename(dirname(__FILE__)) . '/languages');
+		load_plugin_textdomain('woocommerce-outfit', false, basename(dirname(__FILE__)) . '/languages');
 
 		// Core
 		add_action('init', array($this, 'init'));
@@ -121,7 +121,7 @@ class Xim_Woo_Outfit_Init {
 add_action('plugins_loaded', function () {
 	// If WooCommerce is activated, initiate the plugin, else throw error and deactive the plugin
 	if (class_exists('WooCommerce')) {
-		new Xim_Woo_Outfit_Init;
+		new Woocommerce_Outfit_Init;
 	} else {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
@@ -134,7 +134,7 @@ add_action('plugins_loaded', function () {
 		// Throw an error in the wordpress admin
 		add_action('admin_notices', function () {
 			$class = 'notice notice-error is-dismissible';
-			$message = '<strong>' . __('WooCommerce Outfit', 'xim') . '</strong> ' . __('requires', 'xim') . ' <strong>' . __('WooCommerce', 'xim') . '</strong> ' . __('plugin to be installed and activated.', 'xim');
+			$message = '<strong>' . __('WooCommerce Outfit', 'woocommerce-outfit') . '</strong> ' . __('requires', 'woocommerce-outfit') . ' <strong>' . __('WooCommerce', 'woocommerce-outfit') . '</strong> ' . __('plugin to be installed and activated.', 'woocommerce-outfit');
 			printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
 		});
 	}

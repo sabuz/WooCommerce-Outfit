@@ -1,6 +1,6 @@
 <?php
 
-namespace Xim_Woo_Outfit\Traits;
+namespace Woocommerce_Outfit\Traits;
 
 trait Database {
 

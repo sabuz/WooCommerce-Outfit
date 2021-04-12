@@ -1,6 +1,6 @@
 <?php
 
-namespace Xim_Woo_Outfit\Traits;
+namespace Woocommerce_Outfit\Traits;
 
 use WP_Query;
 
@@ -21,7 +21,7 @@ trait Template {
 		$html = '';
 
 		if (isset($_COOKIE['woo_outfit_success']) && $_COOKIE['woo_outfit_success'] == 'true') {
-			$html .= '<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">' . __('Outfit submitted successfully.', 'xim') . '</div>
+			$html .= '<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">' . __('Outfit submitted successfully.', 'woocommerce-outfit') . '</div>
 
 			<script>
 				document.cookie="woo_outfit_success=;expires=expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/"
@@ -29,15 +29,15 @@ trait Template {
 		}
 
 		if ($query->have_posts()) {
-			$html .= '<p>' . sprintf(__('To add more outfit photos, go to <a href="%1$s">new outfit</a>', 'xim'), esc_url(wc_get_endpoint_url('outfits/new-outfit'))) . '</p>
+			$html .= '<p>' . sprintf(__('To add more outfit photos, go to <a href="%1$s">new outfit</a>', 'woocommerce-outfit'), esc_url(wc_get_endpoint_url('outfits/new-outfit'))) . '</p>
 
 			<table class="table">
 				<thead>
 					<tr>
-						<th>' . __('ID', 'xim') . '</th>
-						<th>' . __('Title', 'xim') . '</th>
-						<th>' . __('Date', 'xim') . '</th>
-						<th>' . __('Status', 'xim') . '</th>
+						<th>' . __('ID', 'woocommerce-outfit') . '</th>
+						<th>' . __('Title', 'woocommerce-outfit') . '</th>
+						<th>' . __('Date', 'woocommerce-outfit') . '</th>
+						<th>' . __('Status', 'woocommerce-outfit') . '</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -50,7 +50,7 @@ trait Template {
 							<td>' . the_title('', '', false) . '</td>
 							<td>' . get_the_date() . '</td>
 							<td>' . ucfirst(get_post_status()) . '</td>
-							<td><a href="' . get_the_permalink() . '" target="_blank">' . __('View', 'xim') . '</a></td>
+							<td><a href="' . get_the_permalink() . '" target="_blank">' . __('View', 'woocommerce-outfit') . '</a></td>
 						</tr>';
 					}
 					
@@ -60,8 +60,8 @@ trait Template {
 			</table>';
 		} else {
 			$html .= '<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">
-				<a class="woocommerce-Button button" href="' . esc_url(wc_get_endpoint_url('outfits/new-outfit')) . '">' . __('Add new', 'xim') . '</a>
-				' . __('No outfits available yet.', 'xim') . '
+				<a class="woocommerce-Button button" href="' . esc_url(wc_get_endpoint_url('outfits/new-outfit')) . '">' . __('Add new', 'woocommerce-outfit') . '</a>
+				' . __('No outfits available yet.', 'woocommerce-outfit') . '
 			</div>';
 		}
 
@@ -95,7 +95,7 @@ trait Template {
 
 		$html = '<form id="new-outfit-form" method="post">
 			<div class="form-group">
-				<label>' . __('Outfit Image', 'xim') . '</label>
+				<label>' . __('Outfit Image', 'woocommerce-outfit') . '</label>
 
 				<div class="row">
 					<div class="col-sm-12">
@@ -106,7 +106,7 @@ trait Template {
 			</div>
 
 			<div class="form-group">
-				<label>' . __('Used Products', 'xim') . '</label>
+				<label>' . __('Used Products', 'woocommerce-outfit') . '</label>
 
 				<div class="selected-products empty">
 					<div class="row">
@@ -139,7 +139,7 @@ trait Template {
 
 			if (get_option('woo-outfit-tagging', 'on') && get_option('woo-outfit-customer-tagging', 'on')) {
 				$html .= '<div class="form-group">
-					<label>' . __('Tags', 'xim') . '</label>
+					<label>' . __('Tags', 'woocommerce-outfit') . '</label>
 
 					<select name="tags[]" class="select-tag" multiple="multiple">';
 						foreach ($terms as $term) {
@@ -149,7 +149,7 @@ trait Template {
 				</div>';
 			}
 
-			$html .= '<input type="submit" id="submit" value="' . __('Add Outfit', 'xim') . '">
+			$html .= '<input type="submit" id="submit" value="' . __('Add Outfit', 'woocommerce-outfit') . '">
 		</form>';
 
 		return $html;
@@ -177,7 +177,7 @@ trait Template {
 
 		echo '<div class="woo-outfit-gallery">
 			<div class="woo-outfit-gallery-header">';
-				echo '<h2 class="woo-outfit-gallery-header-title">' . __('Style Gallery', 'xim') . '</h2>';
+				echo '<h2 class="woo-outfit-gallery-header-title">' . __('Style Gallery', 'woocommerce-outfit') . '</h2>';
 
 				if (isset($_GET['tags'])) {
 					$term = get_term_by('slug', $_GET['tags'], 'outfit_tags');
@@ -186,23 +186,23 @@ trait Template {
 				} elseif (isset($_GET['user'])) {
 					$current = (isset($_GET['page']) ? $_GET['page'] : 'photos');
 
-					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . ucwords(get_the_author_meta('display_name', $_GET['user'])) . ($_GET['user'] != get_current_user_id() ? '<a href="#" class="woo-outfit-follow-btn" data-id="' . $_GET['user'] . '">' . ($this->is_following($_GET['user']) ? __('Unfollow', 'xim') : __('Follow', 'xim')) . '</a>' : '') . '</h4>';
+					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . ucwords(get_the_author_meta('display_name', $_GET['user'])) . ($_GET['user'] != get_current_user_id() ? '<a href="#" class="woo-outfit-follow-btn" data-id="' . $_GET['user'] . '">' . ($this->is_following($_GET['user']) ? __('Unfollow', 'woocommerce-outfit') : __('Follow', 'woocommerce-outfit')) . '</a>' : '') . '</h4>';
 
 					echo '<div class="woo-outfit-gallery-header-btn-group">
-						<a href="' . $this->get_user_gallery_link($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">' . __('Photos', 'xim') . '</a>
-						<a href="' . $this->get_user_gallery_link($_GET['user'], 'likes') . '" class="' . ($current == 'likes' ? 'active' : '') . '">' . __('Liked Looks', 'xim') . '</a>
-						<a href="' . $this->get_user_gallery_link($_GET['user'], 'follower') . '" class="woo-outfit-num-follower" data-user="' . $_GET['user'] . '">' . $this->get_num_followers($_GET['user']) . __(' Followers', 'xim') . '</a>
-						<a href="' . $this->get_user_gallery_link($_GET['user'], 'following') . '" class="woo-outfit-num-following" data-user="' . $_GET['user'] . '">' . $this->get_num_following($_GET['user']) . __(' Following', 'xim') . '</a>
+						<a href="' . $this->get_user_gallery_link($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">' . __('Photos', 'woocommerce-outfit') . '</a>
+						<a href="' . $this->get_user_gallery_link($_GET['user'], 'likes') . '" class="' . ($current == 'likes' ? 'active' : '') . '">' . __('Liked Looks', 'woocommerce-outfit') . '</a>
+						<a href="' . $this->get_user_gallery_link($_GET['user'], 'follower') . '" class="woo-outfit-num-follower" data-user="' . $_GET['user'] . '">' . $this->get_num_followers($_GET['user']) . __(' Followers', 'woocommerce-outfit') . '</a>
+						<a href="' . $this->get_user_gallery_link($_GET['user'], 'following') . '" class="woo-outfit-num-following" data-user="' . $_GET['user'] . '">' . $this->get_num_following($_GET['user']) . __(' Following', 'woocommerce-outfit') . '</a>
 					</div>';
 				} else {
 					$current = (isset($_GET['page']) ? $_GET['page'] : 'all');
 
-					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . __('Inspire and Admire', 'xim') . '</h4>';
+					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . __('Inspire and Admire', 'woocommerce-outfit') . '</h4>';
 
 					echo '<div class="woo-outfit-gallery-header-btn-group">
-						<a href="' . get_the_permalink(get_option('woo-outfit-page-id')) . '" class="' . ($current == 'all' ? 'active' : '') . '">' . __('All', 'xim') . '</a>
-						<a href="' . add_query_arg('page', 'following', get_the_permalink(get_option('woo-outfit-page-id'))) . '" class="' . ($current == 'following' ? 'active' : '') . '">' . __('Following', 'xim') . '</a>
-						<a href="' . add_query_arg('page', 'feat', get_the_permalink(get_option('woo-outfit-page-id'))) . '" class="' . ($current == 'feat' ? 'active' : '') . '">' . __('Featured', 'xim') . '</a>
+						<a href="' . get_the_permalink(get_option('woo-outfit-page-id')) . '" class="' . ($current == 'all' ? 'active' : '') . '">' . __('All', 'woocommerce-outfit') . '</a>
+						<a href="' . add_query_arg('page', 'following', get_the_permalink(get_option('woo-outfit-page-id'))) . '" class="' . ($current == 'following' ? 'active' : '') . '">' . __('Following', 'woocommerce-outfit') . '</a>
+						<a href="' . add_query_arg('page', 'feat', get_the_permalink(get_option('woo-outfit-page-id'))) . '" class="' . ($current == 'feat' ? 'active' : '') . '">' . __('Featured', 'woocommerce-outfit') . '</a>
 					</div>';
 				}
 			echo '</div>'; //.woo-outfit-gallery-header
@@ -339,13 +339,13 @@ trait Template {
 
 				echo '<div class="woo-outfit-gallery-pagination">
 					<button class="button" data-current="1" data-max="'. $query->max_num_pages .'"
-						' . (isset($_GET['user']) ? 'data-user="' . $_GET['user'] . '"' : '') . (isset($_GET['page'])? 'data-page="' . $_GET['page'] . '"' : '') . (isset($_GET['tags']) ? 'data-tag="' . $_GET['tags'] . '"' : '') .'>' . __('Load More', 'xim') . '</button>
+						' . (isset($_GET['user']) ? 'data-user="' . $_GET['user'] . '"' : '') . (isset($_GET['page'])? 'data-page="' . $_GET['page'] . '"' : '') . (isset($_GET['tags']) ? 'data-tag="' . $_GET['tags'] . '"' : '') .'>' . __('Load More', 'woocommerce-outfit') . '</button>
 				</div>';
 			} else {
 				if (empty($followings) && @$_GET['page'] == 'following') {
 					echo '<div class="woo-outfit-no-content-found">
-						<p>' . __('You are not following anyone!', 'xim') . '</p>
-						<p>' . __('Let\'s fix that by start following some style gallery stars!', 'xim') . '</p>
+						<p>' . __('You are not following anyone!', 'woocommerce-outfit') . '</p>
+						<p>' . __('Let\'s fix that by start following some style gallery stars!', 'woocommerce-outfit') . '</p>
 					</div>';
 				}
 			}
@@ -413,7 +413,7 @@ trait Template {
 
 		if ($query->have_posts()) {
 			echo '<div class="woo-outfit-single-carousel">
-				<h3>' . __('Outfit Photos', 'xim') . '</h3>
+				<h3>' . __('Outfit Photos', 'woocommerce-outfit') . '</h3>
 
 				<div class="owl-carousel">';
 				while ($query->have_posts()) {

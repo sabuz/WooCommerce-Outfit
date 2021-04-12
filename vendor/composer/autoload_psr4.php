@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Xim_Woo_Outfit\\Traits\\' => array($baseDir . '/traits'),
-    'Xim_Woo_Outfit\\Admin\\' => array($baseDir . '/admin'),
+    'Woocommerce_Outfit\\Traits\\' => array($baseDir . '/traits'),
+    'Woocommerce_Outfit\\Admin\\' => array($baseDir . '/admin'),
 );
