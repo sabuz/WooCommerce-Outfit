@@ -7,10 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitf67a5b5513df5f4a3fe37f83fcd37cfb
 {
     public static $prefixLengthsPsr4 = array (
-        'X' => 
+        'W' => 
         array (
-            'Woocommerce_Outfit\\Traits\\' => 22,
-            'Woocommerce_Outfit\\Admin\\' => 21,
+            'Woocommerce_Outfit\\Traits\\' => 26,
+            'Woocommerce_Outfit\\Admin\\' => 25,
         ),
     );
 
@@ -25,11 +25,16 @@ class ComposerStaticInitf67a5b5513df5f4a3fe37f83fcd37cfb
         ),
     );
 
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitf67a5b5513df5f4a3fe37f83fcd37cfb::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitf67a5b5513df5f4a3fe37f83fcd37cfb::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf67a5b5513df5f4a3fe37f83fcd37cfb::$classMap;
 
         }, null, ClassLoader::class);
     }
