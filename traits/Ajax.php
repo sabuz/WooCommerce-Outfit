@@ -115,7 +115,7 @@ trait Ajax {
 						</a>';
 
 						if ($author != get_current_user_id()) {
-							$content .= '<a href="#" class="woo-outfit-follow-btn" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'woocommerce-outfit') : __('Follow', 'woocommerce-outfit')) . '</a>';
+							$content .= '<a href="#" class="woo-outfit-follow-btn" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'woo-outfit') : __('Follow', 'woo-outfit')) . '</a>';
 						}
 
 						$content .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -130,7 +130,7 @@ trait Ajax {
 					' . $this->modal_tags($_GET['view']) . '
 
 					<div class="woo-outfit-modal-footer-info">
-						<span class="woo-outfit-meta-time">' . __('Added ', 'woocommerce-outfit') . $this->outfit_posted_ago($_REQUEST['view']) . '</span>
+						<span class="woo-outfit-meta-time">' . __('Added ', 'woo-outfit') . $this->outfit_posted_ago($_REQUEST['view']) . '</span>
 
 						' . $this->like_button_html($_REQUEST['view']) . '
 						' . $this->share_buttons_html($_REQUEST['view']) . '
@@ -280,11 +280,11 @@ trait Ajax {
 		$response = array();
 
 		if (!isset($_REQUEST['ids'])) {
-			$response[] = __('Products are required.', 'woocommerce-outfit');
+			$response[] = __('Products are required.', 'woo-outfit');
 		}
 
 		if (!file_exists($_FILES['thumb']['tmp_name'])) {
-			$response[] = __('Outfit photo is required.', 'woocommerce-outfit');
+			$response[] = __('Outfit photo is required.', 'woo-outfit');
 		}
 
 		if (count($response) == 0) {

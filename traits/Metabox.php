@@ -29,8 +29,8 @@ trait Metabox {
 	 * @since    1.0.0
 	 */
 	function register_meta_boxes() {
-		add_meta_box('woo-outfit-hooked-products', __('Used Products', 'woocommerce-outfit'), array($this, 'mb_hooked_products_callback'), 'outfit');
-		add_meta_box('woo-outfit-featured', __('Featured Post', 'woocommerce-outfit'), array($this, 'mb_featured_products_callback'), 'outfit', 'side');
+		add_meta_box('woo-outfit-hooked-products', __('Used Products', 'woo-outfit'), array($this, 'mb_hooked_products_callback'), 'outfit');
+		add_meta_box('woo-outfit-featured', __('Featured Post', 'woo-outfit'), array($this, 'mb_featured_products_callback'), 'outfit', 'side');
 	}
 
 	/**
@@ -96,7 +96,7 @@ trait Metabox {
 		echo '<div class="woo-outfit-mb">
 			<label for="featured">
 				<input type="checkbox" name="featured" id="featured" ' . (!empty($value) ? "checked" : "") . '/>
-				' . __('Make this post featured?', 'woocommerce-outfit') . '
+				' . __('Make this post featured?', 'woo-outfit') . '
 			</label>
 		</div>';
 	}

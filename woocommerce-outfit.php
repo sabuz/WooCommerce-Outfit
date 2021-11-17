@@ -69,7 +69,7 @@ class Woocommerce_Outfit_Init {
 
 	function __construct() {
 		// Add translation support
-		load_plugin_textdomain('woocommerce-outfit', false, basename(dirname(__FILE__)) . '/languages');
+		load_plugin_textdomain('woo-outfit', false, basename(dirname(__FILE__)) . '/languages');
 
 		// Core
 		add_action('init', array($this, 'init'));
@@ -134,7 +134,7 @@ add_action('plugins_loaded', function () {
 		// Throw an error in the wordpress admin
 		add_action('admin_notices', function () {
 			$class = 'notice notice-error is-dismissible';
-			$message = '<strong>' . __('WooCommerce Outfit', 'woocommerce-outfit') . '</strong> ' . __('requires', 'woocommerce-outfit') . ' <strong>' . __('WooCommerce', 'woocommerce-outfit') . '</strong> ' . __('plugin to be installed and activated.', 'woocommerce-outfit');
+			$message = '<strong>' . __('WooCommerce Outfit', 'woo-outfit') . '</strong> ' . __('requires', 'woo-outfit') . ' <strong>' . __('WooCommerce', 'woo-outfit') . '</strong> ' . __('plugin to be installed and activated.', 'woo-outfit');
 			printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
 		});
 	}

@@ -26,16 +26,16 @@ trait Core {
 		register_post_type('outfit',
 			array(
 				'labels' => array(
-					'name' => __('Outfits', 'woocommerce-outfit'),
-					'singular_name' => __('Outfit', 'woocommerce-outfit'),
-					'add_new_item' => __('Add New Outfit', 'woocommerce-outfit'),
-					'new_item' => __('New Outfit', 'woocommerce-outfit'),
-					'edit_item' => __('Edit Outfit', 'woocommerce-outfit'),
-					'view_item' => __('View Outfit', 'woocommerce-outfit'),
-					'all_items' => __('All Outfits', 'woocommerce-outfit'),
-					'search_items' => __('Search Outfits', 'woocommerce-outfit'),
-					'not_found' => __('No Outfits found.', 'woocommerce-outfit'),
-					'not_found_in_trash' => __('No Outfits found in Trash.', 'woocommerce-outfit'),
+					'name' => __('Outfits', 'woo-outfit'),
+					'singular_name' => __('Outfit', 'woo-outfit'),
+					'add_new_item' => __('Add New Outfit', 'woo-outfit'),
+					'new_item' => __('New Outfit', 'woo-outfit'),
+					'edit_item' => __('Edit Outfit', 'woo-outfit'),
+					'view_item' => __('View Outfit', 'woo-outfit'),
+					'all_items' => __('All Outfits', 'woo-outfit'),
+					'search_items' => __('Search Outfits', 'woo-outfit'),
+					'not_found' => __('No Outfits found.', 'woo-outfit'),
+					'not_found_in_trash' => __('No Outfits found in Trash.', 'woo-outfit'),
 				),
 				'public' => true,
 				'exclude_from_search' => true,
@@ -98,11 +98,11 @@ trait Core {
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'outfits_url' => wc_get_endpoint_url('outfits'),
 			'nonce' => wp_create_nonce('woo_outfit_nonce'),
-			'thumb_req' => __('Outfit photo is required', 'woocommerce-outfit'),
-			'invalid_thumb' => __('Choose a valid JPG/JPEG/PNG file', 'woocommerce-outfit'),
-			'size_exceed' => sprintf(__("File size must be less than %d MB", 'woocommerce-outfit'), ini_get('upload_max_filesize')),
-			'ids_req' => __('Products are required', 'woocommerce-outfit'),
-			'select_placeholder' => __('Select a category', 'woocommerce-outfit'),
+			'thumb_req' => __('Outfit photo is required', 'woo-outfit'),
+			'invalid_thumb' => __('Choose a valid JPG/JPEG/PNG file', 'woo-outfit'),
+			'size_exceed' => sprintf(__("File size must be less than %d MB", 'woo-outfit'), ini_get('upload_max_filesize')),
+			'ids_req' => __('Products are required', 'woo-outfit'),
+			'select_placeholder' => __('Select a category', 'woo-outfit'),
 			'upload_limit' => ini_get('upload_max_filesize'),
 		));
 
@@ -166,7 +166,7 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function myaccount_menu_items($items) {
-		$items = array_splice($items, 0, count($items) - 1) + array($this->all_outfit_endpoint => __('Outfits', 'woocommerce-outfit')) + $items;
+		$items = array_splice($items, 0, count($items) - 1) + array($this->all_outfit_endpoint => __('Outfits', 'woo-outfit')) + $items;
 		return $items;
 	}
 
@@ -197,9 +197,9 @@ trait Core {
 		global $wp_query;
 
 		if (isset($wp_query->query_vars[$this->all_outfit_endpoint]) && in_the_loop()) {
-			$title = __('Outfits', 'woocommerce-outfit');
+			$title = __('Outfits', 'woo-outfit');
 		} elseif (isset($wp_query->query_vars[$this->new_outfit_endpoint]) && in_the_loop()) {
-			$title = __('Add New Outfit', 'woocommerce-outfit');
+			$title = __('Add New Outfit', 'woo-outfit');
 		}
 
 		return $title;
@@ -263,7 +263,7 @@ trait Core {
 										</a>';
 
 										if ($author != get_current_user_id()) {
-											echo '<a href="#" class="woo-outfit-follow-btn" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'woocommerce-outfit') : __('Follow', 'woocommerce-outfit')) . '</a>';
+											echo '<a href="#" class="woo-outfit-follow-btn" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'woo-outfit') : __('Follow', 'woo-outfit')) . '</a>';
 										}
 
 										echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -278,7 +278,7 @@ trait Core {
 									' . $this->modal_tags($_GET['view']) . '
 
 									<div class="woo-outfit-modal-footer-info">
-										<span class="woo-outfit-meta-time">' . __('Added ', 'woocommerce-outfit') . $this->outfit_posted_ago($_GET['view']) . '</span>
+										<span class="woo-outfit-meta-time">' . __('Added ', 'woo-outfit') . $this->outfit_posted_ago($_GET['view']) . '</span>
 
 										' . $this->like_button_html($_GET['view']) . '
 										' . $this->share_buttons_html($_GET['view']) . '
@@ -326,7 +326,7 @@ trait Core {
 
 		if (empty($post)) {
 			$post_id = wp_insert_post(array(
-				'post_title' => __('Style Gallery', 'woocommerce-outfit'),
+				'post_title' => __('Style Gallery', 'woo-outfit'),
 				'post_type' => 'page',
 				'post_status' => 'publish',
 				'post_author' => get_current_user_id(),
