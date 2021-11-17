@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Plugin Name:       WooCommerce Outfit
- * Description:       WooCommerce Outfit is one of a kind plugin which will enable your customers to submit their photos to the related bought products.
+ * Plugin Name:       Outfit Photos for WooCommerce
+ * Description:       Outfit Photos for WooCommerce is one of a kind plugin which will enable your customers to submit their photos to the related bought products.
  * Version:           2.0.0
  * Author:            Nazmul Sabuz
  * Author URI:        https://profiles.wordpress.org/nazsabuz/
@@ -134,7 +134,7 @@ add_action('plugins_loaded', function () {
 		// Throw an error in the wordpress admin
 		add_action('admin_notices', function () {
 			$class = 'notice notice-error is-dismissible';
-			$message = '<strong>' . __('WooCommerce Outfit', 'woo-outfit') . '</strong> ' . __('requires', 'woo-outfit') . ' <strong>' . __('WooCommerce', 'woo-outfit') . '</strong> ' . __('plugin to be installed and activated.', 'woo-outfit');
+			$message = '<strong>' . __('Outfit Photos for WooCommerce', 'woo-outfit') . '</strong> ' . __('requires', 'woo-outfit') . ' <strong>' . __('WooCommerce', 'woo-outfit') . '</strong> ' . __('plugin to be installed and activated.', 'woo-outfit');
 			printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message);
 		});
 	}
