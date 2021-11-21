@@ -13,26 +13,26 @@ trait Ajax {
 	function ajax_get_products_by_cat() {
 		check_ajax_referer('woo_outfit_nonce', 'security');
 
-		$json = array();
+		$json = array('products' => array());
 		$user = wp_get_current_user();
-		$term = get_term($_REQUEST['cat'], 'product_cat');
+		$term = get_term(intval($_POST['cat']), 'product_cat');
 		$data = new WP_Query(array(
 			'post_type' => 'product',
 			'post_status' => 'publish',
 			'posts_per_page' => 12,
-			'paged' => intval($_REQUEST['page']),
+			'paged' => intval($_POST['page']),
 			'tax_query' => array(
 				array(
 					'taxonomy' => 'product_cat',
 					'field' => 'term_id',
-					'terms' => $_REQUEST['cat'],
+					'terms' => intval($_POST['cat']),
 					'operator' => 'IN',
 				),
 			),
 			'fields' => 'ids',
 		));
 
-		$json['term'] = array('count' => $term->count, 'next' => (intval($_REQUEST['page']) * 12 >= $term->count ? false : true));
+		$json['term'] = array('count' => $term->count, 'next' => (intval($_POST['page']) * 12 >= $term->count ? false : true));
 
 		if ($data->posts) {
 			foreach ($data->posts as $key => $id) {
