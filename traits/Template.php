@@ -175,6 +175,12 @@ trait Template {
 		wp_enqueue_script('isotope');
 		wp_enqueue_script('style-gallery');
 
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+		$page = isset($_GET['page']) ? $_GET['page'] : '';
+		$user = isset($_GET['user']) ? intval($_GET['user']) : null;
+		$followers = array();
+		$followings = array();
+
 		echo '<div class="woo-outfit-gallery">
 			<div class="woo-outfit-gallery-header">';
 				echo '<h2 class="woo-outfit-gallery-header-title">' . __('Style Gallery', 'woo-outfit') . '</h2>';
@@ -183,16 +189,16 @@ trait Template {
 					$term = get_term_by('slug', $_GET['tags'], 'outfit_tags');
 
 					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . $term->name . '</h4>';
-				} elseif (isset($_GET['user'])) {
+				} elseif ($user) {
 					$current = (isset($_GET['page']) ? $_GET['page'] : 'photos');
 
-					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . ucwords(get_the_author_meta('display_name', $_GET['user'])) . ($_GET['user'] != get_current_user_id() ? '<a href="#" class="woo-outfit-follow-btn" data-id="' . $_GET['user'] . '">' . ($this->is_following($_GET['user']) ? __('Unfollow', 'woo-outfit') : __('Follow', 'woo-outfit')) . '</a>' : '') . '</h4>';
+					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . ucwords(get_the_author_meta('display_name', $user)) . ($user != get_current_user_id() ? '<a href="#" class="woo-outfit-follow-btn" data-id="' . $user . '">' . ($this->is_following($user) ? __('Unfollow', 'woo-outfit') : __('Follow', 'woo-outfit')) . '</a>' : '') . '</h4>';
 
 					echo '<div class="woo-outfit-gallery-header-btn-group">
-						<a href="' . $this->get_user_gallery_link($_GET['user']) . '" class="' . ($current == 'photos' ? 'active' : '') . '">' . __('Photos', 'woo-outfit') . '</a>
-						<a href="' . $this->get_user_gallery_link($_GET['user'], 'likes') . '" class="' . ($current == 'likes' ? 'active' : '') . '">' . __('Liked Looks', 'woo-outfit') . '</a>
-						<a href="' . $this->get_user_gallery_link($_GET['user'], 'follower') . '" class="woo-outfit-num-follower" data-user="' . $_GET['user'] . '">' . $this->get_num_followers($_GET['user']) . __(' Followers', 'woo-outfit') . '</a>
-						<a href="' . $this->get_user_gallery_link($_GET['user'], 'following') . '" class="woo-outfit-num-following" data-user="' . $_GET['user'] . '">' . $this->get_num_following($_GET['user']) . __(' Following', 'woo-outfit') . '</a>
+						<a href="' . $this->get_user_gallery_link($user) . '" class="' . ($current == 'photos' ? 'active' : '') . '">' . __('Photos', 'woo-outfit') . '</a>
+						<a href="' . $this->get_user_gallery_link($user, 'likes') . '" class="' . ($current == 'likes' ? 'active' : '') . '">' . __('Liked Looks', 'woo-outfit') . '</a>
+						<a href="' . $this->get_user_gallery_link($user, 'follower') . '" class="woo-outfit-num-follower" data-user="' . $user . '">' . $this->get_num_followers($user) . __(' Followers', 'woo-outfit') . '</a>
+						<a href="' . $this->get_user_gallery_link($user, 'following') . '" class="woo-outfit-num-following" data-user="' . $user . '">' . $this->get_num_following($user) . __(' Following', 'woo-outfit') . '</a>
 					</div>';
 				} else {
 					$current = (isset($_GET['page']) ? $_GET['page'] : 'all');
@@ -208,19 +214,15 @@ trait Template {
 			echo '</div>'; //.woo-outfit-gallery-header
 
 			// Query
-			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-			$followers = array();
-			$followings = array();
-
-			if (isset($_GET['user'])) {
-				if (@$_GET['page'] == 'follower') {
+			if ($user) {
+				if ($page == 'follower') {
 					$args = array();
-					$followers = $this->get_followers($_GET['user']);
-				} elseif (@$_GET['page'] == 'following') {
+					$followers = $this->get_followers($user);
+				} elseif ($page == 'following') {
 					$args = array();
-					$followings = $this->get_followings($_GET['user']);
-				} elseif (@$_GET['page'] == 'likes') {
-					$ids = $this->get_liked_outfits($_GET['user']);
+					$followings = $this->get_followings($user);
+				} elseif ($page == 'likes') {
+					$ids = $this->get_liked_outfits($user);
 					
 					if (empty($ids)) {
 						$args = array();
@@ -240,7 +242,7 @@ trait Template {
 						'post_status' => 'publish',
 						'posts_per_page' => get_option('woo-outfit-ppq', 9),
 						'order' => 'desc',
-						'author' => $_GET['user'],
+						'author' => $user,
 						'paged' => $paged,
 					);
 				}
@@ -339,7 +341,7 @@ trait Template {
 
 				echo '<div class="woo-outfit-gallery-pagination">
 					<button class="button" data-current="1" data-max="'. $query->max_num_pages .'"
-						' . (isset($_GET['user']) ? 'data-user="' . $_GET['user'] . '"' : '') . (isset($_GET['page'])? 'data-page="' . $_GET['page'] . '"' : '') . (isset($_GET['tags']) ? 'data-tag="' . $_GET['tags'] . '"' : '') .'>' . __('Load More', 'woo-outfit') . '</button>
+						' . ($user ? 'data-user="' . $user . '"' : '') . (isset($_GET['page'])? 'data-page="' . $_GET['page'] . '"' : '') . (isset($_GET['tags']) ? 'data-tag="' . $_GET['tags'] . '"' : '') .'>' . __('Load More', 'woo-outfit') . '</button>
 				</div>';
 			} else {
 				if (empty($followings) && @$_GET['page'] == 'following') {
