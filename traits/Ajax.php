@@ -64,8 +64,10 @@ trait Ajax {
 	function ajax_post_like() {
 		check_ajax_referer('woo_outfit_nonce', 'security');
 
-		$count = $this->toggle_post_like($_REQUEST['post_id']);
-		update_post_meta($_REQUEST['post_id'], 'likes', $count);
+		$post_id = intval($_POST['post_id']);
+
+		$count = $this->toggle_post_like($post_id);
+		update_post_meta($post_id, 'likes', $count);
 		wp_send_json($count, 200);
 	}
 
@@ -81,7 +83,9 @@ trait Ajax {
 	function ajax_follow_people() {
 		check_ajax_referer('woo_outfit_nonce', 'security');
 
-		wp_send_json($this->toggle_follow_profile($_REQUEST['user_id']), 200);
+		$user_id = intval($_POST['user_id']);
+
+		wp_send_json($this->toggle_follow_profile($user_id), 200);
 	}
 
 	function nopriv_ajax_follow_people() {

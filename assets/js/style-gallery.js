@@ -85,7 +85,7 @@ jQuery(document).ready(function() {
 
 		var user_id = jQuery(this).attr('data-id')
 
-		jQuery.get(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_follow_people', {
+		jQuery.post(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_follow_people', {
 			user_id: user_id,
 			security: woo_outfit_tr_obj.nonce
 		}).done(function(data) {
