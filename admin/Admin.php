@@ -224,7 +224,7 @@ trait Admin {
 	 * @since    1.0.0
 	 */
 	function admin_menu() {
-		add_options_page('Woocommerce Outfit', 'Woocommerce Outfit', 'manage_options', 'woo-outfit', array($this, 'menu_page'));
+		add_options_page('Outfit Photos', 'Outfit Photos', 'manage_options', 'woo-outfit', array($this, 'menu_page'));
 		add_action('admin_init', array($this, 'register_settings'));
 	}
 }
