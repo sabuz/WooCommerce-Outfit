@@ -156,9 +156,9 @@ trait Ajax {
 
 		$content = '';
 
-		if ($_GET['user']) {
-			if (@$_GET['page'] == 'likes') {
-				$ids = $this->get_liked_outfits($_GET['user']);
+		if (isset($_GET['user'])) {
+			if (isset($_GET['page']) && $_GET['page'] == 'likes') {
+				$ids = $this->get_liked_outfits(intval($_GET['user']));
 
 				if (empty($ids)) {
 					$args = array();
@@ -178,11 +178,11 @@ trait Ajax {
 					'post_status' => 'publish',
 					'posts_per_page' => get_option('woo-outfit-ppq', 9),
 					'order' => 'desc',
-					'author' => $_GET['user'],
+					'author' => intval($_GET['user']),
 					'paged' => $_GET['paged'],
 				);
 			}
-		} elseif ($_GET['tag']) {
+		} elseif (isset($_GET['tag'])) {
 			$args = array(
 				'post_type' => 'outfit',
 				'post_status' => 'publish',
@@ -198,7 +198,7 @@ trait Ajax {
 				'paged' => $_GET['paged'],
 			);
 		} else {
-			if ($_GET['page']) {
+			if (isset($_GET['page'])) {
 				if ($_GET['page'] == 'feat') {
 					$args = array(
 						'post_type' => 'outfit',
