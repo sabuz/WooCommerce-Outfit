@@ -65,8 +65,8 @@ trait Ajax {
 		check_ajax_referer('woo_outfit_nonce', 'security');
 
 		$post_id = intval($_POST['post_id']);
-
 		$count = $this->toggle_post_like($post_id);
+
 		update_post_meta($post_id, 'likes', $count);
 		wp_send_json($count, 200);
 	}
@@ -83,9 +83,7 @@ trait Ajax {
 	function ajax_follow_people() {
 		check_ajax_referer('woo_outfit_nonce', 'security');
 
-		$user_id = intval($_POST['user_id']);
-
-		wp_send_json($this->toggle_follow_profile($user_id), 200);
+		wp_send_json($this->toggle_follow_profile(intval($_POST['user_id'])), 200);
 	}
 
 	function nopriv_ajax_follow_people() {
@@ -101,8 +99,8 @@ trait Ajax {
 		check_ajax_referer('woo_outfit_nonce', 'security');
 
 		$content = '';
-		$view = intval($_GET['view']);
-		$pagination = boolval($_GET['pagination']);
+		$view = isset($_GET['view']) ? intval($_GET['view']) : null;
+		$pagination = isset($_GET['pagination']) ? boolval($_GET['pagination']) : false;
 
 		if ($view) {
 			$author = $this->get_outfit_author_id($view);
@@ -158,9 +156,9 @@ trait Ajax {
 
 		$content = '';
 
-		if ($_REQUEST['user']) {
-			if (@$_REQUEST['page'] == 'likes') {
-				$ids = $this->get_liked_outfits($_REQUEST['user']);
+		if ($_GET['user']) {
+			if (@$_GET['page'] == 'likes') {
+				$ids = $this->get_liked_outfits($_GET['user']);
 
 				if (empty($ids)) {
 					$args = array();
@@ -171,7 +169,7 @@ trait Ajax {
 						'posts_per_page' => get_option('woo-outfit-ppq', 9),
 						'order' => 'desc',
 						'post__in' => $ids,
-						'paged' => $_REQUEST['paged'],
+						'paged' => $_GET['paged'],
 					);
 				}
 			} else {
@@ -180,11 +178,11 @@ trait Ajax {
 					'post_status' => 'publish',
 					'posts_per_page' => get_option('woo-outfit-ppq', 9),
 					'order' => 'desc',
-					'author' => $_REQUEST['user'],
-					'paged' => $_REQUEST['paged'],
+					'author' => $_GET['user'],
+					'paged' => $_GET['paged'],
 				);
 			}
-		} elseif ($_REQUEST['tag']) {
+		} elseif ($_GET['tag']) {
 			$args = array(
 				'post_type' => 'outfit',
 				'post_status' => 'publish',
@@ -194,14 +192,14 @@ trait Ajax {
 					array(
 						'taxonomy' => 'outfit_tags',
 						'field' => 'slug',
-						'terms' => $_REQUEST['tag'],
+						'terms' => $_GET['tag'],
 					),
 				),
-				'paged' => $_REQUEST['paged'],
+				'paged' => $_GET['paged'],
 			);
 		} else {
-			if ($_REQUEST['page']) {
-				if ($_REQUEST['page'] == 'feat') {
+			if ($_GET['page']) {
+				if ($_GET['page'] == 'feat') {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
@@ -213,9 +211,9 @@ trait Ajax {
 								'value' => 'yes',
 							),
 						),
-						'paged' => $_REQUEST['paged'],
+						'paged' => $_GET['paged'],
 					);
-				} elseif ($_REQUEST['page'] == 'following') {
+				} elseif ($_GET['page'] == 'following') {
 					if (is_user_logged_in()) {
 						$data = $this->get_followings(get_current_user_id());
 
@@ -226,7 +224,7 @@ trait Ajax {
 								'posts_per_page' => get_option('woo-outfit-ppq', 9),
 								'order' => 'desc',
 								'author__in' => $data,
-								'paged' => $_REQUEST['paged'],
+								'paged' => $_GET['paged'],
 							);
 						}
 					} else {
@@ -239,7 +237,7 @@ trait Ajax {
 					'post_status' => 'publish',
 					'posts_per_page' => get_option('woo-outfit-ppq', 9),
 					'order' => 'desc',
-					'paged' => $_REQUEST['paged'],
+					'paged' => $_GET['paged'],
 				);
 			}
 		}
@@ -284,7 +282,7 @@ trait Ajax {
 		
 		$response = array();
 
-		if (!isset($_REQUEST['ids'])) {
+		if (!isset($_POST['ids'])) {
 			$response[] = __('Products are required.', 'woo-outfit');
 		}
 
@@ -336,8 +334,8 @@ trait Ajax {
 						wp_update_attachment_metadata($attach_id, $attach_data);
 
 						set_post_thumbnail($post_id, $attach_id);
-						wp_set_object_terms($post_id, $_REQUEST['tags'], 'outfit_tags');
-						update_post_meta($post_id, 'products', $_REQUEST['ids']);
+						wp_set_object_terms($post_id, $_POST['tags'], 'outfit_tags');
+						update_post_meta($post_id, 'products', $_POST['ids']);
 						wp_update_post(['ID' => $post_id, 'post_title' => 'Outfit ' . $post_id]);
 					}
 
