@@ -166,7 +166,7 @@ trait Core {
 	 * @since    1.0.0
 	 */
 	function myaccount_menu_items($items) {
-		$items = array_splice($items, 0, count($items) - 1) + array($this->all_outfit_endpoint => __('Outfit Photos', 'woo-outfit')) + $items;
+		$items = array_splice($items, 0, count($items) - 1) + array($this->all_outfit_endpoint => __('Outfits', 'woo-outfit')) + $items;
 		return $items;
 	}
 
