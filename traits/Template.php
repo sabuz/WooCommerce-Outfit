@@ -190,7 +190,7 @@ trait Template {
 
 					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . $term->name . '</h4>';
 				} elseif ($user) {
-					$current = (isset($_GET['page']) ? $_GET['page'] : 'photos');
+					$current = ($page ? $page : 'photos');
 
 					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . ucwords(get_the_author_meta('display_name', $user)) . ($user != get_current_user_id() ? '<a href="#" class="woo-outfit-follow-btn" data-id="' . $user . '">' . ($this->is_following($user) ? __('Unfollow', 'woo-outfit') : __('Follow', 'woo-outfit')) . '</a>' : '') . '</h4>';
 
@@ -201,7 +201,7 @@ trait Template {
 						<a href="' . $this->get_user_gallery_link($user, 'following') . '" class="woo-outfit-num-following" data-user="' . $user . '">' . $this->get_num_following($user) . __(' Following', 'woo-outfit') . '</a>
 					</div>';
 				} else {
-					$current = (isset($_GET['page']) ? $_GET['page'] : 'all');
+					$current = ($page ? $page : 'all');
 
 					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . __('Inspire and Admire', 'woo-outfit') . '</h4>';
 
@@ -262,8 +262,8 @@ trait Template {
 					'paged' => $paged,
 				);
 			} else {
-				if (isset($_GET['page'])) {
-					if ($_GET['page'] == 'feat') {
+				if ($page) {
+					if ($page == 'feat') {
 						$args = array(
 							'post_type' => 'outfit',
 							'post_status' => 'publish',
@@ -277,7 +277,7 @@ trait Template {
 							),
 							'paged' => $paged,
 						);
-					} elseif ($_GET['page'] == 'following') {
+					} elseif ($page == 'following') {
 						if (is_user_logged_in()) {
 							$data = $this->get_followings(get_current_user_id());
 
@@ -341,10 +341,10 @@ trait Template {
 
 				echo '<div class="woo-outfit-gallery-pagination">
 					<button class="button" data-current="1" data-max="'. $query->max_num_pages .'"
-						' . ($user ? 'data-user="' . $user . '"' : '') . (isset($_GET['page'])? 'data-page="' . $_GET['page'] . '"' : '') . (isset($_GET['tags']) ? 'data-tag="' . $_GET['tags'] . '"' : '') .'>' . __('Load More', 'woo-outfit') . '</button>
+						' . ($user ? 'data-user="' . $user . '"' : '') . ($page ? 'data-page="' . $page . '"' : '') . (isset($_GET['tags']) ? 'data-tag="' . $_GET['tags'] . '"' : '') .'>' . __('Load More', 'woo-outfit') . '</button>
 				</div>';
 			} else {
-				if (empty($followings) && @$_GET['page'] == 'following') {
+				if (empty($followings) && $page == 'following') {
 					echo '<div class="woo-outfit-no-content-found">
 						<p>' . __('You are not following anyone!', 'woo-outfit') . '</p>
 						<p>' . __('Let\'s fix that by start following some style gallery stars!', 'woo-outfit') . '</p>
