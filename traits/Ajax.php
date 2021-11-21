@@ -97,15 +97,17 @@ trait Ajax {
 		check_ajax_referer('woo_outfit_nonce', 'security');
 
 		$content = '';
+		$view = intval($_GET['view']);
+		$pagination = boolval($_GET['pagination']);
 
-		if ($_REQUEST['view']) {
-			$author = $this->get_outfit_author_id($_REQUEST['view']);
+		if ($view) {
+			$author = $this->get_outfit_author_id($view);
 
 			$content .= '<div class="modal-body clearfix">
 				<div class="woo-outfit-modal-thumb">
-					<img src="' . $this->get_outfit_thumbnail($_REQUEST['view']) . '" />
+					<img src="' . $this->get_outfit_thumbnail($view) . '" />
 
-					' . ($_REQUEST['pagination'] ? '<a href="#" class="outfit-prev" data-id=""><span class="woo-outfit-icon woo-outfit-icon-angle-left"></span></a><a href="#" class="outfit-next" data-id=""><span class="woo-outfit-icon woo-outfit-icon-angle-right"></span></a>' : '') . '
+					' . ( $pagination ? '<a href="#" class="outfit-prev" data-id=""><span class="woo-outfit-icon woo-outfit-icon-angle-left"></span></a><a href="#" class="outfit-next" data-id=""><span class="woo-outfit-icon woo-outfit-icon-angle-right"></span></a>' : '') . '
 				</div>
 
 				<div class="woo-outfit-modal-details">
@@ -124,16 +126,15 @@ trait Ajax {
 					</div>
 
 					<div class="woo-outfit-modal-hooked-products owl-carousel">
-						' . $this->modal_hooked_products($_REQUEST['view']) . '
+						' . $this->modal_hooked_products($view) . '
 					</div>
 
-					' . $this->modal_tags($_GET['view']) . '
+					' . $this->modal_tags($view) . '
 
 					<div class="woo-outfit-modal-footer-info">
-						<span class="woo-outfit-meta-time">' . __('Added ', 'woo-outfit') . $this->outfit_posted_ago($_REQUEST['view']) . '</span>
-
-						' . $this->like_button_html($_REQUEST['view']) . '
-						' . $this->share_buttons_html($_REQUEST['view']) . '
+						<span class="woo-outfit-meta-time">' . __('Added ', 'woo-outfit') . $this->outfit_posted_ago($view) . '</span>
+						' . $this->like_button_html($view) . '
+						' . $this->share_buttons_html($view) . '
 					</div>
 				</div>
 			</div>';

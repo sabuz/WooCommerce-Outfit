@@ -47,6 +47,7 @@ jQuery(document).ready(function() {
 
 		jQuery.get(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_single_outfit_modal', {
 			view: view,
+			pagination: false,
 			security: woo_outfit_tr_obj.nonce
 		}).done(function(data) {
 			jQuery('#woo-outfit-modal .modal-content').empty().append(jQuery(data))
