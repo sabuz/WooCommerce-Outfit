@@ -126,7 +126,7 @@ trait Helper {
 
 	// Modal tags.
 	function modal_tags($post_id) {
-		$tags = wp_get_post_terms($_GET['view'], 'outfit_tags');
+		$tags = wp_get_post_terms($post_id, 'outfit_tags');
 		$content = '';
 
 		if (!empty($tags)) {

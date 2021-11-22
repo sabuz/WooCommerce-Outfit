@@ -215,12 +215,13 @@ trait Core {
 
 		if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'style-gallery')) {
 			if (isset($_GET['view'])) {
+				$view = intval($_GET['view']);
 				echo '<meta property="fb:app_id" content="' . get_option('woo-outfit-fb-app-id') . '" />
-				<meta property="og:url" content="' . get_the_permalink() . '?view=' . $_GET['view'] . '" />
+				<meta property="og:url" content="' . get_the_permalink() . '?view=' . $view . '" />
 				<meta property="og:type" content="website" />
-				<meta property="og:title" content="' . get_the_title($_GET['view']) . '" />
+				<meta property="og:title" content="' . get_the_title($view) . '" />
 				<meta property="og:description" content="" />
-				<meta property="og:image" content="' . $this->get_outfit_thumbnail($_GET['view'], 'product-thumb') . '" />';
+				<meta property="og:image" content="' . $this->get_outfit_thumbnail($view, 'product-thumb') . '" />';
 			}
 		}
 	}
@@ -246,14 +247,15 @@ trait Core {
 		if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'style-gallery')) {
 			// Outfit Modal
 			if (isset($_GET['view'])) {
-				$author = $this->get_outfit_author_id($_GET['view']);
+				$view = intval($_GET['view']);
+				$author = $this->get_outfit_author_id($view);
 
 				echo '<div class="modal" id="woo-outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-body clearfix">
 								<div class="woo-outfit-modal-thumb">
-									<img src="' . $this->get_outfit_thumbnail($_GET['view']) . '" />
+									<img src="' . $this->get_outfit_thumbnail($view) . '" />
 								</div>
 
 								<div class="woo-outfit-modal-details">
@@ -272,16 +274,16 @@ trait Core {
 									</div>
 
 									<div class="woo-outfit-modal-hooked-products owl-carousel">
-										' . $this->modal_hooked_products($_GET['view']) . '
+										' . $this->modal_hooked_products($view) . '
 									</div>
 
-									' . $this->modal_tags($_GET['view']) . '
+									' . $this->modal_tags($view) . '
 
 									<div class="woo-outfit-modal-footer-info">
-										<span class="woo-outfit-meta-time">' . __('Added ', 'woo-outfit') . $this->outfit_posted_ago($_GET['view']) . '</span>
+										<span class="woo-outfit-meta-time">' . __('Added ', 'woo-outfit') . $this->outfit_posted_ago($view) . '</span>
 
-										' . $this->like_button_html($_GET['view']) . '
-										' . $this->share_buttons_html($_GET['view']) . '
+										' . $this->like_button_html($view) . '
+										' . $this->share_buttons_html($view) . '
 									</div>
 								</div>
 							</div>

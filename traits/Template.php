@@ -178,6 +178,7 @@ trait Template {
 		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 		$page = isset($_GET['page']) ? $_GET['page'] : '';
 		$user = isset($_GET['user']) ? intval($_GET['user']) : null;
+		$tags = isset($_GET['tags']) ? $_GET['tags'] : '';
 		$followers = array();
 		$followings = array();
 
@@ -185,8 +186,8 @@ trait Template {
 			<div class="woo-outfit-gallery-header">';
 				echo '<h2 class="woo-outfit-gallery-header-title">' . __('Style Gallery', 'woo-outfit') . '</h2>';
 
-				if (isset($_GET['tags'])) {
-					$term = get_term_by('slug', $_GET['tags'], 'outfit_tags');
+				if (!empty($tags)) {
+					$term = get_term_by('slug', $tags, 'outfit_tags');
 
 					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . $term->name . '</h4>';
 				} elseif ($user) {
@@ -246,7 +247,7 @@ trait Template {
 						'paged' => $paged,
 					);
 				}
-			} elseif (isset($_GET['tags'])) {
+			} elseif (!empty($tags)) {
 				$args = array(
 					'post_type' => 'outfit',
 					'post_status' => 'publish',
@@ -256,7 +257,7 @@ trait Template {
 						array(
 							'taxonomy' => 'outfit_tags',
 							'field' => 'slug',
-							'terms' => $_GET['tags'],
+							'terms' => $tags,
 						),
 					),
 					'paged' => $paged,
@@ -341,7 +342,7 @@ trait Template {
 
 				echo '<div class="woo-outfit-gallery-pagination">
 					<button class="button" data-current="1" data-max="'. $query->max_num_pages .'"
-						' . ($user ? 'data-user="' . $user . '"' : '') . ($page ? 'data-page="' . $page . '"' : '') . (isset($_GET['tags']) ? 'data-tag="' . $_GET['tags'] . '"' : '') .'>' . __('Load More', 'woo-outfit') . '</button>
+						' . ($user ? 'data-user="' . $user . '"' : '') . ($page ? 'data-page="' . $page . '"' : '') . (!empty($tags) ? 'data-tag="' . $tags . '"' : '') .'>' . __('Load More', 'woo-outfit') . '</button>
 				</div>';
 			} else {
 				if (empty($followings) && $page == 'following') {
