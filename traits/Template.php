@@ -178,7 +178,7 @@ trait Template {
 		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 		$page = isset($_GET['page']) ? $_GET['page'] : '';
 		$user = isset($_GET['user']) ? intval($_GET['user']) : null;
-		$tags = isset($_GET['tags']) ? $_GET['tags'] : '';
+		$tags = isset($_GET['tags']) ? strval($_GET['tags']) : '';
 		$followers = array();
 		$followings = array();
 
