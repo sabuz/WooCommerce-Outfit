@@ -70,6 +70,46 @@ jQuery(document).ready(function() {
 		})
 	})
 
+	// Modal pagination
+	jQuery('#woo-outfit-modal').on('click', '.outfit-prev, .outfit-next', function (e) {
+		e.preventDefault()
+
+		var post_id = jQuery(this).data('id')
+
+		if (post_id.length > 0) {
+			var target = jQuery('.woo-outfit-single-carousel').find('[data-id=' + post_id + ']')
+			var next = jQuery(target).parent().next().find('.woo-outfit-gallery-item').data('id')
+			var prev = jQuery(target).parent().prev().find('.woo-outfit-gallery-item').data('id')
+
+			jQuery.get(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_single_outfit_modal', {
+				view: post_id,
+				pagination: true,
+				security: woo_outfit_tr_obj.nonce
+			}).done(function (data) {
+				jQuery('#woo-outfit-modal .modal-content').empty().html(jQuery(data))
+
+				jQuery('#woo-outfit-modal').modal({
+					backdrop: 'static'
+				})
+
+				jQuery("#woo-outfit-modal .woo-outfit-modal-hooked-products").trigger('destroy.owl.carousel')
+
+				setTimeout(function () {
+					jQuery("#woo-outfit-modal .woo-outfit-modal-hooked-products").owlCarousel({
+						items: 2,
+						margin: 10,
+						nav: true,
+						navText: ['<span class="woo-outfit-icon woo-outfit-icon-angle-left">', '<span class="woo-outfit-icon woo-outfit-icon-angle-right">'],
+						lazyLoad: true
+					})
+				}, 100)
+
+				jQuery('.outfit-prev').data('id', prev)
+				jQuery('.outfit-next').data('id', next)
+			})
+		}
+	})
+
 	// Update url on close modal
 	jQuery('#woo-outfit-modal').on('click', '.close', function() {
 		if (has_history == true) {
