@@ -114,12 +114,12 @@ jQuery(document).ready(function() {
 
 				// product-nav
 				jQuery('.product-nav').removeClass('hidden')
-				jQuery('.product-nav .prev').attr('data-page', 0).addClass('disabled')
+				jQuery('.product-nav .prev').data('page', 0).addClass('disabled')
 
 				if (data.term.next) {
-					jQuery('.product-nav .next').attr('data-page', 2).removeClass('disabled')
+					jQuery('.product-nav .next').data('page', 2).removeClass('disabled')
 				} else {
-					jQuery('.product-nav .next').attr('data-page', 1).addClass('disabled')
+					jQuery('.product-nav .next').data('page', 1).addClass('disabled')
 				}
 			} else {
 				jQuery('.product-list').empty().html('<p>Nothing found</p>')
@@ -135,7 +135,7 @@ jQuery(document).ready(function() {
 		e.preventDefault()
 
 		var cat_id = jQuery('.select-cat').val()
-		var page = jQuery(this).attr('data-page')
+		var page = jQuery(this).data('page')
 		var count = 0
 		var html = ''
 
@@ -162,15 +162,15 @@ jQuery(document).ready(function() {
 
 			// product-nav
 			if ((parseInt(page) - 1) == 0) {
-				jQuery('.product-nav .prev').attr('data-page', 0).addClass('disabled')
+				jQuery('.product-nav .prev').data('page', 0).addClass('disabled')
 			} else {
-				jQuery('.product-nav .prev').attr('data-page', (parseInt(page) - 1)).removeClass('disabled')
+				jQuery('.product-nav .prev').data('page', (parseInt(page) - 1)).removeClass('disabled')
 			}
 
 			if (data.term.next) {
-				jQuery('.product-nav .next').attr('data-page', (parseInt(page) + 1)).removeClass('disabled')
+				jQuery('.product-nav .next').data('page', (parseInt(page) + 1)).removeClass('disabled')
 			} else {
-				jQuery('.product-nav .next').attr('data-page', parseInt(page)).addClass('disabled')
+				jQuery('.product-nav .next').data('page', parseInt(page)).addClass('disabled')
 			}
 		})
 	})
@@ -181,7 +181,7 @@ jQuery(document).ready(function() {
 	jQuery('.product-list').on('click', '.button', function(e) {
 		e.preventDefault()
 
-		var id = jQuery(this).attr('data-id')
+		var id = jQuery(this).data('id')
 		var index = 0
 		var index = jQuery.map(ids, function(i, j) {
 			if (i.id == id) {
@@ -213,7 +213,7 @@ jQuery(document).ready(function() {
 	jQuery('.selected-products').on('click', '.close', function(e) {
 		e.preventDefault()
 
-		id = jQuery(this).attr('data-id')
+		id = jQuery(this).data('id')
 		jQuery(this).parents('.col-xs-4').remove()
 
 		var index = jQuery.map(ids, function(i, j) {

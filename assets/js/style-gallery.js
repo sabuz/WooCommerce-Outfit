@@ -29,8 +29,8 @@ jQuery(window).on('resize', function() {
 
 jQuery(document).ready(function() {
 	var has_history = false
-	var current = parseInt(jQuery('.woo-outfit-gallery-pagination .button').attr('data-current'))
-	var max = parseInt(jQuery('.woo-outfit-gallery-pagination .button').attr('data-max'))
+	var current = parseInt(jQuery('.woo-outfit-gallery-pagination .button').data('current'))
+	var max = parseInt(jQuery('.woo-outfit-gallery-pagination .button').data('max'))
 
 	// Pagination handler
 	if (max == 0 || current == max) {
@@ -39,7 +39,7 @@ jQuery(document).ready(function() {
 
 	// Outfit modal
 	jQuery('.woo-outfit-gallery').on('click', '.woo-outfit-gallery-item-thumb', function(e) {
-		view = jQuery(this).closest('.woo-outfit-gallery-item').attr('data-id')
+		view = jQuery(this).closest('.woo-outfit-gallery-item').data('id')
 
 		// update url
 		has_history = true
@@ -83,7 +83,7 @@ jQuery(document).ready(function() {
 	jQuery(document).on('click', '.woo-outfit-follow-btn', function(e) {
 		e.preventDefault()
 
-		var user_id = jQuery(this).attr('data-id')
+		var user_id = jQuery(this).data('id')
 
 		jQuery.post(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_follow_people', {
 			user_id: user_id,
@@ -106,7 +106,7 @@ jQuery(document).ready(function() {
 		var target = jQuery(this)
 
 		jQuery.post(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_post_like', {
-			post_id: target.attr('data-id'),
+			post_id: target.data('id'),
 			security: woo_outfit_tr_obj.nonce
 		}).done(function(data) {
 			target.toggleClass('enabled').siblings('.woo-outfit-rating-count').html(data)
@@ -120,11 +120,11 @@ jQuery(document).ready(function() {
 	// Ajax pagination
 	jQuery('.woo-outfit-gallery-pagination').on('click', '.button', function() {
 		var target = jQuery(this)
-		var current = jQuery(this).attr('data-current')
-		var max = jQuery(this).attr('data-max')
-		var user = jQuery(this).attr('data-user')
-		var page = jQuery(this).attr('data-page')
-		var tag = jQuery(this).attr('data-tag')
+		var current = jQuery(this).data('current')
+		var max = jQuery(this).data('max')
+		var user = jQuery(this).data('user')
+		var page = jQuery(this).data('page')
+		var tag = jQuery(this).data('tag')
 
 		target.addClass('loading')
 
@@ -162,7 +162,7 @@ jQuery(document).ready(function() {
 				target.removeClass('loading')
 
 				if (current != max) {
-					jQuery('.woo-outfit-gallery-pagination .button').attr('data-current', current)
+					jQuery('.woo-outfit-gallery-pagination .button').data('current', current)
 				} else {
 					jQuery('.woo-outfit-gallery-pagination .button').remove()
 				}
