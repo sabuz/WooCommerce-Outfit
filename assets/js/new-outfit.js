@@ -181,7 +181,7 @@ jQuery(document).ready(function() {
 	jQuery('.product-list').on('click', '.button', function(e) {
 		e.preventDefault()
 
-		var id = jQuery(this).data('id')
+		var id = jQuery(this).attr('data-id')
 		var index = 0
 		var index = jQuery.map(ids, function(i, j) {
 			if (i.id == id) {
@@ -213,7 +213,7 @@ jQuery(document).ready(function() {
 	jQuery('.selected-products').on('click', '.close', function(e) {
 		e.preventDefault()
 
-		id = jQuery(this).data('id')
+		id = jQuery(this).attr('data-id')
 		jQuery(this).parents('.col-xs-4').remove()
 
 		var index = jQuery.map(ids, function(i, j) {

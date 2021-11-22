@@ -39,9 +39,9 @@ jQuery(document).ready(function() {
 
 	// Outfit modal
 	jQuery('.woo-outfit-gallery').on('click', '.woo-outfit-gallery-item-thumb', function(e) {
-		var view = jQuery(this).closest('.woo-outfit-gallery-item').data('id')
-		var next = jQuery(this).closest('.woo-outfit-gallery-item').next().data('id')
-		var prev = jQuery(this).closest('.woo-outfit-gallery-item').prev().data('id')
+		var view = jQuery(this).closest('.woo-outfit-gallery-item').attr('data-id')
+		var next = jQuery(this).closest('.woo-outfit-gallery-item').next().attr('data-id')
+		var prev = jQuery(this).closest('.woo-outfit-gallery-item').prev().attr('data-id')
 
 		// update url
 		has_history = true
@@ -70,8 +70,8 @@ jQuery(document).ready(function() {
 				})
 			}, 100)
 
-			jQuery('#woo-outfit-modal .outfit-prev').data('id', prev)
-			jQuery('#woo-outfit-modal .outfit-next').data('id', next)
+			jQuery('#woo-outfit-modal .outfit-prev').attr('data-id', prev)
+			jQuery('#woo-outfit-modal .outfit-next').attr('data-id', next)
 		})
 	})
 
@@ -79,12 +79,12 @@ jQuery(document).ready(function() {
 	jQuery('#woo-outfit-modal').on('click', '.outfit-prev, .outfit-next', function (e) {
 		e.preventDefault()
 
-		var post_id = jQuery(this).data('id')
+		var post_id = jQuery(this).attr('data-id')
 
 		if (post_id.length > 0) {
-			var target = jQuery('.woo-outfit-single-carousel').find('[data-id=' + post_id + ']')
-			var next = jQuery(target).parent().next().find('.woo-outfit-gallery-item').data('id')
-			var prev = jQuery(target).parent().prev().find('.woo-outfit-gallery-item').data('id')
+			var target = jQuery('.woo-outfit-gallery').find('[data-id=' + post_id + ']')
+			var next = jQuery(target).next().attr('data-id')
+			var prev = jQuery(target).prev().attr('data-id')
 
 			jQuery.get(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_single_outfit_modal', {
 				view: post_id,
@@ -109,8 +109,8 @@ jQuery(document).ready(function() {
 					})
 				}, 100)
 
-				jQuery('.outfit-prev').data('id', prev)
-				jQuery('.outfit-next').data('id', next)
+				jQuery('#woo-outfit-modal .outfit-prev').attr('data-id', prev)
+				jQuery('#woo-outfit-modal .outfit-next').attr('data-id', next)
 			})
 		}
 	})
@@ -128,7 +128,7 @@ jQuery(document).ready(function() {
 	jQuery(document).on('click', '.woo-outfit-follow-btn', function(e) {
 		e.preventDefault()
 
-		var user_id = jQuery(this).data('id')
+		var user_id = jQuery(this).attr('data-id')
 
 		jQuery.post(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_follow_people', {
 			user_id: user_id,
@@ -151,7 +151,7 @@ jQuery(document).ready(function() {
 		var target = jQuery(this)
 
 		jQuery.post(woo_outfit_tr_obj.ajax_url + '?action=woo_outfit_post_like', {
-			post_id: target.data('id'),
+			post_id: target.attr('data-id'),
 			security: woo_outfit_tr_obj.nonce
 		}).done(function(data) {
 			target.toggleClass('enabled').siblings('.woo-outfit-rating-count').html(data)
