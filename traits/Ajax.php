@@ -155,6 +155,7 @@ trait Ajax {
 		check_ajax_referer('woo_outfit_nonce', 'security');
 
 		$content = '';
+		$paged = intval($_GET['paged']);
 
 		if (isset($_GET['user'])) {
 			if (isset($_GET['page']) && $_GET['page'] == 'likes') {
@@ -169,7 +170,7 @@ trait Ajax {
 						'posts_per_page' => get_option('woo-outfit-ppq', 9),
 						'order' => 'desc',
 						'post__in' => $ids,
-						'paged' => $_GET['paged'],
+						'paged' => $paged,
 					);
 				}
 			} else {
@@ -179,7 +180,7 @@ trait Ajax {
 					'posts_per_page' => get_option('woo-outfit-ppq', 9),
 					'order' => 'desc',
 					'author' => intval($_GET['user']),
-					'paged' => $_GET['paged'],
+					'paged' => $paged,
 				);
 			}
 		} elseif (isset($_GET['tag'])) {
@@ -195,7 +196,7 @@ trait Ajax {
 						'terms' => $_GET['tag'],
 					),
 				),
-				'paged' => $_GET['paged'],
+				'paged' => $paged,
 			);
 		} else {
 			if (isset($_GET['page'])) {
@@ -211,7 +212,7 @@ trait Ajax {
 								'value' => 'yes',
 							),
 						),
-						'paged' => $_GET['paged'],
+						'paged' => $paged,
 					);
 				} elseif ($_GET['page'] == 'following') {
 					if (is_user_logged_in()) {
@@ -224,7 +225,7 @@ trait Ajax {
 								'posts_per_page' => get_option('woo-outfit-ppq', 9),
 								'order' => 'desc',
 								'author__in' => $data,
-								'paged' => $_GET['paged'],
+								'paged' => $paged,
 							);
 						}
 					} else {
@@ -237,7 +238,7 @@ trait Ajax {
 					'post_status' => 'publish',
 					'posts_per_page' => get_option('woo-outfit-ppq', 9),
 					'order' => 'desc',
-					'paged' => $_GET['paged'],
+					'paged' => $paged,
 				);
 			}
 		}
@@ -250,8 +251,8 @@ trait Ajax {
 			
 			$content .= '<div class="woo-outfit-gallery-item col-sm-4" data-id="' . $query->post->ID . '">
 				<div class="woo-outfit-gallery-item-inner-wrap">
-					<div class="woo-outfit-gallery-item-thumb-wrap" data-width="' . @$image[1] . '" data-height="' . @$image[2] . '">
-						<img src="' . @$image[0] . '" class="woo-outfit-gallery-item-thumb" />
+					<div class="woo-outfit-gallery-item-thumb-wrap" data-width="' . $image[1] . '" data-height="' . $image[2] . '">
+						<img src="' . $image[0] . '" class="woo-outfit-gallery-item-thumb" />
 					</div>
 
 					<div class="woo-outfit-gallery-item-footer clearfix">

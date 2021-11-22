@@ -9,7 +9,7 @@ trait Helper {
 	function get_outfit_thumbnail($post_id, $size = 'full', $url = true) {
 		$data = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), $size);
 
-		return ($url == true ? @$data[0] : $data);
+		return ($url == true ? $data[0] : $data);
 	}
 
 	// Post time interval
