@@ -125,7 +125,7 @@ trait Metabox {
 			}
 
 			if (isset($_POST['ids'])) {
-				update_post_meta($post->ID, 'products', $_POST['ids']);
+				update_post_meta($post->ID, 'products', strval($_POST['ids']));
 			}
 		}
 	}
