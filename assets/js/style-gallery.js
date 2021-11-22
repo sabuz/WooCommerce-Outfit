@@ -39,7 +39,9 @@ jQuery(document).ready(function() {
 
 	// Outfit modal
 	jQuery('.woo-outfit-gallery').on('click', '.woo-outfit-gallery-item-thumb', function(e) {
-		view = jQuery(this).closest('.woo-outfit-gallery-item').data('id')
+		var view = jQuery(this).closest('.woo-outfit-gallery-item').data('id')
+		var next = jQuery(this).closest('.woo-outfit-gallery-item').next().data('id')
+		var prev = jQuery(this).closest('.woo-outfit-gallery-item').prev().data('id')
 
 		// update url
 		has_history = true
@@ -67,6 +69,9 @@ jQuery(document).ready(function() {
 					lazyLoad: true
 				})
 			}, 100)
+
+			jQuery('#woo-outfit-modal .outfit-prev').data('id', prev)
+			jQuery('#woo-outfit-modal .outfit-next').data('id', next)
 		})
 	})
 
