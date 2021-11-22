@@ -335,8 +335,8 @@ trait Ajax {
 						wp_update_attachment_metadata($attach_id, $attach_data);
 
 						set_post_thumbnail($post_id, $attach_id);
-						wp_set_object_terms($post_id, $_POST['tags'], 'outfit_tags');
-						update_post_meta($post_id, 'products', $_POST['ids']);
+						wp_set_object_terms($post_id, (array) $_POST['tags'], 'outfit_tags');
+						update_post_meta($post_id, 'products', strval($_POST['ids']));
 						wp_update_post(['ID' => $post_id, 'post_title' => 'Outfit ' . $post_id]);
 					}
 

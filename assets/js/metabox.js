@@ -12,7 +12,7 @@ jQuery(document).ready(function() {
 		var html = ''
 		var count = 0
 
-		jQuery.get(woo_outfit_tr_obj.ajaxurl + '?action=woo_outfit_get_products_by_cat', {
+		jQuery.post(woo_outfit_tr_obj.ajaxurl + '?action=woo_outfit_get_products_by_cat', {
 			cat: cat_id,
 			page: 1,
 			security: woo_outfit_tr_obj.nonce
@@ -62,7 +62,7 @@ jQuery(document).ready(function() {
 		var count = 0
 		var html = ''
 
-		jQuery.get(woo_outfit_tr_obj.ajaxurl + '?action=woo_outfit_get_products_by_cat', {
+		jQuery.post(woo_outfit_tr_obj.ajaxurl + '?action=woo_outfit_get_products_by_cat', {
 			cat: cat_id,
 			page: page,
 			security: woo_outfit_tr_obj.nonce
