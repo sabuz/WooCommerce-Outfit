@@ -189,7 +189,9 @@ trait Template {
 				if (!empty($tags)) {
 					$term = get_term_by('slug', $tags, 'outfit_tags');
 
-					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . esc_html($term->name) . '</h4>';
+					if ($term) {
+						echo '<h4 class="woo-outfit-gallery-header-subtitle">' . esc_html($term->name) . '</h4>';
+					}
 				} elseif ($user) {
 					$current = ($page ? $page : 'photos');
 
