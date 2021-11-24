@@ -47,10 +47,10 @@ trait Template {
 						$query->the_post();
 						$html .= '<tr>
 							<td>' . get_the_ID() . '</td>
-							<td>' . the_title('', '', false) . '</td>
+							<td>' . esc_html(get_the_title()) . '</td>
 							<td>' . get_the_date() . '</td>
 							<td>' . ucfirst(get_post_status()) . '</td>
-							<td><a href="' . get_the_permalink() . '" target="_blank">' . __('View', 'woo-outfit') . '</a></td>
+							<td><a href="' . esc_url(get_the_permalink()) . '" target="_blank">' . __('View', 'woo-outfit') . '</a></td>
 						</tr>';
 					}
 					
@@ -122,7 +122,7 @@ trait Template {
 					<select class="select-cat">
 						<option></option>';
 						foreach ($this->get_product_cats() as $cat) {
-							$html .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
+							$html .= '<option value="' . intval($cat->term_id) . '">' . esc_html($cat->name) . '</option>';
 						}
 					$html .= '</select>
 				</div>
@@ -143,7 +143,7 @@ trait Template {
 
 					<select name="tags[]" class="select-tag" multiple="multiple">';
 						foreach ($terms as $term) {
-							$html .= '<option value="' . $term->slug . '">' . $term->name . '</option>';
+							$html .= '<option value="' . $term->slug . '">' . esc_html($term->name) . '</option>';
 						}
 					$html .= '</select>
 				</div>';
@@ -189,17 +189,17 @@ trait Template {
 				if (!empty($tags)) {
 					$term = get_term_by('slug', $tags, 'outfit_tags');
 
-					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . $term->name . '</h4>';
+					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . esc_html($term->name) . '</h4>';
 				} elseif ($user) {
 					$current = ($page ? $page : 'photos');
 
 					echo '<h4 class="woo-outfit-gallery-header-subtitle">' . ucwords(get_the_author_meta('display_name', $user)) . ($user != get_current_user_id() ? '<a href="#" class="woo-outfit-follow-btn" data-id="' . $user . '">' . ($this->is_following($user) ? __('Unfollow', 'woo-outfit') : __('Follow', 'woo-outfit')) . '</a>' : '') . '</h4>';
 
 					echo '<div class="woo-outfit-gallery-header-btn-group">
-						<a href="' . $this->get_user_gallery_link($user) . '" class="' . ($current == 'photos' ? 'active' : '') . '">' . __('Photos', 'woo-outfit') . '</a>
-						<a href="' . $this->get_user_gallery_link($user, 'likes') . '" class="' . ($current == 'likes' ? 'active' : '') . '">' . __('Liked Looks', 'woo-outfit') . '</a>
-						<a href="' . $this->get_user_gallery_link($user, 'follower') . '" class="woo-outfit-num-follower" data-user="' . $user . '">' . $this->get_num_followers($user) . __(' Followers', 'woo-outfit') . '</a>
-						<a href="' . $this->get_user_gallery_link($user, 'following') . '" class="woo-outfit-num-following" data-user="' . $user . '">' . $this->get_num_following($user) . __(' Following', 'woo-outfit') . '</a>
+						<a href="' . esc_url($this->get_user_gallery_link($user)) . '" class="' . ($current == 'photos' ? 'active' : '') . '">' . __('Photos', 'woo-outfit') . '</a>
+						<a href="' . esc_url($this->get_user_gallery_link($user, 'likes')) . '" class="' . ($current == 'likes' ? 'active' : '') . '">' . __('Liked Looks', 'woo-outfit') . '</a>
+						<a href="' . esc_url($this->get_user_gallery_link($user, 'follower')) . '" class="woo-outfit-num-follower" data-user="' . $user . '">' . $this->get_num_followers($user) . __(' Followers', 'woo-outfit') . '</a>
+						<a href="' . esc_url($this->get_user_gallery_link($user, 'following')) . '" class="woo-outfit-num-following" data-user="' . $user . '">' . $this->get_num_following($user) . __(' Following', 'woo-outfit') . '</a>
 					</div>';
 				} else {
 					$current = ($page ? $page : 'all');
@@ -319,12 +319,12 @@ trait Template {
 
 							echo '<div class="woo-outfit-gallery-item col-sm-4" data-id="' . $post->ID . '">
 								<div class="woo-outfit-gallery-item-inner-wrap">
-									<img src="' . $this->get_outfit_thumbnail($post->ID, 'woo-outfit-style-gallery') . '" class="woo-outfit-gallery-item-thumb" />
+									<img src="' . esc_url($this->get_outfit_thumbnail($post->ID, 'woo-outfit-style-gallery')) . '" class="woo-outfit-gallery-item-thumb" />
 
 									<div class="woo-outfit-gallery-item-footer clearfix">
 										<div class="pull-left">
-											<a class="woo-outfit-meta-author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
-												' . ucwords(get_the_author_meta('display_name')) . '</a>
+											<a class="woo-outfit-meta-author" href="' . esc_url($this->get_user_gallery_link(get_the_author_meta('ID'))) . '">
+												' . esc_html(ucwords(get_the_author_meta('display_name'))) . '</a>
 											<p class="woo-outfit-meta-time">' . $this->outfit_posted_ago() . '</p>
 										</div>
 										<div class="pull-right">
@@ -424,12 +424,12 @@ trait Template {
 					
 					echo '<div class="woo-outfit-gallery-item" data-id="' . $query->post->ID . '">
 						<div class="woo-outfit-gallery-item-inner-wrap">
-							<img src="' . $this->get_outfit_thumbnail($query->post->ID, 'woo-outfit-single-listing') . '" class="woo-outfit-gallery-item-thumb" />
+							<img src="' . esc_url($this->get_outfit_thumbnail($query->post->ID, 'woo-outfit-single-listing')) . '" class="woo-outfit-gallery-item-thumb" />
 
 							<div class="woo-outfit-gallery-item-footer clearfix">
 								<div class="pull-left">
-									<a class="woo-outfit-meta-author" href="' . $this->get_user_gallery_link(get_the_author_meta('ID')) . '">
-										' . ucwords(get_the_author_meta('display_name')) . '</a>
+									<a class="woo-outfit-meta-author" href="' . esc_url($this->get_user_gallery_link(get_the_author_meta('ID'))) . '">
+										' . esc_html(ucwords(get_the_author_meta('display_name'))) . '</a>
 									<p class="woo-outfit-meta-time">' . $this->outfit_posted_ago() . '</p>
 								</div>
 								<div class="pull-right">

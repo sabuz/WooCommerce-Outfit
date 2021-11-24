@@ -41,46 +41,41 @@ trait Metabox {
 	function mb_hooked_products_callback($post) {
 		$products = get_post_meta($post->ID, 'products', true);
 
-		$content = '';
-		$content .= wp_nonce_field('woo_outfit_meta_box_nonce', 'woo_outfit_meta_box_nonce');
-		$content .= '<div class="woo-outfit-mb">
+		echo wp_nonce_field('woo_outfit_meta_box_nonce', 'woo_outfit_meta_box_nonce');
+		echo '<div class="woo-outfit-mb">
 			<div class="selected-products">
 				<div class="row has-col">';
 				if (!empty($products)) {
 					foreach (json_decode($products) as $product) {
-						$content .= '<div class="col">
+						echo '<div class="col">
 							<div class="item">
-								<img src="' . $this->get_outfit_thumbnail($product->id, 'product-thumb') . '">
-								<a href="#" class="close" data-id="' . $product->id . '"></a>
-								<a href="#" class="switch ' . ($product->labels == 1 ? 'active' : 'inactive') . '" data-id="' . $product->id . '"></a>
+								<img src="' . esc_url($this->get_outfit_thumbnail(intval($product->id), 'product-thumb')) . '">
+								<a href="#" class="close" data-id="' . intval($product->id) . '"></a>
+								<a href="#" class="switch ' . ($product->labels == 1 ? 'active' : 'inactive') . '" data-id="' . intval($product->id) . '"></a>
 							</div>
 						</div>';
 					}
 				}
-				$content .= '</div>
-				<input type="hidden" name="ids" class="ids" value=' . $products . '>
+				echo '</div>
+				<input type="hidden" name="ids" class="ids" value=' . esc_textarea($products) . '>
 			</div>
 
 			<div class="select-cat-wrap">
 				<select class="select-cat">
 					<option></option>';
 					foreach ($this->get_product_cats() as $cat) {
-						$content .= '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
+						echo '<option value="' . intval($cat->term_id) . '">' . esc_html($cat->name) . '</option>';
 					}
-				$content .= '</select>
+				echo '</select>
 			</div>
 
-			<div class="product-list">
-
-			</div>
+			<div class="product-list"></div>
 
 			<div class="product-nav hidden">
 				<a href="#" class="prev" data-page="0">&lt; Prev</a>
 				<a href="#" class="next" data-page="0">Next &gt;</a>
 			</div>
 		</div>';
-
-		echo $content;
 	}
 
 	/**
