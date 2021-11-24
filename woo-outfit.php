@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Outfit Photos for WooCommerce
  * Description:       Outfit Photos for WooCommerce is one of a kind plugin which will enable your customers to submit their photos to the related bought products.
- * Version:           2.0.0
+ * Version:           2.1.0
  * Author:            Nazmul Sabuz
  * Author URI:        https://profiles.wordpress.org/nazsabuz/
  * License:           GPL-2.0+

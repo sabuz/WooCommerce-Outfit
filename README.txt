@@ -1,9 +1,9 @@
 === Outfit Photos for WooCommerce ===
 Contributors: nazsabuz
-Tags: woocommerce, outfit
+Tags: woocommerce, outfit, tag, photo, woocommerce photo
 Requires at least: 4.0
 Tested up to: 5.8.2
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,3 +43,7 @@ If you encounter any bugs, or have comments or suggestions, please submit a tick
 * Added: Tags option.
 * Added: Outfit community.
 * Added: Sharing outfit on social media.
+
+= 2.1.0 =
+* Fixes major security issues.
+* Fixes navigation in style gallery.
