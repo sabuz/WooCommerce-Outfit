@@ -19,6 +19,8 @@ trait Admin {
 			} else {
 				$section = 'general';
 			} ?>
+			
+			<?php $section = isset($_GET['section']) ? sanitize_text_field($_GET['section']) : 'general'; ?>
 
 			<h2 class="nav-tab-wrapper">
 	    		<a href="?page=woo-outfit&section=general" class="nav-tab <?php echo $section == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e('General', 'woo-outfit'); ?></a>

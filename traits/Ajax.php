@@ -155,11 +155,14 @@ trait Ajax {
 		check_ajax_referer('woo_outfit_nonce', 'security');
 
 		$content = '';
-		$paged = intval($_GET['paged']);
+		$paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
+		$tag = isset($_GET['tag']) ? sanitize_text_field($_GET['tag']) : '';
+		$page = isset($_GET['page']) ? sanitize_text_field($_GET['page']) : '';
+		$user = isset($_GET['user']) ? intval($_GET['user']) : null;
 
-		if (isset($_GET['user'])) {
-			if (isset($_GET['page']) && $_GET['page'] == 'likes') {
-				$ids = $this->get_liked_outfits(intval($_GET['user']));
+		if (!empty($user)) {
+			if (!empty($page) && $page == 'likes') {
+				$ids = $this->get_liked_outfits($user);
 
 				if (empty($ids)) {
 					$args = array();
@@ -179,11 +182,11 @@ trait Ajax {
 					'post_status' => 'publish',
 					'posts_per_page' => get_option('woo-outfit-ppq', 9),
 					'order' => 'desc',
-					'author' => intval($_GET['user']),
+					'author' => $user,
 					'paged' => $paged,
 				);
 			}
-		} elseif (isset($_GET['tag'])) {
+		} elseif (!empty($tag)) {
 			$args = array(
 				'post_type' => 'outfit',
 				'post_status' => 'publish',
@@ -193,14 +196,14 @@ trait Ajax {
 					array(
 						'taxonomy' => 'outfit_tags',
 						'field' => 'slug',
-						'terms' => $_GET['tag'],
+						'terms' => $tag,
 					),
 				),
 				'paged' => $paged,
 			);
 		} else {
-			if (isset($_GET['page'])) {
-				if ($_GET['page'] == 'feat') {
+			if (!empty($page)) {
+				if ($page == 'feat') {
 					$args = array(
 						'post_type' => 'outfit',
 						'post_status' => 'publish',
@@ -214,7 +217,7 @@ trait Ajax {
 						),
 						'paged' => $paged,
 					);
-				} elseif ($_GET['page'] == 'following') {
+				} elseif ($page == 'following') {
 					if (is_user_logged_in()) {
 						$data = $this->get_followings(get_current_user_id());
 
