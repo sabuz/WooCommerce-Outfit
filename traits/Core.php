@@ -248,7 +248,7 @@ trait Core {
 			// Outfit Modal
 			if (isset($_GET['view'])) {
 				$view = intval($_GET['view']);
-				$author = $this->get_outfit_author_id($view);
+				$author = intval($this->get_outfit_author_id($view));
 
 				echo '<div class="modal" id="woo-outfit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 					<div class="modal-dialog modal-lg" role="document">
@@ -265,7 +265,7 @@ trait Core {
 										</a>';
 
 										if ($author != get_current_user_id()) {
-											echo '<a href="#" class="woo-outfit-follow-btn" data-id="' . $author . '">' . ($this->is_following($author) ? __('Unfollow', 'woo-outfit') : __('Follow', 'woo-outfit')) . '</a>';
+											echo '<a href="#" class="woo-outfit-follow-btn" data-id="' . $author . '">' . ($this->is_following($author) ? esc_html__('Unfollow', 'woo-outfit') : esc_html__('Follow', 'woo-outfit')) . '</a>';
 										}
 
 										echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -280,7 +280,7 @@ trait Core {
 									' . $this->modal_tags($view) . '
 
 									<div class="woo-outfit-modal-footer-info">
-										<span class="woo-outfit-meta-time">' . __('Added ', 'woo-outfit') . $this->outfit_posted_ago($view) . '</span>
+										<span class="woo-outfit-meta-time">' . esc_html__('Added ', 'woo-outfit') . $this->outfit_posted_ago($view) . '</span>
 
 										' . $this->like_button_html($view) . '
 										' . $this->share_buttons_html($view) . '
