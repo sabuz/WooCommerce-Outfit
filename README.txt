@@ -47,3 +47,4 @@ If you encounter any bugs, or have comments or suggestions, please submit a tick
 = 2.1.0 =
 * Fixes major security issues.
 * Fixes navigation in style gallery.
+* Fixes PHP fatal error for invalid tags in style gallery.
